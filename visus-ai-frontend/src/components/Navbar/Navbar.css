@@ -1,0 +1,54 @@
+/* src/components/ModernNavbar.css */
+
+/* --- Estilos Base da Navbar --- */
+.navbar {
+  /* Efeito de scroll e posicionamento */
+  position: fixed !important; /* !important para garantir que sobreponha o estilo padrão do MUI */
+  background-color: transparent !important;
+  color: #fff !important;
+  box-shadow: none !important;
+  transition: all 0.3s ease-in-out !important;
+}
+
+/* --- Estado de Scroll Ativado --- */
+.navbar.scrolled {
+  background-color: #fff !important;
+  color: #333 !important;
+  box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* O ícone principal (logo) também precisa mudar de cor no scroll */
+.navbar.scrolled .navbar-brand-icon {
+  color: #1976d2; /* Cor primária do seu tema */
+}
+
+/* --- Estilos dos Elementos Internos --- */
+.navbar-brand-icon {
+  color: #fff;
+  transition: color 0.3s ease-in-out;
+}
+
+/* --- Responsividade --- */
+
+/* Esconde os links de navegação em telas pequenas (mobile) */
+.navbar-desktop-links {
+  display: none;
+}
+
+/* Esconde o ícone de menu "hambúrguer" em telas grandes (desktop) */
+.navbar-menu-icon {
+  display: block;
+}
+
+/* Media Query para telas a partir de 600px de largura (ponto de quebra 'sm' do MUI) */
+@media (min-width: 600px) {
+  /* Mostra os links de navegação no desktop */
+  .navbar-desktop-links {
+    display: block;
+  }
+  
+  /* Esconde o ícone de menu "hambúrguer" no desktop */
+  .navbar-menu-icon {
+    display: none !important; /* Usa !important para garantir a sobreposição */
+  }
+}

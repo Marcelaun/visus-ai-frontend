@@ -1,0 +1,22 @@
+
+
+* {
+    background-color: #FFFFFF;
+}
+
+
+/* <weight> Use a value from 100 to 900
+/* <uniquifier> Use a unique and descriptive class name */
+
+/* .inter-<uniquifier> {
+  font-family: "Inter", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: <weight>;
+  font-style: normal;
+} */
+
+
+.login-text-test {
+    font-family: "Inter", sans-serif;
+    font-size: 2rem;
+}
