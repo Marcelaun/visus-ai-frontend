@@ -1,19 +1,15 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './pages/Login/Login';
+// src/App.js (ATUALIZADO)
 
-import './App.css'
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './AppRoutes'; // Importe o novo componente
+import './App.css';
 
 function App() {
- 
-
   return (
     <Router>
-        <Routes>
-          <Route path="/"  element={<Login/>}/> 
-        </Routes>
+      <AppRoutes />
     </Router>
-  )
+  );
 }
 
-export default App
+export default App;
