@@ -8,6 +8,8 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import PageLayout from './components/PageLayout/PageLayout';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import PasswordReset from './pages/PasswordReset/PasswordReset';
+import RegisterProfessional from './pages/RegisterProfessional/RegisterProfessional';
+import AccountCreationSplashScreen from './pages/AccountCreationSplashScreen/AccountCreationSplashScreen';
 
 function AppRoutes() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -53,6 +55,26 @@ function AppRoutes() {
           element={
               <PageLayout backgroundColor="#f0f4f8">
                 <PasswordReset />
+              </PageLayout>
+          }
+
+          />
+
+          <Route
+          path="/createAccount"
+          element={
+              <PageLayout backgroundColor="#f0f4f8">
+                <RegisterProfessional />
+              </PageLayout>
+          }
+
+          />
+
+          <Route
+          path="/accountCreationSuccessful"
+          element={
+              <PageLayout backgroundColor="#f0f4f8">
+                <AccountCreationSplashScreen />
               </PageLayout>
           }
 

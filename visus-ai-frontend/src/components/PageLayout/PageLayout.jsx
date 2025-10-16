@@ -8,9 +8,6 @@ const PageLayout = ({ children, backgroundColor }) => {
       sx={{
         backgroundColor: backgroundColor || '#fff', // Cor padrão é branca
         minHeight: '100vh',
-        paddingTop: '80px',
-        paddingLeft: 2,
-        paddingRight: 2,
       }}
     >
       {children}
