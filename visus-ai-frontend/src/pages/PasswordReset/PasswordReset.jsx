@@ -1,4 +1,3 @@
-
 import React from 'react';
 
 const PasswordReset = () => {
@@ -6,7 +5,7 @@ const PasswordReset = () => {
     <div>
       <h1>Teste Password Reset </h1>
     </div>
-  )
-}
+  );
+};
 
 export default PasswordReset;

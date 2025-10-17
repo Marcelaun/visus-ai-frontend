@@ -1,7 +1,9 @@
 /* A Modern CSS Reset by Andy Bell */
 
 /* 1. Use a mais natural box-sizing. */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
 
@@ -11,7 +13,8 @@
 }
 
 /* 3. Permita que elementos de corpo cresçam para preencher a altura. */
-html, body {
+html,
+body {
   height: 100%;
 }
 
@@ -28,33 +31,46 @@ body {
 }
 
 /* 6. Melhore o comportamento padrão de imagens e mídias. */
-img, picture, video, canvas, svg {
+img,
+picture,
+video,
+canvas,
+svg {
   display: block;
   max-width: 100%;
 }
 
 /* 7. Remova os estilos padrão de formulários. */
-input, button, textarea, select {
+input,
+button,
+textarea,
+select {
   font: inherit;
 }
 
 /* 8. Evite quebras de texto estranhas. */
-p, h1, h2, h3, h4, h5, h6 {
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   overflow-wrap: break-word;
 }
 
 :root {
   /* Tamanhos de Fonte */
-  --font-size-sm: 0.875rem;  /* 14px */
-  --font-size-base: 1rem;    /* 16px */
-  --font-size-lg: 1.125rem;  /* 18px */
-  --font-size-xl: 1.25rem;   /* 20px */
-  --font-size-h1: 2.5rem;    /* 40px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1rem; /* 16px */
+  --font-size-lg: 1.125rem; /* 18px */
+  --font-size-xl: 1.25rem; /* 20px */
+  --font-size-h1: 2.5rem; /* 40px */
 
   /* Espaçamentos */
-  --spacing-xs: 0.25rem;     /* 4px */
-  --spacing-sm: 0.5rem;      /* 8px */
-  --spacing-md: 1rem;        /* 16px */
-  --spacing-lg: 1.5rem;      /* 24px */
-  --spacing-xl: 2rem;        /* 32px */
+  --spacing-xs: 0.25rem; /* 4px */
+  --spacing-sm: 0.5rem; /* 8px */
+  --spacing-md: 1rem; /* 16px */
+  --spacing-lg: 1.5rem; /* 24px */
+  --spacing-xl: 2rem; /* 32px */
 }

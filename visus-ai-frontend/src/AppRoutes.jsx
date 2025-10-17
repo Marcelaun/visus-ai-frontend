@@ -1,7 +1,7 @@
 // src/AppRoutes.jsx (NOVO ARQUIVO)
 
-import { useState } from 'react';
-import { Routes, Route, Navigate, useNavigate } from 'react-router-dom';
+import {useState} from 'react';
+import {Routes, Route, Navigate, useNavigate} from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
@@ -10,6 +10,8 @@ import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import PasswordReset from './pages/PasswordReset/PasswordReset';
 import RegisterProfessional from './pages/RegisterProfessional/RegisterProfessional';
 import AccountCreationSplashScreen from './pages/AccountCreationSplashScreen/AccountCreationSplashScreen';
+import AccountRecovery from './pages/AccountRecovery/AccountRecovery';
+import EmailSendingSplashScreen from './pages/EmailSendingSplashScreen/EmailSendingSplashScreen';
 
 function AppRoutes() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -28,7 +30,7 @@ function AppRoutes() {
   return (
     <>
       {isLoggedIn && <Navbar onLogout={handleLogout} />}
-      
+
       <Routes>
         <Route
           path="/login"
@@ -50,40 +52,52 @@ function AppRoutes() {
           }
         />
 
-          <Route
+        <Route
           path="/passwordReset"
           element={
-              <PageLayout backgroundColor="#f0f4f8">
-                <PasswordReset />
-              </PageLayout>
+            <PageLayout backgroundColor="#f0f4f8">
+              <PasswordReset />
+            </PageLayout>
           }
-
-          />
-
-          <Route
-          path="/createAccount"
-          element={
-              <PageLayout backgroundColor="#f0f4f8">
-                <RegisterProfessional />
-              </PageLayout>
-          }
-
-          />
-
-          <Route
-          path="/accountCreationSuccessful"
-          element={
-              <PageLayout backgroundColor="#f0f4f8">
-                <AccountCreationSplashScreen />
-              </PageLayout>
-          }
-
-          />
+        />
 
         <Route
-          path="/"
-          element={<Navigate to={isLoggedIn ? '/dashboard' : '/login'} />}
+          path="/createAccount"
+          element={
+            <PageLayout backgroundColor="#f0f4f8">
+              <RegisterProfessional />
+            </PageLayout>
+          }
         />
+
+        <Route
+          path="/accountCreationSuccessful"
+          element={
+            <PageLayout backgroundColor="#33B9B9">
+              <AccountCreationSplashScreen />
+            </PageLayout>
+          }
+        />
+
+        <Route
+          path="/accountRecovery"
+          element={
+            <PageLayout backgroundColor="#fff">
+              <AccountRecovery />
+            </PageLayout>
+          }
+        />
+
+        <Route
+          path="/emailSendSuccess"
+          element={
+            <PageLayout backgroundColor="#33B9B9">
+              <EmailSendingSplashScreen />
+            </PageLayout>
+          }
+        />
+
+        <Route path="/" element={<Navigate to={isLoggedIn ? '/dashboard' : '/login'} />} />
       </Routes>
     </>
   );

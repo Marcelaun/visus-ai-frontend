@@ -1,51 +1,49 @@
-
-
 .register-professional-back-icon {
-    background-color: #D9D9D9;
-    width: 3rem;
-    border-radius: 0.8rem;
+  background-color: #d9d9d9;
+  width: 3rem;
+  border-radius: 0.8rem;
 }
 
 .register-professional-main-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.4rem;
 }
 
 .register-professional-nav-header {
-    display: flex;
-    align-items: center;
-    gap: 4.5rem;
-    padding: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 4.5rem;
+  padding: 0.8rem;
 }
 
 .register-professional-page-title {
-    font-family: "Inter", sans-serif;
-    font-weight: 300;
-    color: #33B9B9;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  color: #33b9b9;
 }
 
 .register-professional-form {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-top: 1.5rem;
-    padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  padding: 0.5rem;
 }
 
 .register-professional-form-labels {
-   font-family: "Inter", sans-serif;
-    font-size: 1.1rem;
-    font-weight: 400;
-    margin-left: 0.7rem;
-    margin-top: 0.5rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-left: 0.7rem;
+  margin-top: 0.5rem;
 }
 
 .register-professional-input-box::placeholder {
-  font-family: "Inter", sans-serif;
+  font-family: 'Inter', sans-serif;
   font-size: 1.15rem;
   color: #919494;
 }
@@ -55,7 +53,6 @@
   border-radius: 0.5rem;
   border: none;
   background-color: #ebebeb;
-  
 }
 
 .register-professional-input-box:focus {
@@ -63,43 +60,44 @@
 }
 
 .register-professional-login-redirect-text {
-    font-family: "Inter", sans-serif;
-    font-weight: 300;
-    font-size: 1.2rem;
-    color: #33B9B9;
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 1.2rem;
+  color: #33b9b9;
 }
 
 .register-professional-login-link {
-     font-family: "Inter", sans-serif;
-    font-weight: 700;
-    font-size: 1.2rem;
-    color: #33B9B9;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #33b9b9;
 }
 
 .register-professional-login-redirect {
-    display: flex;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
-    padding-bottom: 2rem;
-
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  padding-bottom: 2rem;
 }
 
 .register-professional-submit-btn {
-    padding: 1rem;
-    border-radius: 1rem;
-    border: none;
-    background-color: #33B9B9;
-    color: #fff;
-    margin-top: 2rem;
-    font-family: "Inter", sans-serif;
-    font-size: 1.1rem;
-    width: 90vw;
-    align-self: center;
-    transition: 0.2s ease;
+  padding: 1rem;
+  border-radius: 1rem;
+  border: none;
+  background-color: #33b9b9;
+  color: #fff;
+  margin-top: 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  width: 90vw;
+  align-self: center;
+  transition: 0.2s ease;
 }
 
 .register-professional-submit-btn:active {
-    opacity: 0.5;
+  opacity: 0.5;
 }
+
+

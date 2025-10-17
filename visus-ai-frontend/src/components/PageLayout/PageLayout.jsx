@@ -1,8 +1,8 @@
 // src/components/PageLayout.jsx
 import React from 'react';
-import { Box } from '@mui/material';
+import {Box} from '@mui/material';
 
-const PageLayout = ({ children, backgroundColor }) => {
+const PageLayout = ({children, backgroundColor}) => {
   return (
     <Box
       sx={{

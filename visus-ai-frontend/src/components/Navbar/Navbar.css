@@ -4,7 +4,7 @@
 .navbar {
   position: fixed !important;
   background-color: transparent !important;
-  color: #33B9B9 !important;
+  color: #33b9b9 !important;
   box-shadow: none !important;
   transition: all 0.3s ease-in-out !important;
 }
@@ -85,7 +85,8 @@
   display: none;
 }
 
-.navbar-brand-logo { /* <-- ADICIONE A CLASSE DO LOGO AQUI */
+.navbar-brand-logo {
+  /* <-- ADICIONE A CLASSE DO LOGO AQUI */
   display: none;
 }
 
