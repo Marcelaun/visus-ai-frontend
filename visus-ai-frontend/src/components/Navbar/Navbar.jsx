@@ -1,6 +1,8 @@
-// src/components/Navbar.jsx
+// src/components/Navbar/Navbar.jsx
 
 import React, {useState, useEffect} from 'react';
+// 1. Importe o useLocation para detectar a rota
+import {useLocation} from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -8,9 +10,6 @@ import {
   Box,
   Button,
   IconButton,
-  Avatar,
-  Menu,
-  MenuItem,
   Drawer,
   List,
   ListItem,
@@ -23,22 +22,43 @@ import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import PostAddIcon from '@mui/icons-material/PostAdd';
+import PersonIcon from '@mui/icons-material/Person';
+import LogoutIcon from '@mui/icons-material/Logout';
 import LogoVisusAi from '../../assets/Logo.svg';
 
 import './Navbar.css';
 
+// 2. Adicionei 'path' a cada item para a lógica do título funcionar
 const navItems = [
-  {text: 'Dashboard', icon: <DashboardIcon />},
-  {text: 'Pacientes', icon: <PeopleIcon />},
-  {text: 'Novo Laudo', icon: <PostAddIcon />},
+  {text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard'},
+  {text: 'Pacientes', icon: <PeopleIcon />, path: '/pacientes'},
+  {text: 'Novo Laudo', icon: <PostAddIcon />, path: '/novo-laudo'},
+  {text: 'Perfil', icon: <PersonIcon />, path: '/perfil'},
+  {text: 'Sair', icon: <LogoutIcon />, path: '/login'},
 ];
 
-const settings = ['Perfil', 'Sair'];
+// const settings = ['Sair']; // Este array não está mais sendo usado
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const [anchorElUser, setAnchorElUser] = useState(null);
   const [mobileOpen, setMobileOpen] = useState(false);
+  // 3. Estado para guardar o título da página atual
+  const [pageTitle, setPageTitle] = useState('');
+  // 4. Obter o objeto de localização
+  const location = useLocation();
+
+  // 5. Efeito que roda toda vez que a rota (location) muda
+  useEffect(() => {
+    // Encontra o item de navegação correspondente ao caminho atual
+    const currentNavItem = navItems.find((item) => item.path === location.pathname);
+
+    if (currentNavItem) {
+      setPageTitle(currentNavItem.text);
+    } else {
+      // Define um título padrão se a rota não for encontrada
+      setPageTitle('Visus');
+    }
+  }, [location]); // Dependência: o efeito roda quando a 'location' muda
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -46,20 +66,24 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const handleOpenUserMenu = (event) => setAnchorElUser(event.currentTarget);
-  const handleCloseUserMenu = () => setAnchorElUser(null);
   const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
 
   const drawer = (
     <Box onClick={handleDrawerToggle} className="drawer-container">
+      <div className="image-container-logo">
+        <img src={LogoVisusAi} alt="Logo VisusAI" className="logo-visus-ai" />
+      </div>
       <Typography variant="h6" className="drawer-title">
         Plataforma Visus
       </Typography>
+
       <Divider />
       <List>
         {navItems.map((item) => (
           <ListItem key={item.text} disablePadding>
             <ListItemButton>
+              {' '}
+              {/* Lembre-se de adicionar <Link to={item.path}> aqui */}
               <ListItemIcon className="drawer-nav-icon">{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} className="drawer-nav-item" />
             </ListItemButton>
@@ -80,11 +104,17 @@ const Navbar = () => {
             onClick={handleDrawerToggle}
             className="navbar-menu-icon"
           >
+            {/* O ícone de Menu agora será maior devido ao CSS */}
             <MenuIcon />
           </IconButton>
 
-          <img src={LogoVisusAi} className="navbar-brand-logo" alt="Logo da Plataforma Visus" />
+          {/* 6. Título dinâmico para mobile */}
+          <Typography variant="h6" component="div" className="navbar-page-title">
+            {pageTitle}
+          </Typography>
 
+          {/* Itens do Desktop */}
+          <img src={LogoVisusAi} className="navbar-brand-logo" alt="Logo da Plataforma Visus" />
           <Typography variant="h6" component="div" className="navbar-brand-title">
             Plataforma de Triagem RD
           </Typography>
@@ -92,31 +122,11 @@ const Navbar = () => {
           <Box className="navbar-desktop-links">
             {navItems.map((item) => (
               <Button key={item.text} className="navbar-link">
+                {' '}
+                {/* Lembre-se de adicionar <Link to={item.path}> aqui */}
                 {item.text}
               </Button>
             ))}
-          </Box>
-
-          <Box className="navbar-user-menu">
-            <IconButton onClick={handleOpenUserMenu} className="navbar-avatar-button">
-              <Avatar alt="Usuário Logado" src="/static/images/avatar/2.jpg" />
-            </IconButton>
-            <Menu
-              className="navbar-dropdown-menu"
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{vertical: 'top', horizontal: 'right'}}
-              keepMounted
-              transformOrigin={{vertical: 'top', horizontal: 'right'}}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
           </Box>
         </Toolbar>
       </AppBar>

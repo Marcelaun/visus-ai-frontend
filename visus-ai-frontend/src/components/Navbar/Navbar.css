@@ -11,24 +11,38 @@
 
 .navbar.scrolled {
   background-color: #fff !important;
-  color: #333 !important;
+  color: #33b9b9 !important;
   box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2) !important;
 }
 
 .navbar-toolbar {
   display: flex;
   align-items: center;
+  /* 1. Adicionado para o título da página funcionar */
+  position: relative; 
+}
+
+/* --- Título da Página (NOVO) --- */
+.navbar-page-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: inherit;
+  font-weight: 500;
+  /* Garante que ele apareça em telas pequenas */
+  display: block; 
+  font-family: 'Inter', sans-serif;
 }
 
 /* --- Marca (Logo e Título) --- */
 .navbar-brand-logo {
-  height: 40px; /* Defina a altura do seu logo */
+  height: 40px; 
   margin-right: 8px;
   transition: filter 0.3s ease-in-out;
 }
 
 .navbar.scrolled .navbar-brand-logo {
-  filter: none; /* Volta à cor original do SVG */
+  filter: none; 
 }
 
 .navbar-brand-title {
@@ -37,23 +51,9 @@
 
 /* --- Links de Navegação (Desktop) --- */
 .navbar-desktop-links .navbar-link {
-  color: inherit; /* Herda a cor do pai (.navbar ou .navbar.scrolled) */
-  text-transform: none; /* Remove o 'uppercase' padrão do botão do MUI */
+  color: inherit; 
+  text-transform: none; 
   font-weight: 500;
-}
-
-/* --- Menu do Usuário --- */
-.navbar-user-menu {
-  flex-grow: 0;
-  margin-left: 16px;
-}
-
-.navbar-avatar-button {
-  padding: 0 !important;
-}
-
-.navbar-dropdown-menu {
-  margin-top: 45px;
 }
 
 /* --- Drawer (Menu Mobile) --- */
@@ -63,20 +63,24 @@
 }
 
 .drawer-title {
-  margin-top: 16px;
-  margin-bottom: 16px;
-  font-weight: bold;
-  color: #1976d2; /* Cor primária do tema */
+  font-family: 'Inter', sans-serif;
+  margin-top: 1rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+  padding: 1rem;
+  color: #ffffff; 
+  background-color: #33b9b9;
+
 }
 
 .drawer-nav-item span {
   font-size: 1rem;
   font-weight: 500;
-  color: #333;
+  color: #33b9b9;
 }
 
 .drawer-nav-icon {
-  color: #555;
+  color: #33b9b9;
 }
 
 /* --- Responsividade --- */
@@ -86,12 +90,32 @@
 }
 
 .navbar-brand-logo {
-  /* <-- ADICIONE A CLASSE DO LOGO AQUI */
   display: none;
 }
 
 .navbar-menu-icon {
   display: block;
+}
+
+/* 2. Regra para aumentar o ícone de hambúrguer (NOVO) */
+.navbar-menu-icon svg {
+  font-size: 2.5rem; /* Ajuste este valor conforme necessário */
+}
+
+
+.image-container-logo {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.logo-visus-ai {
+  display: flex;
+  width: 8rem;
 }
 
 /* A partir de 600px (breakpoint 'sm' do MUI) */
@@ -105,5 +129,9 @@
   }
   .navbar-menu-icon {
     display: none !important;
+  }
+  /* 3. Esconde o título de página móvel no desktop (NOVO) */
+  .navbar-page-title {
+    display: none;
   }
 }

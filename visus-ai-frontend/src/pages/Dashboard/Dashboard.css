@@ -1,0 +1,16 @@
+
+
+.dashboard-main-container {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.dashboard-welcome-title {
+     font-family: 'Inter', sans-serif;
+     font-size: 1rem;
+}

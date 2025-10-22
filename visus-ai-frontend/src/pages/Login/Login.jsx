@@ -15,6 +15,8 @@ const Login = ({onLogin}) => {
   const navigate = useNavigate();
 
   const handleSubmit = () => {
+
+    console.log('passei_nafuncao_desubmit');
     // Agora só chama a função onLogin.
     // O redirecionamento será feito no AppRoutes.
     onLogin();
@@ -53,7 +55,7 @@ const Login = ({onLogin}) => {
                 setPassword(e.target.value);
               }}
             />
-            <Link to="/passwordReset" className="password-reset-link">
+            <Link to="/accountRecovery" className="password-reset-link">
               Esqueceu sua senha?
             </Link>
             <input

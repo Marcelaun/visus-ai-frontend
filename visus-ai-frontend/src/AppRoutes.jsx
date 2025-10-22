@@ -1,6 +1,6 @@
 // src/AppRoutes.jsx (NOVO ARQUIVO)
 
-import {useState} from 'react';
+import {useState, useEffect, use} from 'react';
 import {Routes, Route, Navigate, useNavigate} from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Login from './pages/Login/Login';
@@ -14,11 +14,15 @@ import AccountRecovery from './pages/AccountRecovery/AccountRecovery';
 import EmailSendingSplashScreen from './pages/EmailSendingSplashScreen/EmailSendingSplashScreen';
 
 function AppRoutes() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const navigate = useNavigate(); // 1. Inicialize o hook useNavigate
 
   const handleLogin = () => {
+    console.log('isloggedin_antes_e_mudar: ');
+    console.log(isLoggedIn);
     setIsLoggedIn(true);
+    console.log('isloggedin_depois_de_mudar: ');
+    console.log(isLoggedIn);
     navigate('/dashboard'); // Também é bom ter isso aqui para redirecionar no login
   };
 
@@ -26,6 +30,10 @@ function AppRoutes() {
     setIsLoggedIn(false);
     navigate('/login'); // 2. AQUI ESTÁ A MÁGICA! Navega para /login no logout.
   };
+
+  useEffect(() => {
+    console.log(isLoggedIn);
+  }, [isLoggedIn]);
 
   return (
     <>
@@ -44,11 +52,9 @@ function AppRoutes() {
         <Route
           path="/dashboard"
           element={
-            <ProtectedRoute isLoggedIn={isLoggedIn}>
-              <PageLayout backgroundColor="#f0f4f8">
-                <Dashboard />
-              </PageLayout>
-            </ProtectedRoute>
+            <PageLayout backgroundColor="#ffffffff">
+              <Dashboard />
+            </PageLayout>
           }
         />
 
