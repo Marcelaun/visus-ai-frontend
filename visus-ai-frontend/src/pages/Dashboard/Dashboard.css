@@ -7,10 +7,130 @@
     padding: 1rem;
     align-items: center;
     justify-content: center;
+    gap: 2rem;
 }
 
 
 .dashboard-welcome-title {
      font-family: 'Inter', sans-serif;
      font-size: 1rem;
+}
+
+.dashboard-general-data-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1rem;
+
+}
+.dashboard-general-data-title-container, .dashboard-recent-analysis-data-title-container {
+    display: flex;
+    gap: 0.5rem;
+    text-align: start;
+    align-items: center;
+    width: 90vw;
+    margin-left: 0.5rem;
+    margin-bottom: 0.4rem;
+}
+
+.dashboard-general-data-title, .dashboard-recent-analysis-data-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+}
+
+.dashboard-general-data-icon, .dashboard-recent-analysis-data-icon {
+    width: 1.2rem;
+}
+
+
+.data-box-container {
+    display: flex;
+    gap: 0.4rem;
+    padding: 0.5rem;
+}
+
+.dashboard-data-box {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border: 1px solid #EDEDED;
+    padding: 1rem;
+    border-radius: 0.7rem;
+    justify-content: center;
+    align-items: center;
+    width: 31vw;
+}
+
+.dashboard-data-box-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+
+.dashboard-data-quantity {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-size: 1.6rem;
+
+}
+
+.dashboard-recent-analysis-data-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+    background-color: #FAFAFA;
+    width: 95vw;
+    border-radius: 0.7rem;
+}
+
+.dashboard-analysis-data-titles {
+    display: flex;
+    gap: 1.8rem;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0.8rem;
+}
+
+.dashboard-analysis-data-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    background-color: #fff;
+    padding: 1rem;
+    border-radius: 0.6rem;
+}
+
+.dashboard-analysis-data {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.dashboard-analysis-data-result {
+    text-align: center;
+    font-weight: 800;
+}
+
+.dashboard-analysis-data-status {
+    
+    padding: 0.3rem;
+    border-radius: 0.5rem;
+    font-weight: 800;
+}
+
+.dashboard-analisys-data-title {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 800;
+}
+
+.dashboard-analysis-data-name, .dashboard-analysis-data-day, .dashboard-analysis-data-result, .dashboard-analysis-data-status {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
 }
