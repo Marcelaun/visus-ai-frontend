@@ -7,6 +7,7 @@ import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
 import PageLayout from './components/PageLayout/PageLayout';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import PatientList from './pages/PatientList/PatientList';
 import PasswordReset from './pages/PasswordReset/PasswordReset';
 import RegisterProfessional from './pages/RegisterProfessional/RegisterProfessional';
 import AccountCreationSplashScreen from './pages/AccountCreationSplashScreen/AccountCreationSplashScreen';
@@ -99,6 +100,15 @@ function AppRoutes() {
           element={
             <PageLayout backgroundColor="#33B9B9">
               <EmailSendingSplashScreen />
+            </PageLayout>
+          }
+        />
+
+        <Route
+          path="/patientList"
+          element={
+            <PageLayout backgroundColor="#fff">
+              <PatientList />
             </PageLayout>
           }
         />

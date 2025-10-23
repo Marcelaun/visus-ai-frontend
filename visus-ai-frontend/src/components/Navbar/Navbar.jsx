@@ -31,7 +31,7 @@ import './Navbar.css';
 // 2. Adicionei 'path' a cada item para a lógica do título funcionar
 const navItems = [
   {text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard'},
-  {text: 'Pacientes', icon: <PeopleIcon />, path: '/pacientes'},
+  {text: 'Pacientes', icon: <PeopleIcon />, path: '/patientList'},
   {text: 'Novo Laudo', icon: <PostAddIcon />, path: '/novo-laudo'},
   {text: 'Perfil', icon: <PersonIcon />, path: '/perfil'},
   {text: 'Sair', icon: <LogoutIcon />, path: '/login'},

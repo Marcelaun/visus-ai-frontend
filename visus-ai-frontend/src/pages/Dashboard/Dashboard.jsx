@@ -1,17 +1,14 @@
 // src/pages/Dashboard/Dashboard.jsx
 
 import React from 'react';
-import {Typography} from '@mui/material';
 import './Dashboard.css';
 import DashboardGeneralIcon from '../../assets/dashboard-general.svg';
 import DashboardRecentAnalysisIcon from '../../assets/dashboard-recent-analysis-icon.svg';
+import DashboardStatisticsIcon from '../../assets/dashboard-statistics-icon.svg';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const Dashboard = () => {
   return (
-    // <div>
-    //
-    //   <Typography>Esta página só pode ser vista por usuários logados.</Typography>
-    // </div>
     <>
       <div className="dashboard-main-container">
         <h3 className="dashboard-welcome-title">Bem vindo Dr.(a) João Silva!</h3>
@@ -96,6 +93,96 @@ const Dashboard = () => {
                 >
                   Pendente
                 </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="dashboard-statistics-data-container">
+          <div className="dashboard-general-data-title-container">
+            <img
+              src={DashboardStatisticsIcon}
+              alt="Icone dashboard dados"
+              className="dashboard-general-data-icon"
+            />
+            <h4 className="dashboard-general-data-title">Estatísticas RD</h4>
+          </div>
+
+          <div className="dashboard-statistics-data-bg-main-container">
+            <div className="dashboard-statistics-data-bg-container">
+              <div className="dashboard-data-cases">
+                <div className="dashboard-data-cases-box">
+                  <div className="dashboard-data-cases-title-container">
+                    <h4 className="dashboard-data-cases-title">Normal (60%)</h4>
+                    <h4 className="dashboard-datacases-text">88 casos</h4>
+                  </div>
+                  <LinearProgress
+                    variant="determinate"
+                    value={60}
+                    // 1. A prop "color" foi removida daqui
+
+                    sx={{
+                      height: 12,
+                      borderRadius: 5,
+                      backgroundColor: '#f0f0f0', // Cor da trilha (fundo cinza)
+                      mb: 2,
+
+                      // 2. A mágica acontece aqui
+                      '& .MuiLinearProgress-bar': {
+                        borderRadius: 5,
+                        backgroundColor: '#35B22A', // <-- SUA COR PERSONALIZADA
+                      },
+                    }}
+                  />
+                </div>
+                <div className="dashboard-data-cases-box">
+                  <div className="dashboard-data-cases-title-container">
+                    <h4 className="dashboard-data-cases-title">RD Leve (25%)</h4>
+                    <h4 className="dashboard-datacases-text">37 casos</h4>
+                  </div>
+                  <LinearProgress
+                    variant="determinate"
+                    value={25}
+                    // 1. A prop "color" foi removida daqui
+
+                    sx={{
+                      height: 12,
+                      borderRadius: 5,
+                      backgroundColor: '#f0f0f0', // Cor da trilha (fundo cinza)
+                      mb: 2,
+
+                      // 2. A mágica acontece aqui
+                      '& .MuiLinearProgress-bar': {
+                        borderRadius: 5,
+                        backgroundColor: '#F39C12', // <-- SUA COR PERSONALIZADA
+                      },
+                    }}
+                  />
+                </div>
+                <div className="dashboard-data-cases-box">
+                  <div className="dashboard-data-cases-title-container">
+                    <h4 className="dashboard-data-cases-title">Normal (15%)</h4>
+                    <h4 className="dashboard-datacases-text">22 casos</h4>
+                  </div>
+                  <LinearProgress
+                    variant="determinate"
+                    value={15}
+                    // 1. A prop "color" foi removida daqui
+
+                    sx={{
+                      height: 12,
+                      borderRadius: 5,
+                      backgroundColor: '#f0f0f0', // Cor da trilha (fundo cinza)
+                      mb: 2,
+
+                      // 2. A mágica acontece aqui
+                      '& .MuiLinearProgress-bar': {
+                        borderRadius: 5,
+                        backgroundColor: '#E74C3C', // <-- SUA COR PERSONALIZADA
+                      },
+                    }}
+                  />
+                </div>
               </div>
             </div>
           </div>

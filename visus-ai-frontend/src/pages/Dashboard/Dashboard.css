@@ -114,7 +114,7 @@
 
 .dashboard-analysis-data-result {
     text-align: center;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .dashboard-analysis-data-status {
@@ -133,4 +133,32 @@
 .dashboard-analysis-data-name, .dashboard-analysis-data-day, .dashboard-analysis-data-result, .dashboard-analysis-data-status {
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
+}
+
+.dashboard-data-cases-title-container {
+    margin-bottom: 1rem;
+}
+
+.dashboard-statistics-data-bg-main-container {
+    background-color: #FAFAFA;
+    padding: 0.6rem;
+    border-radius: 0.8rem;
+}
+
+.dashboard-statistics-data-bg-container {
+    padding: 0.8rem;
+    background-color: #fff;
+    border-radius: 0.8rem;
+}
+
+.dashboard-data-cases-title-container {
+    display: flex;
+    justify-content: space-between;
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+.dashboard-data-cases-title, .dashboard-datacases-text {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
 }
