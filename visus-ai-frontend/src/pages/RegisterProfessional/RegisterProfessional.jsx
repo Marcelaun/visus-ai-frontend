@@ -123,7 +123,7 @@ const RegisterProfessional = () => {
             value="Criar Conta"
             className="register-professional-submit-btn"
             id="clickSubmitButton"
-            disabled={password !== confirmPassword ? 'disabled' : ''}
+            disabled={password !== confirmPassword}
           />
         </form>
 

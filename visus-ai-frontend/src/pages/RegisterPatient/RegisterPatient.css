@@ -64,4 +64,19 @@
    font-size: 1.2rem;
    margin-top: 1rem;
    font-weight: 800;
+   align-self: center;
+}
+
+.register-patient-input-box-comorbidities {
+  padding: 1.2rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #ebebeb;
+  height: 30vh;
+}
+
+
+
+.register-patient-input-box-comorbidities:focus {
+  outline: none;
 }
