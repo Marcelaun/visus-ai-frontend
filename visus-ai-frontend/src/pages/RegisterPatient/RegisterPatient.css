@@ -1,0 +1,67 @@
+.register-patient-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+  margin-top: 1.5rem;
+  padding: 0.5rem;
+}
+
+.register-patient-form-labels {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-left: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.register-patient-input-box::placeholder {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15rem;
+  color: #919494;
+}
+
+.register-patient-input-box {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #ebebeb;
+}
+
+.register-patient-input-box:focus {
+  outline: none;
+}
+
+
+.register-patient-submit-btn {
+  padding: 1rem;
+  border-radius: 1rem;
+  border: none;
+  background-color: #33b9b9;
+  color: #fff;
+  margin-top: 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  width: 90vw;
+  align-self: center;
+  transition: 0.2s ease;
+}
+
+.register-patient-submit-btn:active {
+  opacity: 0.5;
+}
+
+.register-patient-main-container {
+    margin-top: 5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.register-patient-main-title {
+    font-family: 'Inter', sans-serif;
+   font-size: 1.2rem;
+   margin-top: 1rem;
+   font-weight: 800;
+}
