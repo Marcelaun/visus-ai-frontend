@@ -37,7 +37,7 @@
   padding: 1rem;
   border-radius: 1rem;
   border: none;
-  background-color: #33b9b9;
+  background-color: #27AE60;
   color: #fff;
   margin-top: 2rem;
   font-family: 'Inter', sans-serif;
@@ -79,4 +79,15 @@
 
 .register-patient-input-box-comorbidities:focus {
   outline: none;
+}
+
+.register-patient-cancel-btn {
+  background-color: #6E706F;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 1rem;
+  color: #fff;
+  text-decoration: none;
+  margin-top: 1rem;
+
 }

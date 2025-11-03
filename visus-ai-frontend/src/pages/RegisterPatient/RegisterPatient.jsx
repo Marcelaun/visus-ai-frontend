@@ -222,11 +222,14 @@ const RegisterPatient = () => {
 
           <input
             type="submit"
-            value="Criar Conta"
+            value="Salvar Paciente"
             className="register-patient-submit-btn"
             id="clickSubmitButton"
             disabled={password !== confirmPassword}
           />
+          <Link to="/dashboard" className="register-patient-cancel-btn">
+            Cancelar
+          </Link>
         </form>
       </div>
     </>
