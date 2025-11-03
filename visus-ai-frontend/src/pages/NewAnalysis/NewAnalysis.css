@@ -1,0 +1,162 @@
+
+
+.new-analysis-input-box::placeholder {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.15rem;
+  color: #919494;
+}
+
+.new-analysis-input-box {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #ebebeb;
+}
+
+.new-analysis-input-box:focus {
+  outline: none;
+}
+
+
+.new-analysis-form-labels {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  margin-left: 0.7rem;
+  margin-top: 0.5rem;
+}
+
+.new-analysis-main-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.new-analysis-main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 5rem;
+}
+
+.patient-selection-container, .exam-data-container, .new-analysis-img-upload-container {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border: 1px solid #F0F0F0;
+    border-radius: 0.4rem;
+    width: 95vw;
+    gap: 0.4rem;
+}
+
+.patient-selection-title, .exam-data-selection-title, .new-analysis-selection-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  color: #39B9B9;
+  font-weight: 600;
+}
+
+
+.new-analysis-main-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.new-analysis-input-file {
+    display: none;
+}
+.new-analysis-upload-dropzone {
+    background-color: #F0F0F0;
+    padding: 2.5rem 1.2rem;
+    border-radius: 0.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.new-analysis-upload-dropzone:hover  {
+    background-color: #cfcfcf;
+}
+
+.new-analysis-upload-text-main {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.new-analysis-upload-text-sub {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: #9A9A9A;
+}
+
+.new-analysis-upload-icon-img {
+    width: 8rem;
+}
+
+.new-analysis-input-box-clinical-obs {
+  padding: 1.2rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: #ebebeb;
+  height: 30vh;
+}
+
+
+
+.new-analysis-input-box-clinical-obs:focus {
+  outline: none;
+}
+
+.new-analysis-cancel-btn {
+  background-color: #6E706F;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 1rem;
+  color: #fff;
+  text-decoration: none;
+  margin-top: 1rem;
+
+}
+
+.new-analysis-cancel-btn {
+  background-color: #6E706F;
+  padding: 1rem;
+  text-align: center;
+  border-radius: 1rem;
+  color: #fff;
+  text-decoration: none;
+  width: 90vw;
+
+}
+
+
+.new-analysis-submit-btn {
+  padding: 1rem;
+  border-radius: 1rem;
+  border: none;
+  background-color: #27AE60;
+  color: #fff;
+  margin-top: 2rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  width: 90vw;
+  align-self: center;
+  transition: 0.2s ease;
+}
+
+.new-analysis-submit-btn:active {
+  opacity: 0.5;
+}
