@@ -26,6 +26,7 @@ import PostAddIcon from '@mui/icons-material/PostAdd';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
+import BarChartIcon from '@mui/icons-material/BarChart';
 import LogoVisusAi from '../../assets/Logo.svg';
 
 import './Navbar.css';
@@ -36,6 +37,7 @@ const navItems = [
   {text: 'Pacientes', icon: <PeopleIcon />, path: '/patientList'},
   {text: 'Cadastrar Paciente', icon: <PeopleIconAdd />, path: '/patientRegister'},
   {text: 'Nova Análise', icon: <NoteAddIcon />, path: '/newAnalysis'},
+  {text: 'Resultado Análise', icon: <BarChartIcon />, path: '/analysisResult'},
   {text: 'Novo Laudo', icon: <PostAddIcon />, path: '/novo-laudo'},
   {text: 'Perfil', icon: <PersonIcon />, path: '/perfil'},
   {text: 'Sair', icon: <LogoutIcon />, path: '/login'},

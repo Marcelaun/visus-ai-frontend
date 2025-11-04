@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import PageLayout from './components/PageLayout/PageLayout';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import PatientList from './pages/PatientList/PatientList';
+import AnalysisResult from './pages/AnalysisResult/AnalysisResult';
 import RegisterPatient from './pages/RegisterPatient/RegisterPatient';
 import PasswordReset from './pages/PasswordReset/PasswordReset';
 import NewAnalysis from './pages/NewAnalysis/NewAnalysis';
@@ -129,6 +130,15 @@ function AppRoutes() {
           element={
             <PageLayout backgroundColor="#fff">
               <NewAnalysis />
+            </PageLayout>
+          }
+        />
+
+        <Route
+          path="/analysisResult"
+          element={
+            <PageLayout backgroundColor="#fff">
+              <AnalysisResult />
             </PageLayout>
           }
         />

@@ -1,0 +1,38 @@
+
+
+.analysis-result-main-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.analysis-result-pacient-title-container {
+    display: flex;
+    gap: 0.2rem;
+}
+
+.analysis-result-patient-data-label-container {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.analysis-result-patient-data-label-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.analysis-result-patient-data-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.analysis-result-patient-data {
+    display: flex;
+    gap: 1rem;
+    width: 95vw;
+    padding: 0.5rem;
+}
