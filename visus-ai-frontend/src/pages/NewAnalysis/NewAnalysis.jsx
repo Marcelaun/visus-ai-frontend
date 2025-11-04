@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import UploadIcon from '../../assets/new-analysis-upload-img-icon.svg';
 import {Link} from 'react-router-dom';
 
@@ -22,29 +22,40 @@ const NewAnalysis = () => {
       patientExaminedEye: patientExaminedEye,
       utilizedEquipment: utilizedEquipment,
       patientClinicalObs: patientClinicalObs,
-      files: selectedFiles,
+      // Vamos enviar apenas os objetos 'File', não as URLs de preview
+      files: selectedFiles.map((fileObj) => fileObj.file),
     };
 
     console.log(dadosFormatados);
   };
 
+  // 1. NOVO useEffect: Limpa as URLs da memória para evitar vazamentos
+  useEffect(() => {
+    // A função de limpeza (return) é chamada quando o componente
+    // é desmontado ou antes de o 'selectedFiles' ser atualizado.
+    return () => {
+      selectedFiles.forEach((fileObj) => URL.revokeObjectURL(fileObj.previewUrl));
+    };
+  }, [selectedFiles]); // Depende de 'selectedFiles'
+
   const handleFileChange = (e) => {
-    // Converte a FileList (que não é um array) para um array
     const newFiles = Array.from(e.target.files);
 
-    // Adiciona os novos arquivos à lista existente
-    setSelectedFiles((prevFiles) => [...prevFiles, ...newFiles]);
+    // Cria um novo array com o arquivo E a sua URL de preview
+    const newFilesWithUrls = newFiles.map((file) => ({
+      file: file,
+      previewUrl: URL.createObjectURL(file),
+    }));
 
-    // Limpa o valor do input para permitir selecionar o mesmo arquivo de novo
+    setSelectedFiles((prevFiles) => [...prevFiles, ...newFilesWithUrls]);
     e.target.value = null;
   };
 
-  // 3. NOVA FUNÇÃO: Remove um arquivo da lista pelo seu índice
+  // 3. FUNÇÃO ATUALIZADA: Apenas filtra o estado. O useEffect cuidará da limpeza.
   const handleRemoveFile = (indexToRemove) => {
     setSelectedFiles((prevFiles) => prevFiles.filter((_, index) => index !== indexToRemove));
   };
 
-  // Função para formatar o tamanho do arquivo (opcional, mas bom para UI)
   const formatFileSize = (bytes) => {
     if (bytes === 0) return '0 Bytes';
     const k = 1024;
@@ -125,7 +136,13 @@ const NewAnalysis = () => {
 
           <div className="new-analysis-img-upload-container">
             <h4 className="new-analysis-selection-title">Upload da Imagem</h4>
-            <input type="file" id="file-upload" className="new-analysis-input-file" />
+            <input
+              type="file"
+              id="file-upload"
+              onChange={handleFileChange}
+              className="new-analysis-input-file"
+              accept="image/jpeg, image/png, image/tiff"
+            />
             <label htmlFor="file-upload" className="new-analysis-upload-dropzone">
               <div className="new-analysis-upload-icon">
                 <img src={UploadIcon} alt="Ícone Upload" className="new-analysis-upload-icon-img" />
@@ -136,6 +153,36 @@ const NewAnalysis = () => {
                 Formatos aceitos: JPG, PNG, TIFF (máx. 10MB)
               </p>
             </label>
+
+            {/* 5. BLOCO ATUALIZADO: Renderiza a lista com a imagem */}
+            {selectedFiles.length > 0 && (
+              <div className="selected-files-list">
+                <h5 className="selected-files-title">Imagens Selecionadas:</h5>
+                {selectedFiles.map((fileObj, index) => (
+                  <div key={index} className="selected-file-item">
+                    {/* A nova imagem de preview */}
+                    <img
+                      src={fileObj.previewUrl}
+                      alt={fileObj.file.name}
+                      className="file-preview-img"
+                    />
+                    {/* Um wrapper para o texto */}
+                    <div className="file-info">
+                      <span className="file-name">{fileObj.file.name}</span>
+                      <span className="file-size">({formatFileSize(fileObj.file.size)})</span>
+                    </div>
+                    <button
+                      type="button"
+                      className="remove-file-btn"
+                      onClick={() => handleRemoveFile(index)}
+                    >
+                      &times;
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
+
             <label htmlFor="patient-clinical-obs" className="new-analysis-form-labels">
               Observações Clínicas (opcional)
             </label>
@@ -155,7 +202,7 @@ const NewAnalysis = () => {
             value="Iniciar Análise"
             className="new-analysis-submit-btn"
             id="clickSubmitButton"
-            disabled={!patient}
+            disabled={!patient || selectedFiles.length === 0}
           />
           <Link to="/dashboard" className="new-analysis-cancel-btn">
             Cancelar
