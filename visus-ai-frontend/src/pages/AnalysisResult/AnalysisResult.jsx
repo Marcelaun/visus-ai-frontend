@@ -11,13 +11,9 @@ const AnalysisResult = () => {
     <>
       <div className="analysis-result-main-container">
         <div className="analysis-result-patient-data-container">
-          <div className="analysis-result-patient-title-container">
-            <img
-              src={UserIcon}
-              alt="Ícone Usuário"
-              className="analysis-result-patient-title-icon"
-            />
-            <h4 className="analysis-restul-patient-data-title">Dados do Paciente</h4>
+          <div className="analysis-result-title-container">
+            <img src={UserIcon} alt="Ícone Usuário" className="analysis-result-title-icon" />
+            <h4 className="analysis-result-data-title">Dados do Paciente</h4>
           </div>
           <div className="analysis-result-patient-data">
             <div className="analysis-result-patient-data-sub">
@@ -49,6 +45,31 @@ const AnalysisResult = () => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="analysis-result-ai-results-main-container">
+          <div className="analysis-result-title-container">
+            <img src={ChartIcon} alt="Ícone Usuário" className="analysis-result-title-icon" />
+            <h4 className="analysis-result-data-title">Resultados da IA</h4>
+          </div>
+          <div className="analysis-result-ai-results-percentage-main-container">
+            <div className="analysis-result-ai-result-percentage-container">
+              <h3 className="analysis-result-ai-result-title">RETINOPATIA DIABÉTICA MODERADA</h3>
+              <div className="analysis-result-ai-confiability-percentage-container">
+                <h4 className="analysis-result-ai-result-confiability-title">Confiabilidade: </h4>
+                <p className="analysis-result-ai-result-percentage-value">78%</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="analysis-result-ai-automatic-recomendations-main-container">
+          <div className="analysis-result-title-container">
+            <img src={BulbIcon} alt="Ícone Lampada" className="analysis-result-title-icon" />
+            <h4 className="analysis-result-data-title">
+              Recomendações Automáticas (Sugestão da IA)
+            </h4>
+          </div>
+          <div className="analysis-result-ai-text-recomendations-container"></div>
         </div>
       </div>
     </>
