@@ -1,0 +1,94 @@
+
+
+.analysis-result-main-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 5rem;
+    justify-content: center;
+    align-items: center;
+}
+
+.analysis-result-title-container {
+    display: flex;
+    gap: 0.2rem;
+    margin-left: 0.8rem;
+    margin-bottom: 0.7rem;
+    margin-top: 1rem;
+}
+
+.analysis-result-patient-data-label-container {
+    display: flex;
+    gap: 0.4rem;
+}
+
+.analysis-result-patient-data-label-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.analysis-result-patient-data-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
+}
+
+.analysis-result-patient-data {
+    display: flex;
+    justify-content: space-around;
+    width: 98vw;
+    padding: 0.5rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 8px;
+}
+
+.analysis-result-ai-results-percentage-main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 8px;
+  width: 95vw;
+  padding: 0.6rem;
+  border-radius: 0.8rem;
+  
+
+}
+
+.analysis-result-ai-result-percentage-container {
+  border-radius: 0.8rem;
+  display: flex;
+  flex-direction: column;
+  background-color: #FEF9F0;
+  padding: 1rem;
+  width: 90vw;
+  align-items: center;
+}
+
+.analysis-result-ai-confiability-percentage-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 0.5rem;
+}
+
+.analysis-result-ai-result-percentage-value {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+}
+
+.analysis-result-ai-result-confiability-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 300;
+  margin-bottom: 0.3rem;
+}
+
+.analysis-result-ai-result-title {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  color: #F39C12;
+}
