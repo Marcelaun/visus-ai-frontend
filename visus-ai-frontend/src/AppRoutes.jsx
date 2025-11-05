@@ -1,6 +1,6 @@
 // src/AppRoutes.jsx (NOVO ARQUIVO)
 
-import {useState, useEffect, use} from 'react';
+import {useState, useEffect} from 'react';
 import {Routes, Route, Navigate, useNavigate} from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Login from './pages/Login/Login';
