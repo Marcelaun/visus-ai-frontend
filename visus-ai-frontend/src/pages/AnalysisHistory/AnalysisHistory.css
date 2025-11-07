@@ -1,0 +1,246 @@
+/* Importando uma fonte parecida com a da imagem */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- Container Principal --- */
+.analysis-history-main-container {
+  font-family: 'Inter', sans-serif;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+}
+
+/* --- Cabeçalho (Título) --- */
+.historico-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.header-icon {
+  width: 1.5rem;
+  color: #10b981; /* Um tom de verde/ciano */
+  margin-right: 0.75rem;
+}
+
+.historico-header h2 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* --- Controles (Busca e Filtro) --- */
+.historico-controls {
+  display: flex;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+}
+
+.search-bar-wrapper {
+  position: relative;
+  flex-grow: 1; /* Ocupa o máximo de espaço */
+}
+
+.search-icon {
+  position: absolute;
+  left: 0.875rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 1.25rem;
+  height: 1.25rem;
+  color: #9ca3af; /* Cinza do ícone */
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.875rem 1rem 0.875rem 3rem; /* Padding para o ícone */
+  font-size: 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.search-input::placeholder {
+  color: #9ca3af;
+}
+
+.filter-button {
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #fff;
+  background-color: #3b82f6; /* Azul do botão */
+  border: none;
+  border-radius: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.filter-button:hover {
+  background-color: #2563eb;
+}
+
+/* --- Tabela --- */
+.historico-table {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.table-header,
+.table-row {
+  display: grid;
+  /* Define as 6 colunas */
+  grid-template-columns: 2fr 1fr 1.5fr 1.5fr 1.5fr 1fr;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  gap: 1rem;
+}
+
+.table-header {
+  background-color: #f9fafb; /* Fundo cinza claro do cabeçalho */
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.header-cell {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #6b7280; /* Cinza escuro */
+  text-transform: uppercase;
+}
+
+.table-row {
+  border-bottom: 1px solid #f3f4f6; /* Linha sutil entre as linhas */
+}
+
+.table-row:last-child {
+  border-bottom: none;
+}
+
+/* --- Células Individuais --- */
+[class*="cell-"] {
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.cell-paciente strong {
+  font-weight: 600;
+  color: #111;
+}
+
+.cell-olho {
+  color: #555;
+}
+
+.resultado-text {
+  font-weight: 600;
+}
+
+.tipo-normal { color: #10b981; } /* Verde */
+.tipo-leve { color: #f59e0b; } /* Laranja/Amarelo */
+.tipo-moderada { color: #f59e0b; } /* Laranja (igual leve na foto) */
+.tipo-severa { color: #ef4444; } /* Vermelho (exemplo) */
+
+.status-tag {
+  display: inline-block;
+  padding: 0.35rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.status-liberado {
+  background-color: #d1fae5; /* Fundo verde claro */
+  color: #065f46; /* Texto verde escuro */
+}
+
+.status-analise {
+  background-color: #fee2e2; /* Fundo vermelho claro */
+  color: #991b1b; /* Texto vermelho escuro */
+}
+
+.action-button {
+  padding: 0.5rem 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #fff;
+  background-color: #3b82f6; /* Azul */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  width: 100%; /* Faz o botão preencher o espaço no desktop */
+}
+
+.action-button:hover {
+  background-color: #2563eb;
+}
+
+/* --- RESPONSIVIDADE (Celular) --- */
+@media (max-width: 900px) {
+  .historico-table {
+    box-shadow: none;
+    border-radius: 0;
+    background-color: transparent;
+  }
+  
+  /* Esconde o cabeçalho da tabela */
+  .table-header {
+    display: none;
+  }
+  
+  /* Transforma a linha em um card */
+  .table-row {
+    display: block; /* Empilha as células */
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    margin-bottom: 1rem;
+    padding: 1rem;
+  }
+
+  /* Remove as colunas de grid */
+  [class*="cell-"] {
+    display: flex;
+    justify-content: space-between; /* Alinha o label e o valor */
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  
+  .table-row div:last-child {
+    border-bottom: none;
+  }
+
+  /* Adiciona o "Label" antes do conteúdo */
+  [class*="cell-"]::before {
+    content: attr(data-label); /* Puxa o texto do atributo 'data-label' */
+    font-weight: 600;
+    color: #6b7280;
+    margin-right: 1rem;
+  }
+
+  /* Ajustes finais para o modo card */
+  .cell-paciente {
+    font-size: 1.1rem;
+    border-bottom: none;
+    padding-bottom: 0.5rem;
+  }
+  .cell-paciente::before {
+    display: none; /* Não precisa de label para o nome principal */
+  }
+  .cell-paciente strong {
+    font-size: 1.2rem;
+  }
+
+  .cell-acoes {
+    padding-top: 1rem;
+  }
+  .cell-acoes::before {
+    display: none; /* Não precisa de label para o botão */
+  }
+  .action-button {
+    width: auto; /* Deixa o botão com tamanho normal */
+  }
+}

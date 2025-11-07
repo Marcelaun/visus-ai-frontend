@@ -28,10 +28,11 @@
   left: 50%;
   transform: translateX(-50%);
   color: inherit;
-  font-weight: 500;
   /* Garante que ele apareça em telas pequenas */
   display: block; 
   font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 400;
 }
 
 /* --- Marca (Logo e Título) --- */

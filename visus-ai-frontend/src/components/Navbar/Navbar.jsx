@@ -21,10 +21,12 @@ import {
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
+import WorkHistory from '@mui/icons-material/WorkHistory';
 import PeopleIconAdd from '@mui/icons-material/GroupAdd';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
+import AdminPanelIcon from '@mui/icons-material/AdminPanelSettings';
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LogoVisusAi from '../../assets/Logo.svg';
@@ -38,7 +40,9 @@ const navItems = [
   {text: 'Cadastrar Paciente', icon: <PeopleIconAdd />, path: '/patientRegister'},
   {text: 'Nova Análise', icon: <NoteAddIcon />, path: '/newAnalysis'},
   {text: 'Resultado Análise', icon: <BarChartIcon />, path: '/analysisResult'},
+  {text: 'Histórico Análises', icon: <WorkHistory />, path: '/analysisHistory'},
   {text: 'Novo Laudo', icon: <PostAddIcon />, path: '/novo-laudo'},
+  {text: 'Painel Administrativo', icon: <AdminPanelIcon />, path: '/adminPanel'},
   {text: 'Perfil', icon: <PersonIcon />, path: '/perfil'},
   {text: 'Sair', icon: <LogoutIcon />, path: '/login'},
 ];
@@ -115,7 +119,7 @@ const Navbar = () => {
           </IconButton>
 
           {/* 6. Título dinâmico para mobile */}
-          <Typography variant="h6" component="div" className="navbar-page-title">
+          <Typography variant="h6" style={{fontSize: 18, fontFamily: 'Inter'}} component="text" className="navbar-page-title">
             {pageTitle}
           </Typography>
 

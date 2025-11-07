@@ -5,9 +5,11 @@ import {Routes, Route, Navigate, useNavigate} from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
+import AdminPanel from './pages/AdminPanel/AdminPanel';
 import PageLayout from './components/PageLayout/PageLayout';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import PatientList from './pages/PatientList/PatientList';
+import AnalysisHistory from './pages/AnalysisHistory/AnalysisHistory';
 import AnalysisResult from './pages/AnalysisResult/AnalysisResult';
 import RegisterPatient from './pages/RegisterPatient/RegisterPatient';
 import PasswordReset from './pages/PasswordReset/PasswordReset';
@@ -139,6 +141,24 @@ function AppRoutes() {
           element={
             <PageLayout backgroundColor="#fff">
               <AnalysisResult />
+            </PageLayout>
+          }
+        />
+
+        <Route
+          path="/analysisHistory"
+          element={
+            <PageLayout backgroundColor="#fff">
+              <AnalysisHistory />
+            </PageLayout>
+          }
+        />
+
+         <Route
+          path="/adminPanel"
+          element={
+            <PageLayout backgroundColor="#fff">
+              <AdminPanel/>
             </PageLayout>
           }
         />
