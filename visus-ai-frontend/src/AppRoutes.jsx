@@ -6,6 +6,7 @@ import Navbar from './components/Navbar/Navbar';
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
 import AdminPanel from './pages/AdminPanel/AdminPanel';
+import Profile from './pages/Profile/Profile';
 import PageLayout from './components/PageLayout/PageLayout';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import PatientList from './pages/PatientList/PatientList';
@@ -162,6 +163,16 @@ function AppRoutes() {
             </PageLayout>
           }
         />
+
+        <Route
+          path="/profile"
+          element={
+            <PageLayout backgroundColor="#fff">
+              <Profile/>
+            </PageLayout>
+          }
+        />
+
 
         <Route path="/" element={<Navigate to={isLoggedIn ? '/dashboard' : '/login'} />} />
       </Routes>

@@ -105,7 +105,7 @@ const NewAnalysis = () => {
           <div className="exam-data-container">
             <h4 className="exam-data-selection-title">Dados do Exame</h4>
             <label htmlFor="patient-examined-eye" className="new-analysis-form-labels">
-              Paciente *
+              Olho Examinado *
             </label>
             <select
               id="patient-examined-eye"
@@ -176,7 +176,7 @@ const NewAnalysis = () => {
                       className="remove-file-btn"
                       onClick={() => handleRemoveFile(index)}
                     >
-                      &times;
+                      Apagar Imagem &times;
                     </button>
                   </div>
                 ))}

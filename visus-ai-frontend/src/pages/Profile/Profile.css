@@ -1,0 +1,116 @@
+/* Importando a fonte padrão que estamos usando */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+.perfil-container {
+  font-family: 'Inter', sans-serif;
+  background-color: #f8f9fa; /* Fundo levemente cinza */
+  padding: 1.5rem;
+  /* Garante que o conteúdo não fique preso na navbar */
+  padding-top: 80px; 
+  min-height: 100vh;
+}
+
+/* --- Cabeçalho (Título) --- */
+.perfil-header {
+  display: flex;
+  align-items: center;
+  max-width: 800px; /* Limita a largura */
+  margin: 0 auto 1.5rem auto;
+}
+
+.perfil-header-icon {
+  width: 2rem; /* 32px */
+  height: 2rem;
+  color: #33b9b9; /* Cor do seu tema */
+  margin-right: 0.75rem;
+}
+
+.perfil-header h2 {
+  font-size: 1.75rem; /* 28px */
+  font-weight: 600;
+  color: #333;
+}
+
+/* --- Cartão Principal --- */
+.perfil-card {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.perfil-section {
+  margin-bottom: 2rem;
+}
+
+.perfil-section-title {
+  font-size: 1.1rem; /* 17.6px */
+  font-weight: 600;
+  color: #333;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* --- Linha de Informação (Label + Valor) --- */
+.info-row {
+  margin-bottom: 1.25rem;
+}
+
+.info-row:last-child {
+  margin-bottom: 0;
+}
+
+.info-label {
+  display: block;
+  font-size: 0.875rem; /* 14px */
+  font-weight: 500;
+  color: #6b7280; /* Cinza */
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+}
+
+.info-value {
+  display: block;
+  font-size: 1rem; /* 16px */
+  font-weight: 500;
+  color: #111;
+}
+
+/* --- Botões de Ação --- */
+.perfil-actions {
+  display: flex;
+  flex-wrap: wrap; /* Para telas pequenas */
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.perfil-button {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.perfil-button:hover {
+  opacity: 0.85;
+}
+
+/* Botão Primário (cor do tema) */
+.btn-primary {
+  background-color: #33b9b9;
+  color: #ffffff;
+}
+
+/* Botão Secundário (cinza) */
+.btn-secondary {
+  background-color: #e5e7eb;
+  color: #333;
+}

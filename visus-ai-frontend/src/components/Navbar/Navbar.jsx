@@ -2,7 +2,7 @@
 
 import React, {useState, useEffect} from 'react';
 // 1. Importe o useLocation para detectar a rota
-import {useLocation} from 'react-router-dom';
+import {useLocation, Link, useNavigate} from 'react-router-dom';
 import {
   AppBar,
   Toolbar,
@@ -41,9 +41,9 @@ const navItems = [
   {text: 'Nova Análise', icon: <NoteAddIcon />, path: '/newAnalysis'},
   {text: 'Resultado Análise', icon: <BarChartIcon />, path: '/analysisResult'},
   {text: 'Histórico Análises', icon: <WorkHistory />, path: '/analysisHistory'},
-  {text: 'Novo Laudo', icon: <PostAddIcon />, path: '/novo-laudo'},
+  // {text: 'Novo Laudo', icon: <PostAddIcon />, path: '/novo-laudo'},
   {text: 'Painel Administrativo', icon: <AdminPanelIcon />, path: '/adminPanel'},
-  {text: 'Perfil', icon: <PersonIcon />, path: '/perfil'},
+  {text: 'Perfil', icon: <PersonIcon />, path: '/profile'},
   {text: 'Sair', icon: <LogoutIcon />, path: '/login'},
 ];
 
@@ -56,6 +56,11 @@ const Navbar = () => {
   const [pageTitle, setPageTitle] = useState('');
   // 4. Obter o objeto de localização
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleNavigation = (navPath) => {
+    navigate(navPath);
+  }
 
   // 5. Efeito que roda toda vez que a rota (location) muda
   useEffect(() => {
@@ -91,9 +96,10 @@ const Navbar = () => {
       <List>
         {navItems.map((item) => (
           <ListItem key={item.text} disablePadding>
-            <ListItemButton>
+            <ListItemButton onClick={() => handleNavigation(item.path)}>
               {' '}
               {/* Lembre-se de adicionar <Link to={item.path}> aqui */}
+              
               <ListItemIcon className="drawer-nav-icon">{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} className="drawer-nav-item" />
             </ListItemButton>
@@ -119,7 +125,7 @@ const Navbar = () => {
           </IconButton>
 
           {/* 6. Título dinâmico para mobile */}
-          <Typography variant="h6" style={{fontSize: 18, fontFamily: 'Inter'}} component="text" className="navbar-page-title">
+          <Typography variant="h6" style={{fontSize: 18, fontFamily: 'Inter'}} component="div" className="navbar-page-title">
             {pageTitle}
           </Typography>
 
@@ -131,9 +137,10 @@ const Navbar = () => {
 
           <Box className="navbar-desktop-links">
             {navItems.map((item) => (
-              <Button key={item.text} className="navbar-link">
+              <Button onClick={() => handleNavigation(item.path)} key={item.text} className="navbar-link">
                 {' '}
                 {/* Lembre-se de adicionar <Link to={item.path}> aqui */}
+                
                 {item.text}
               </Button>
             ))}
