@@ -1,4 +1,5 @@
-import React from 'react';
+import React, {useState} from 'react';
+import {Link} from 'react-router-dom';
 import AnalysisResultDocIcon from '../../assets/analysis-result-doc-icon.svg';
 import BulbIcon from '../../assets/Bulb.svg';
 import ChartIcon from '../../assets/chart-bar-vertical.svg';
@@ -7,6 +8,25 @@ import UserIcon from '../../assets/user-icon.svg';
 import './AnalysisResult.css';
 
 const AnalysisResult = () => {
+
+  const [professionalValidation, setProfessionalValidation] = useState('');
+
+  const handleSubmit = (e) => {
+    // Agora só chama a função onLogin.
+    // O redirecionamento será feito no AppRoutes.
+    e.preventDefault();
+    const dadosFormatados = {
+      professionalValidation: professionalValidation
+
+    };
+
+    console.log(dadosFormatados);
+  };
+
+  const handleSketchSave = () => {
+    console.log('Rascunho Salvo');
+  }
+
   return (
     <>
       <div className="analysis-result-main-container">
@@ -69,7 +89,52 @@ const AnalysisResult = () => {
               Recomendações Automáticas (Sugestão da IA)
             </h4>
           </div>
-          <div className="analysis-result-ai-text-recomendations-container"></div>
+          <div className="analysis-result-ai-text-recomendations-container">
+            <div className="analysis-result-ai-text-suggestion-container">
+              <h4 className="analysis-result-ai-text-suggestion-title">SUGESTÃO: ENCAMINHAMENTO PARA OFTALMOLOGISTA</h4>
+              <p className="analysis-result-ai-text-suggestion-text">
+                Com base na detecção, sugere-se: Agendamento com especialista em retina (até 30 dias), exames complementares (Angiofluoresceinografia, OCT), controle glicêmico rigoroso e reavaliação a cada 3-4 meses.
+              </p>
+            </div>
+            <div className="analysis-result-ai-warning-container">
+              <h3 className="analysis-result-ai-warning-title">IMPORTANTE!!: </h3>
+              <p className="analysis-result-ai-warning-text">Este Resultado é uma triagem automatizada e não substitui a avaliação médica. o profissional deve validar o resultado e definir a conduta final.</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="analysis-result-professional-conduct-main-container">
+          <div className="analysis-result-title-container">
+            <img src={AnalysisResultDocIcon} alt="Ícone Lampada" className="analysis-result-title-icon" />
+            <h4 className="analysis-result-data-title">
+              Conduta Final do Profissional
+            </h4>
+          </div>
+          <div className="analysis-result-professional-conduct-text-area-container">
+            <form action="" onSubmit={handleSubmit} className="analysis-result-professional-conduct-form">
+              <label htmlFor="professional-validation" className="analysis-result-professional-validation-form-labels">
+            Valide a Sugestão da IA e descreva a recomendação final para o paciente.
+          </label>
+          <textarea
+            id="professional-validation"
+            className="analysis-result-professional-validation-input-box"
+            placeholder="EX: Encaminho o paciente para avaliação com oftalmologista. Recomendo agendamento prioritário. "
+            // O 'required' não é necessário se o label não tem '*'
+            // required
+            value={professionalValidation} // Vincule ao novo estado
+            onChange={(e) => setProfessionalValidation(e.target.value)} // Use o novo 'setter'
+          />
+
+          <input
+                      type="submit"
+                      value="Aprovar e Liberar Laudo"
+                      className="analysis-result-professional-submit-btn"
+                      id="clickSubmitButton"
+                      disabled={!professionalValidation}
+                    />
+                    <button onClick={handleSketchSave} className="analysis-result-professional-validation-save-sketch-btn">Salvar Rascunho</button>
+            </form>
+          </div>
         </div>
       </div>
     </>
