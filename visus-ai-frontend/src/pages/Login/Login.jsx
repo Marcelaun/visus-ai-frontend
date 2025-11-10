@@ -1,6 +1,7 @@
 import './Login.css';
 import Navbar from '../../components/Navbar/Navbar';
 import LogoVisus from '../../assets/Logo.svg';
+import Footer from '../../components/Footer/Footer';
 import {useNavigate, Link} from 'react-router-dom';
 import {useState} from 'react';
 
@@ -14,9 +15,14 @@ const Login = ({onLogin}) => {
   const [password, setPassword] = useState();
   const navigate = useNavigate();
 
-  const handleSubmit = () => {
-
+  const handleSubmit = (e) => {
+    e.preventDefault();
     console.log('passei_nafuncao_desubmit');
+    console.log({
+      email: email,
+      password: password,
+
+    });
     // Agora só chama a função onLogin.
     // O redirecionamento será feito no AppRoutes.
     onLogin();
@@ -75,6 +81,7 @@ const Login = ({onLogin}) => {
           </div>
         </div>
       </div>
+      
     </>
   );
 };

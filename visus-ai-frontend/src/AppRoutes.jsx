@@ -13,6 +13,7 @@ import PatientList from './pages/PatientList/PatientList';
 import AnalysisHistory from './pages/AnalysisHistory/AnalysisHistory';
 import AnalysisResult from './pages/AnalysisResult/AnalysisResult';
 import RegisterPatient from './pages/RegisterPatient/RegisterPatient';
+import Footer from './components/Footer/Footer';
 import PasswordReset from './pages/PasswordReset/PasswordReset';
 import NewAnalysis from './pages/NewAnalysis/NewAnalysis';
 import RegisterProfessional from './pages/RegisterProfessional/RegisterProfessional';
@@ -43,20 +44,25 @@ function AppRoutes() {
   }, [isLoggedIn]);
 
   return (
-    <>
+
+    // 2. SUBSTITUA O FRAGMENT (<>) PELO CONTAINER PRINCIPAL
+    <div className="app-container">
       {isLoggedIn && <Navbar onLogout={handleLogout} />}
 
-      <Routes>
-        <Route
-          path="/login"
-          element={
-            <PageLayout backgroundColor="#ffffffff">
-              <Login onLogin={handleLogin} />
-            </PageLayout>
-          }
-        />
-
-        <Route
+      {/* 3. ADICIONE O WRAPPER DE CONTEÚDO */}
+      <main className="content-wrap">
+        <Routes>
+          {/* Todas as suas rotas <Route ... /> vão aqui dentro */}
+          <Route
+            path="/login"
+            element={
+              <PageLayout backgroundColor="#ffffffff">
+                <Login onLogin={handleLogin} />
+              </PageLayout>
+            }
+          />
+          {/* ... (todas as suas outras rotas) ... */}
+          <Route
           path="/dashboard"
           element={
             <PageLayout backgroundColor="#ffffffff">
@@ -175,8 +181,15 @@ function AppRoutes() {
 
 
         <Route path="/" element={<Navigate to={isLoggedIn ? '/dashboard' : '/login'} />} />
-      </Routes>
-    </>
+         
+        </Routes>
+      </main>
+
+      {/* 4. ADICIONE O FOOTER FORA DO <main> */}
+      <Footer /> 
+    </div>
+
+    
   );
 }
 

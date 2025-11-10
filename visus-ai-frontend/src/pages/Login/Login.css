@@ -123,3 +123,15 @@
   text-decoration: none;
   border-radius: 1rem;
 }
+
+
+@media (min-width: 901px) {
+  /* .login-main-container {
+    width: 80vw;
+    height: 80vh;
+  } */
+
+  .login-create-account-link {
+    width: 30vw;
+  }
+}

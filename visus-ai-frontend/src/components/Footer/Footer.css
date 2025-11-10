@@ -1,0 +1,64 @@
+.footer-main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+ 
+  /* 1. Define este container como a "base" para o z-index */
+  position: relative;
+
+  /* 3. Adiciona um padding e altura para dar espaço */
+ 
+  width: 100%;
+ 
+  overflow: hidden; /* Garante que o SVG não "vaze" */
+}
+
+/* 4. Estiliza o SVG para ser o fundo */
+.footer-svg-background {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  z-index: 0; /* Coloca o SVG atrás de tudo */
+  line-height: 0; /* Remove espaço em branco do SVG */
+ 
+}
+
+.footer-info-main-container {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #f0f0f0;
+  
+  width: 90vw;
+  max-width: 800px; /* Adicionado um max-width */
+  background-color: #fff;
+  border-radius: 1rem;
+  
+  
+  /* 5. Coloca o conteúdo na FRENTE do SVG */
+  position: relative;
+  z-index: 1;
+  /* ADICIONE ISTO para o card "flutuar" sobre a onda */
+  margin-top: 6rem;
+  margin-bottom: 2rem; /* Adiciona um respiro na parte de baixo */
+  
+  /* 6. (Opcional) Adiciona uma sombra para destacar */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.footer-logo {
+  width: 11rem; /* Aumentei um pouco o tamanho */
+  max-width: 40%;
+  align-self: center; /* Centraliza o logo no card */
+  margin-bottom: 1.5rem; /* Espaço abaixo do logo */
+}
+
+/* (Adicionado) Estilo para o texto de aviso */
+.footer-platform-advise-text {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: #555;
+  line-height: 1.6;
+}
