@@ -5,6 +5,7 @@
   gap: 2rem;
   justify-content: space-between;
   align-items: center;
+  background-color: #33B9B9;
 }
 
 .account-creation-success-splash-message-container {
@@ -65,7 +66,7 @@
   .account-creation-success-main-container {
     height: 100vh;
     justify-content: center;
-    background-color: #33B9B9;
+    background: linear-gradient(to right, #88D8B0 25%, #33B9B9 100%);
   }
 
   .account-creation-success-splash-message-container {

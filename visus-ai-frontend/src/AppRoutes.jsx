@@ -15,6 +15,7 @@ import AnalysisResult from './pages/AnalysisResult/AnalysisResult';
 import RegisterPatient from './pages/RegisterPatient/RegisterPatient';
 import Footer from './components/Footer/Footer';
 import PasswordReset from './pages/PasswordReset/PasswordReset';
+import PatientResult from './pages/PatientAnalysisResult/PatientAnalysisResult';
 import NewAnalysis from './pages/NewAnalysis/NewAnalysis';
 import RegisterProfessional from './pages/RegisterProfessional/RegisterProfessional';
 import AccountCreationSplashScreen from './pages/AccountCreationSplashScreen/AccountCreationSplashScreen';
@@ -22,7 +23,7 @@ import AccountRecovery from './pages/AccountRecovery/AccountRecovery';
 import EmailSendingSplashScreen from './pages/EmailSendingSplashScreen/EmailSendingSplashScreen';
 
 function AppRoutes() {
-  const [isLoggedIn, setIsLoggedIn] = useState('');
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
   const navigate = useNavigate(); // 1. Inicialize o hook useNavigate
 
   const handleLogin = () => {
@@ -174,6 +175,15 @@ function AppRoutes() {
             element={
               <PageLayout backgroundColor="#fff">
                 <Profile />
+              </PageLayout>
+            }
+          />
+
+          <Route
+            path="/patientAnalysisResult"
+            element={
+              <PageLayout backgroundColor="#fff">
+                <PatientResult />
               </PageLayout>
             }
           />

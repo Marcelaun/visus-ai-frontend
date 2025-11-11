@@ -1,22 +1,41 @@
-
-
-.new-analysis-input-box::placeholder {
+/* --- Estilos Mobile-First (Limpado) --- */
+.new-analysis-input-box::placeholder,
+.new-analysis-input-box-clinical-obs::placeholder {
   font-family: 'Inter', sans-serif;
-  font-size: 1.15rem;
+  font-size: 1rem; /* Ajustado para padrão */
   color: #919494;
 }
 
-.new-analysis-input-box {
+.new-analysis-input-box,
+select.new-analysis-input-box { /* Aplicado a select também */
   padding: 1rem;
   border-radius: 0.5rem;
   border: none;
   background-color: #ebebeb;
+  font-family: inherit;
+  font-size: 1rem;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 
-.new-analysis-input-box:focus {
+/* Seta para o <select> (para mobile) */
+select.new-analysis-input-box {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke-width='2' stroke='%236b7280'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' /%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-size: 1rem;
+  padding-right: 3rem; 
+}
+/* Cor do placeholder "Selecione..." */
+select.new-analysis-input-box:invalid {
+  color: #919494;
+}
+
+.new-analysis-input-box:focus,
+.new-analysis-input-box-clinical-obs:focus {
   outline: none;
 }
-
 
 .new-analysis-form-labels {
   font-family: 'Inter', sans-serif;
@@ -33,59 +52,67 @@
 }
 
 .new-analysis-main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 5rem;
+  padding: 1rem; /* Adicionado padding */
+  width: 100%;
+  box-sizing: border-box; /* Garante que o padding não quebre o layout */
 }
 
-.patient-selection-container, .exam-data-container, .new-analysis-img-upload-container {
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    border: 1px solid #F0F0F0;
-    border-radius: 0.4rem;
-    width: 95vw;
-    gap: 0.4rem;
+.patient-selection-container, 
+.exam-data-container, 
+.new-analysis-img-upload-container {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border: 1px solid #F0F0F0;
+  border-radius: 0.4rem;
+  width: 95vw;
+  gap: 0.4rem;
 }
 
-.patient-selection-title, .exam-data-selection-title, .new-analysis-selection-title {
+.patient-selection-title, 
+.exam-data-selection-title, 
+.new-analysis-selection-title {
   font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
   color: #39B9B9;
   font-weight: 600;
 }
 
-
 .new-analysis-main-form-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .new-analysis-input-file {
-    display: none;
-}
-.new-analysis-upload-dropzone {
-    background-color: #F0F0F0;
-    padding: 2.5rem 1.2rem;
-    border-radius: 0.7rem;
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
+  display: none;
 }
 
-.new-analysis-upload-dropzone:hover  {
-    background-color: #cfcfcf;
+.new-analysis-upload-dropzone {
+  background-color: #F0F0F0;
+  padding: 2.5rem 1.2rem;
+  border-radius: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.new-analysis-upload-dropzone:hover {
+  background-color: #cfcfcf;
 }
 
 .new-analysis-upload-text-main {
@@ -93,6 +120,11 @@
   font-size: 1.1rem;
   font-weight: 800;
   margin: 0;
+}
+
+.new-analysis-cancel-btn:hover {
+  opacity: 0.7;
+  cursor: pointer;
 }
 
 .new-analysis-upload-text-sub {
@@ -103,7 +135,7 @@
 }
 
 .new-analysis-upload-icon-img {
-    width: 8rem;
+  width: 8rem;
 }
 
 .new-analysis-input-box-clinical-obs {
@@ -112,23 +144,22 @@
   border: none;
   background-color: #ebebeb;
   height: 30vh;
+  font-family: inherit; /* Garante que a fonte seja herdada */
+  font-size: 1rem;
 }
-
-
 
 .new-analysis-input-box-clinical-obs:focus {
   outline: none;
 }
 
-.new-analysis-cancel-btn {
-  background-color: #6E706F;
-  padding: 1rem;
-  text-align: center;
-  border-radius: 1rem;
-  color: #fff;
-  text-decoration: none;
+/* Container dos Botões (novo, para mobile) */
+.new-analysis-form-actions {
+  display: flex;
+  flex-direction: column;
+  width: 95vw;
+  align-items: center;
+  gap: 1rem;
   margin-top: 1rem;
-
 }
 
 .new-analysis-cancel-btn {
@@ -138,10 +169,12 @@
   border-radius: 1rem;
   color: #fff;
   text-decoration: none;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
   width: 90vw;
-
+  margin-top: 0; /* Removido */
+  transition: opacity 0.2s ease;
 }
-
 
 .new-analysis-submit-btn {
   padding: 1rem;
@@ -149,63 +182,188 @@
   border: none;
   background-color: #27AE60;
   color: #fff;
-  margin-top: 2rem;
   font-family: 'Inter', sans-serif;
   font-size: 1.1rem;
   width: 90vw;
   align-self: center;
   transition: 0.2s ease;
+  cursor: pointer;
+}
+.new-analysis-submit-btn:disabled {
+  background-color: #469b69;
+  cursor: not-allowed;
+  opacity: 0.7;
 }
 
-.new-analysis-submit-btn:active {
+.new-analysis-submit-btn:active,
+.new-analysis-cancel-btn:active {
   opacity: 0.5;
 }
 
-.remove-file-btn {
-  padding: 0.5rem;
-  width: 45vw;
-  background-color: #ae2b27;
-  border: none;
-  border-radius: 0.5rem;
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  margin-top: 1rem;
-  margin-bottom: 1rem;
-}
-
-.selected-file-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid #f7f7f7;
-  padding: 0.5rem;
-  border-radius: 0.8rem;
-}
-
-.file-preview-img {
-  border-radius: 0.8rem;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.file-name, .file-size {
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  
-}
-
-.selected-files-title {
-  align-self: center;
-  font-family: 'Inter', sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
+/* --- Lista de Uploads (Mobile) --- */
 .selected-files-list {
   display: flex;
   flex-direction: column;
+  gap: 1rem; /* Espaço entre os itens */
+}
+.selected-files-title {
+  align-self: flex-start; /* Alinhado à esquerda */
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.selected-file-item {
+  display: flex; /* Mudado para 'flex' */
+  flex-direction: row; /* Horizontal */
+  align-items: center;
+  border: 1px solid #f0f0f0;
+  padding: 0.75rem;
+  border-radius: 0.8rem;
+}
+.file-preview-img {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 0.5rem;
+  margin-right: 12px;
+  flex-shrink: 0;
+}
+.file-info {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  min-width: 0;
+}
+.file-name, .file-size {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.file-size {
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+.remove-file-btn {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ae2b27;
+  cursor: pointer;
+  padding: 0 0.5rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+
+/* ===============================================
+   INÍCIO DO CÓDIGO DESKTOP 
+===============================================
+*/
+@media (min-width: 901px) {
+  /* 1. Transforma o container em um "card" */
+  .new-analysis-main-container {
+    max-width: 1000px;
+    margin: 6rem auto 4rem auto;
+    padding: 2.5rem 3rem;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  }
+
+  .new-analysis-main-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* 2. Define o layout do formulário em 2 colunas */
+  .new-analysis-main-form-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Duas colunas iguais */
+    gap: 1.5rem 2.5rem; /* Espaço de linha e coluna */
+    width: 100%;
+  }
+  
+  /* 3. Define onde cada seção fica no grid */
+  .patient-selection-container {
+    grid-column: 1 / 2; /* Coluna 1 */
+  }
+  .exam-data-container {
+    grid-column: 2 / 3; /* Coluna 2 */
+  }
+  .new-analysis-img-upload-container {
+    grid-column: 1 / -1; /* Ocupa as 2 colunas */
+    margin-top: 1rem;
+  }
+  .new-analysis-form-actions {
+    grid-column: 1 / -1; /* Ocupa as 2 colunas */
+  }
+
+  /* 4. Remove larguras de 95vw e bordas desnecessárias */
+  .patient-selection-container,
+  .exam-data-container,
+  .new-analysis-img-upload-container {
+    width: 100%;
+    border: none;
+    padding: 0;
+  }
+
+  .new-analysis-input-box-clinical-obs {
+    height: 180px; /* Altura fixa em vez de 'vh' */
+  }
+
+  /* 5. Estiliza a lista de uploads para ser um grid */
+  .selected-files-list {
+    display: grid;
+    /* Cria colunas automáticas de 180px */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 1rem;
+  }
+  .selected-file-item {
+    /* Transforma cada item em um card vertical */
+    flex-direction: column;
+    padding: 1rem;
+    border: 1px solid #eee;
+  }
+  .file-preview-img {
+    width: 100%;
+    height: 100px;
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+  .file-info {
+    align-items: center;
+    text-align: center;
+  }
+  .remove-file-btn {
+    margin: 10px 0 0 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #ae2b27;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+  }
+
+  /* 6. Estiliza os botões de ação */
+  .new-analysis-form-actions {
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #f0f0f0;
+  }
+  .new-analysis-submit-btn,
+  .new-analysis-cancel-btn {
+    width: auto;
+    max-width: 250px; /* Limita a largura */
+    flex-grow: 1; /* Faz ocuparem espaço */
+  }
 }

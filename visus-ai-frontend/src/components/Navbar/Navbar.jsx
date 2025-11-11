@@ -40,6 +40,7 @@ const navItems = [
   {text: 'Cadastrar Paciente', icon: <PeopleIconAdd />, path: '/patientRegister'},
   {text: 'Nova Análise', icon: <NoteAddIcon />, path: '/newAnalysis'},
   {text: 'Resultado Análise', icon: <BarChartIcon />, path: '/analysisResult'},
+  {text: 'Seu Resultado da Triagem', icon: <BarChartIcon />, path: '/patientAnalysisResult'},
   {text: 'Histórico Análises', icon: <WorkHistory />, path: '/analysisHistory'},
   // {text: 'Novo Laudo', icon: <PostAddIcon />, path: '/novo-laudo'},
   {text: 'Painel Administrativo', icon: <AdminPanelIcon />, path: '/adminPanel'},
@@ -60,7 +61,7 @@ const Navbar = () => {
 
   const handleNavigation = (navPath) => {
     navigate(navPath);
-  }
+  };
 
   // 5. Efeito que roda toda vez que a rota (location) muda
   useEffect(() => {
@@ -99,7 +100,6 @@ const Navbar = () => {
             <ListItemButton onClick={() => handleNavigation(item.path)}>
               {' '}
               {/* Lembre-se de adicionar <Link to={item.path}> aqui */}
-              
               <ListItemIcon className="drawer-nav-icon">{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} className="drawer-nav-item" />
             </ListItemButton>
@@ -125,7 +125,12 @@ const Navbar = () => {
           </IconButton>
 
           {/* 6. Título dinâmico para mobile */}
-          <Typography variant="h6" style={{fontSize: 18, fontFamily: 'Inter'}} component="div" className="navbar-page-title">
+          <Typography
+            variant="h6"
+            style={{fontSize: 18, fontFamily: 'Inter'}}
+            component="div"
+            className="navbar-page-title"
+          >
             {pageTitle}
           </Typography>
 
@@ -137,10 +142,13 @@ const Navbar = () => {
 
           <Box className="navbar-desktop-links">
             {navItems.map((item) => (
-              <Button onClick={() => handleNavigation(item.path)} key={item.text} className="navbar-link">
+              <Button
+                onClick={() => handleNavigation(item.path)}
+                key={item.text}
+                className="navbar-link"
+              >
                 {' '}
                 {/* Lembre-se de adicionar <Link to={item.path}> aqui */}
-                
                 {item.text}
               </Button>
             ))}
@@ -155,7 +163,7 @@ const Navbar = () => {
           onClose={handleDrawerToggle}
           ModalProps={{keepMounted: true}}
           sx={{
-            display: {xs: 'block', sm: 'none'},
+            display: {xs: 'block', md: 'none'},
             '& .MuiDrawer-paper': {boxSizing: 'border-box', width: 250},
           }}
         >

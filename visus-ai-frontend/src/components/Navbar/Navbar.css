@@ -26,6 +26,8 @@
 .navbar-page-title {
   position: absolute;
   left: 50%;
+  width: 70%;
+  text-align: center;
   transform: translateX(-50%);
   color: inherit;
   /* Garante que ele apareça em telas pequenas */
@@ -120,7 +122,7 @@
 }
 
 /* A partir de 600px (breakpoint 'sm' do MUI) */
-@media (min-width: 600px) {
+@media (min-width: 900px) {
   .navbar-desktop-links,
   .navbar-brand-title {
     display: block;

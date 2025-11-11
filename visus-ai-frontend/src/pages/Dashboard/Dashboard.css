@@ -1,5 +1,4 @@
-
-
+/* Seu CSS original, 100% limpo de espaços inválidos */
 .dashboard-main-container {
     margin-top: 4rem;
     display: flex;
@@ -10,10 +9,9 @@
     gap: 2rem;
 }
 
-
 .dashboard-welcome-title {
-     font-family: 'Inter', sans-serif;
-     font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
 }
 
 .dashboard-general-data-container {
@@ -22,9 +20,10 @@
     align-items: center;
     justify-content: center;
     margin-top: 1rem;
-
 }
-.dashboard-general-data-title-container, .dashboard-recent-analysis-data-title-container {
+
+.dashboard-general-data-title-container, 
+.dashboard-recent-analysis-data-title-container {
     display: flex;
     gap: 0.5rem;
     text-align: start;
@@ -34,15 +33,16 @@
     margin-bottom: 0.4rem;
 }
 
-.dashboard-general-data-title, .dashboard-recent-analysis-data-title {
+.dashboard-general-data-title, 
+.dashboard-recent-analysis-data-title {
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
 }
 
-.dashboard-general-data-icon, .dashboard-recent-analysis-data-icon {
+.dashboard-general-data-icon, 
+.dashboard-recent-analysis-data-icon {
     width: 1.2rem;
 }
-
 
 .data-box-container {
     display: flex;
@@ -69,12 +69,10 @@
     text-align: center;
 }
 
-
 .dashboard-data-quantity {
     font-family: 'Inter', sans-serif;
     font-weight: 900;
     font-size: 1.6rem;
-
 }
 
 .dashboard-recent-analysis-data-container {
@@ -118,7 +116,6 @@
 }
 
 .dashboard-analysis-data-status {
-    
     padding: 0.3rem;
     border-radius: 0.5rem;
     font-weight: 800;
@@ -130,7 +127,10 @@
     font-weight: 800;
 }
 
-.dashboard-analysis-data-name, .dashboard-analysis-data-day, .dashboard-analysis-data-result, .dashboard-analysis-data-status {
+.dashboard-analysis-data-name, 
+.dashboard-analysis-data-day, 
+.dashboard-analysis-data-result, 
+.dashboard-analysis-data-status {
     font-family: 'Inter', sans-serif;
     font-size: 0.9rem;
 }
@@ -158,13 +158,157 @@
     padding-right: 1rem;
 }
 
-.dashboard-data-cases-title, .dashboard-datacases-text {
+.dashboard-data-cases-title, 
+.dashboard-datacases-text {
     font-family: 'Inter', sans-serif;
     font-weight: 400;
 }
 
+/* ===============================================
+   INÍCIO DO CÓDIGO DESKTOP 
+===============================================
+*/
+
 @media (min-width: 901px) { 
-
-
     
+    /* 1. Transforma o container principal em um Grid de 2 colunas */
+    .dashboard-main-container {
+        display: grid;
+        grid-template-columns: 2fr 1fr; /* Coluna da esquerda (66%) e da direita (33%) */
+        gap: 2rem;
+        align-items: start; /* Alinha os blocos pelo topo */
+        max-width: 100vw; /* Limita a largura em telas muito grandes */
+        margin: 6rem auto; /* Centraliza o container */
+        padding: 4rem;
+        height: 100vh;
+        border-bottom: 1px solid #f0f0f0;
+        
+    }
+
+    /* 2. Faz o título e os cards gerais ocuparem as 2 colunas */
+    .dashboard-welcome-title,
+    .dashboard-general-data-container {
+        grid-column: 1 / -1; /* Ocupa a linha inteira */
+    }
+
+    .dashboard-welcome-title {
+        text-align: left; /* Alinha o texto à esquerda */
+        font-size: 1.5rem;
+    }
+
+    /* 3. Ajusta os cards de estatística */
+    .dashboard-general-data-container {
+        width: 100%;
+        margin-top: 0;
+    }
+    .dashboard-general-data-title-container {
+        width: 100%;
+        margin-left: 0;
+    }
+    .data-box-container {
+        justify-content: flex-start; /* Alinha os cards à esquerda */
+        gap: 1.5rem;
+    }
+    .dashboard-data-box {
+        width: 250px; /* Largura fixa em vez de % */
+        padding: 1.5rem;
+    }
+    .dashboard-data-box-title {
+        font-size: 1rem;
+    }
+    .dashboard-data-quantity {
+        font-size: 2rem;
+    }
+
+
+    /* 4. Posiciona a tabela de Análises na coluna da esquerda */
+    .dashboard-recent-analysis-container {
+        grid-column: 1 / 2;
+        width: 100%;
+        
+    }
+    .dashboard-recent-analysis-data-container {
+        width: 80%;
+        padding: 0;
+        background-color: #fff; /* Remove o fundo cinza do container */
+        border-radius: 0.8rem;
+        gap: 0;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    }
+    .dashboard-recent-analysis-data-title-container {
+        width: 100%;
+    }
+
+    /* 5. Transforma a lista de "Análises Recentes" em uma tabela real */
+    .dashboard-analysis-data-titles {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1.5fr 1.5fr; /* 4 colunas */
+        gap: 1rem;
+        padding: 1rem 1.5rem;
+        background-color: #f9fafb; /* Cor de cabeçalho */
+        border-radius: 0;
+        width: 100%;
+    }
+    .dashboard-analysis-data-container {
+        display: block; /* Remove o flex column */
+        background-color: #fff;
+        padding: 0;
+        gap: 0;
+    }
+    .dashboard-analysis-data {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1.5fr 1.5fr; /* 4 colunas (IGUAL AO HEADER) */
+        gap: 1rem;
+        border-radius: 0.8rem;
+        width: 100%;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid #f0f0f0;
+    }
+    .dashboard-analysis-data:last-child {
+        border-bottom: none;
+    }
+    .dashboard-analysis-data-status {
+        justify-self: start; /* Alinha a tag de status */
+    }
+
+
+    /* 6. Posiciona as Estatísticas RD na coluna da direita */
+    .dashboard-statistics-data-container {
+        grid-column: 2 / 3;
+        width: 100%;
+    }
+    .dashboard-statistics-data-bg-main-container {
+        width: 35rem;
+        padding: 0;
+        box-shadow: rgba(0, 0, 0, 0.05) 0px 7px 29px 0px;
+
+    }
+    .dashboard-data-cases-title,
+    .dashboard-datacases-text {
+        font-size: 1rem;
+    }
+
+    .dashboard-statistics-data-bg-container {
+        padding: 1.2rem;
+    }
+}
+
+@media screen and (max-width:1300px) and (min-width: 900px) {
+    .dashboard-statistics-data-bg-main-container {
+        width: 22rem;
+    }
+}
+@media screen and (max-width:3000px) and (min-width: 1440px) { 
+
+.dashboard-analysis-data-titles {
+    display: flex;
+    justify-content: space-around;
+}
+
+.dashboard-analysis-data {
+    width: 48vw;
+    display: flex;
+    justify-content: space-around;
+}
+
 }
