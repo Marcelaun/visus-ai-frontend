@@ -62,5 +62,20 @@
 @media screen and (min-width: 901px) {
   .email-sending-success-main-container {
     background-color: #33b9b9;
+    height: 100vh;
+  }
+
+  .email-sending-success-splash-message-container {
+    width: 70vw;
+    padding: 5rem;
+  }
+
+  .email-sending-success-title {
+    font-size: 2.5rem;
+  }
+
+  .email-sending-success-text {
+    font-size: 1.4rem;
+    color: #707070;
   }
 }
