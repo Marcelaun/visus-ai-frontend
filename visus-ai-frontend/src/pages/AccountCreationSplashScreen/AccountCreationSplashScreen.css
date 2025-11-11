@@ -56,4 +56,46 @@
   align-items: center;
   justify-content: center;
   color: #333333;
+  transition: 0.2s ease-in-out;
+}
+
+@media screen and (min-width: 901px) { 
+
+
+  .account-creation-success-main-container {
+    height: 100vh;
+    justify-content: center;
+    background-color: #33B9B9;
+  }
+
+  .account-creation-success-splash-message-container {
+    height: 60vh;
+    width: 70vw;
+    margin-bottom: 3rem;
+  }
+
+  .account-creation-splash-screen-link {
+    width: 36vw;
+    font-weight: 600;
+    color: #333333;
+
+  }
+
+  .account-creation-success-title {
+    font-weight: 800;
+    font-size: 2.6rem;
+  }
+
+  .account-creation-success-text {
+    font-size: 1.5rem;
+    color: #707070;
+  }
+
+  .account-creation-splash-screen-link:hover {
+    cursor: pointer;
+    background-color: #333333;
+    color: #fff;
+  }
+
+
 }

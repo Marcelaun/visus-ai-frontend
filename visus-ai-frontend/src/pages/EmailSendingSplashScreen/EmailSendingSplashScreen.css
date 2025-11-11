@@ -58,3 +58,9 @@
   color: #333333;
   margin-top: 1.2rem;
 }
+
+@media screen and (min-width: 901px) {
+  .email-sending-success-main-container {
+    background-color: #33b9b9;
+  }
+}

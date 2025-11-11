@@ -65,10 +65,12 @@
   border-radius: 0.5rem;
   border: none;
   background-color: #f0f0f0;
+  border: 1px solid #fff
 }
 
 .login-input-box:focus {
   outline: none;
+  border: 1px solid #33b9b9;
 }
 
 .login-create-account-link,
@@ -124,6 +126,20 @@
   border-radius: 1rem;
 }
 
+.password-reset-link, .login-submit-btn, .login-create-account-link{
+  transition: 0.2s ease-in-out;
+}
+
+.login-create-account-link:hover {
+background-color: #33b9b9;
+color: #fff;
+border: 1px solid #fff;
+}
+
+.password-reset-link:hover, .login-submit-btn:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
 
 @media (min-width: 901px) {
   /* .login-main-container {

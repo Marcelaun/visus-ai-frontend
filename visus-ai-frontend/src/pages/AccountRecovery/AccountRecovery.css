@@ -84,14 +84,21 @@
   font-size: 1.1rem;
   width: 90vw;
   align-self: center;
-  transition: 0.2s ease;
+  transition: 0.3s ease;
   margin-top: 12rem;
 }
 
 .account-recovery-submit-btn:active {
      opacity: 0.5;
 }
+.account-recovery-link {
+  transition: 0.3s ease-in-out;
+}
 
+.account-recovery-submit-btn:hover, .account-recovery-link:hover {
+  opacity: 0.7;
+  cursor: pointer;
+}
 .account-recovery-link {
     display: flex;
     align-items: center;
@@ -101,6 +108,34 @@
     font-size: 1.2rem;
     text-decoration: none;
     color: #33b9b9;
+
+}
+
+@media (min-width: 901px) {
+  .account-recovery-form {
+    width: 40vw;
+  }
+
+  .account-recovery-submit-btn {
+    width: 20vw;
+  }
+
+  .account-recovery-main-container {
+    justify-content: center;
+    align-items: center;
+    
+  }
+  .account-recovery-nav-header {
+    width: 60vw;
+  }
+
+  .account-recovery-form {
+    margin-top: 10rem;
+  }
+
+  .account-recovery-desc-title {
+    width: 40vw;
+  }
 
 }
 

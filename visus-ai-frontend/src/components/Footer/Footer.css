@@ -15,7 +15,6 @@
 
 /* 4. Estiliza o SVG para ser o fundo */
 .footer-svg-background {
-  position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -30,9 +29,10 @@
   border: 1px solid #f0f0f0;
   
   width: 90vw;
-  max-width: 800px; /* Adicionado um max-width */
+  max-width: 1400px; /* Adicionado um max-width */
   background-color: #fff;
   border-radius: 1rem;
+  padding: 3rem;
   
   
   /* 5. Coloca o conteúdo na FRENTE do SVG */
@@ -50,7 +50,7 @@
   width: 11rem; /* Aumentei um pouco o tamanho */
   max-width: 40%;
   align-self: center; /* Centraliza o logo no card */
-  margin-bottom: 1.5rem; /* Espaço abaixo do logo */
+  margin-bottom: 3rem; /* Espaço abaixo do logo */
 }
 
 /* (Adicionado) Estilo para o texto de aviso */
@@ -61,4 +61,44 @@
   font-weight: 400;
   color: #555;
   line-height: 1.6;
+}
+
+.footer-links-container {
+  display: flex;
+  flex-wrap: wrap; /* Permite que os links quebrem a linha em telas menores */
+  justify-content: center;
+  gap: 1.5rem; /* Espaço entre cada link */
+  margin-top: 2rem;
+  margin-bottom: 2rem; /* Espaço antes do copyright */
+}
+
+/* Estilo individual de cada link */
+.footer-link-item {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #333; /* Cor escura para o card branco */
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+.footer-link-item:hover {
+  color: #33b9b9; /* Cor do seu tema no hover */
+  text-decoration: underline;
+}
+
+/* Texto de Copyright */
+.footer-copyright-text {
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  color: #888; /* Cor cinza mais clara */
+}
+
+@media (max-width: 480px) {
+
+.footer-platform-advise-text {
+  font-size: 0.9rem;
+}
+
 }

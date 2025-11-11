@@ -82,6 +82,10 @@
   padding-bottom: 2rem;
 }
 
+.register-professional-text-title-form-container {
+  display: none;
+}
+
 .register-professional-submit-btn {
   padding: 1rem;
   border-radius: 1rem;
@@ -93,11 +97,103 @@
   font-size: 1.1rem;
   width: 90vw;
   align-self: center;
-  transition: 0.2s ease;
+  transition: 0.2s ease-in-out;
 }
 
 .register-professional-submit-btn:active {
   opacity: 0.5;
 }
 
+.register-professional-submit-btn:hover, .register-professional-login-link:hover {
+  opacity: 0.5;
+  cursor: pointer;
+}
+
+
+@media screen and (min-width: 901px) { 
+
+.register-professional-nav-header {
+  display: none;
+}
+
+.register-professional-form-greetings-container {
+  display: flex;
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  
+
+
+}
+
+.register-professional-text-title-form-container {
+  display: flex;
+  justify-content: center;
+}
+
+.register-professional-input-box {
+  width: 40vw;
+}
+
+.register-professional-greetings-text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  height: 100%;
+  background: linear-gradient(to right, #88D8B0 25%, #33B9B9 100%);
+  padding: 3rem;
+}
+
+.register-professional-greetings-title {
+  font-family: "Montserrat", sans-serif;
+  font-size: 4rem;
+  color: #fff;
+  padding-top: 2rem;
+}
+
+.register-professional-greetings-main-container {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.register-professional-greetings-text {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.8rem;
+  color: #fff;
+  text-align: center;
+  margin-bottom: 4rem;
+
+}
+
+.register-professional-submit-btn {
+  width: 40vw;
+}
+
+.register-professional-logo-container {
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+  background-color: #FBFFFD;
+  padding-bottom: 4rem;
+  border: 1px solid #f5f5f5;
+}
+
+.register-professional-logo {
+  width: 16rem;
+}
+
+.register-professional-form {
+  width: 90vw;
+  padding: 2rem;
+  padding-left: 10rem;
+  padding-right: 10rem;
+}
+    
+}
+
+@media screen and (max-width: 900px) {
+  .register-professional-greetings-main-container {
+    display: none;
+  }
+}
 
