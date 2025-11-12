@@ -24,6 +24,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import WorkHistory from '@mui/icons-material/WorkHistory';
 import PeopleIconAdd from '@mui/icons-material/GroupAdd';
 import PostAddIcon from '@mui/icons-material/PostAdd';
+import AssessmentIcon from '@mui/icons-material/Assessment';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import AdminPanelIcon from '@mui/icons-material/AdminPanelSettings';
@@ -40,7 +41,7 @@ const navItems = [
   {text: 'Cadastrar Paciente', icon: <PeopleIconAdd />, path: '/patientRegister'},
   {text: 'Nova Análise', icon: <NoteAddIcon />, path: '/newAnalysis'},
   {text: 'Resultado Análise', icon: <BarChartIcon />, path: '/analysisResult'},
-  {text: 'Seu Resultado da Triagem', icon: <BarChartIcon />, path: '/patientAnalysisResult'},
+  {text: 'Seu Resultado da Triagem', icon: <AssessmentIcon />, path: '/patientAnalysisResult'},
   {text: 'Histórico Análises', icon: <WorkHistory />, path: '/analysisHistory'},
   // {text: 'Novo Laudo', icon: <PostAddIcon />, path: '/novo-laudo'},
   {text: 'Painel Administrativo', icon: <AdminPanelIcon />, path: '/adminPanel'},
