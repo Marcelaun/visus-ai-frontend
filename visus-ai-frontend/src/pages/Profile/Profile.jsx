@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Profile.css'; // Vamos criar este arquivo
 
 // Componente para o ícone do título (como no AdminPanel)
@@ -16,15 +16,17 @@ const InfoRow = ({ label, value }) => (
   </div>
 );
 
-const Profile = () => {
+const Profile = ({ user }) => {
+
+  if (!user) {
+    return (
+      <div className="perfil-container">
+        <h2>Carregando...</h2>
+      </div>
+    );
+  }
   // Dados de exemplo que viriam do seu login/API
-  const [profissional] = useState({
-    nome: 'Dr(a). Joana Mendes',
-    cpf: '123.456.789-00',
-    registro: 'CRM 123456 SP',
-    email: 'joana.mendes@email.com',
-    telefone: '(11) 98765-4321',
-  });
+  
 
   return (
     <div className="perfil-container">
@@ -41,16 +43,18 @@ const Profile = () => {
         {/* --- DADOS PESSOAIS --- */}
         <div className="perfil-section">
           <h3 className="perfil-section-title">Dados Pessoais</h3>
-          <InfoRow label="Nome Completo" value={profissional.nome} />
-          <InfoRow label="CPF" value={profissional.cpf} />
-          <InfoRow label="Registro Profissional" value={profissional.registro} />
-          <InfoRow label="Telefone" value={profissional.telefone} />
+          {/* 4. Use os dados reais! */}
+          <InfoRow label="Nome Completo" value={user.name} />
+          {/* 5. Acessa os dados do perfil 'professional' */}
+          <InfoRow label="CPF" value={user.professional?.cpf ?? 'Não preenchido'} />
+          <InfoRow label="Registro Profissional" value={user.professional?.registro_profissional ?? 'Não preenchido'} />
+          <InfoRow label="Telefone" value={user.professional?.telefone ?? 'Não preenchido'} />
         </div>
 
         {/* --- DADOS DE ACESSO --- */}
         <div className="perfil-section">
           <h3 className="perfil-section-title">Dados de Acesso</h3>
-          <InfoRow label="E-mail (Login)" value={profissional.email} />
+          <InfoRow label="E-mail (Login)" value={user.email} />
           <InfoRow label="Senha" value="********" />
         </div>
 

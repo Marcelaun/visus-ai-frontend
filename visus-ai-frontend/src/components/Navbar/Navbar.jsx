@@ -51,7 +51,7 @@ const navItems = [
 
 // const settings = ['Sair']; // Este array não está mais sendo usado
 
-const Navbar = () => {
+const Navbar = ({ onLogout }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   // 3. Estado para guardar o título da página atual
@@ -98,12 +98,16 @@ const Navbar = () => {
       <List>
         {navItems.map((item) => (
           <ListItem key={item.text} disablePadding>
-            <ListItemButton onClick={() => handleNavigation(item.path)}>
-              {' '}
-              {/* Lembre-se de adicionar <Link to={item.path}> aqui */}
-              <ListItemIcon className="drawer-nav-icon">{item.icon}</ListItemIcon>
-              <ListItemText primary={item.text} className="drawer-nav-item" />
-            </ListItemButton>
+            <ListItemButton onClick={() => {
+  if (item.text === 'Sair') {
+    onLogout(); // <-- CHAMA A FUNÇÃO DE LOGOUT REAL
+  } else {
+    handleNavigation(item.path); // Navega para outras páginas
+  }
+}}>
+  <ListItemIcon className="drawer-nav-icon">{item.icon}</ListItemIcon>
+  <ListItemText primary={item.text} className="drawer-nav-item" />
+</ListItemButton>
           </ListItem>
         ))}
       </List>
@@ -142,18 +146,22 @@ const Navbar = () => {
           </Typography>
 
           <Box className="navbar-desktop-links">
-            {navItems.map((item) => (
-              <Button
-                onClick={() => handleNavigation(item.path)}
-                key={item.text}
-                className="navbar-link"
-              >
-                {' '}
-                {/* Lembre-se de adicionar <Link to={item.path}> aqui */}
-                {item.text}
-              </Button>
-            ))}
-          </Box>
+  {navItems.map((item) => (
+    <Button
+      onClick={() => {
+        if (item.text === 'Sair') {
+          onLogout(); // <-- CHAMA A FUNÇÃO DE LOGOUT REAL
+        } else {
+          handleNavigation(item.path); // Navega para outras páginas
+        }
+      }}
+      key={item.text}
+      className="navbar-link"
+    >
+      {item.text}
+    </Button>
+  ))}
+</Box>
         </Toolbar>
       </AppBar>
 

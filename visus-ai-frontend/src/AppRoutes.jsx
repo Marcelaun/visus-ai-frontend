@@ -1,6 +1,6 @@
-// src/AppRoutes.jsx (NOVO ARQUIVO)
+// src/AppRoutes.jsx (CORRIGIDO)
 
-import {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react'; // useEffect foi importado
 import {Routes, Route, Navigate, useNavigate} from 'react-router-dom';
 import Navbar from './components/Navbar/Navbar';
 import Login from './pages/Login/Login';
@@ -8,7 +8,7 @@ import Dashboard from './pages/Dashboard/Dashboard';
 import AdminPanel from './pages/AdminPanel/AdminPanel';
 import Profile from './pages/Profile/Profile';
 import PageLayout from './components/PageLayout/PageLayout';
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'; // Importado
 import PatientList from './pages/PatientList/PatientList';
 import AnalysisHistory from './pages/AnalysisHistory/AnalysisHistory';
 import AnalysisResult from './pages/AnalysisResult/AnalysisResult';
@@ -22,64 +22,87 @@ import AccountCreationSplashScreen from './pages/AccountCreationSplashScreen/Acc
 import AccountRecovery from './pages/AccountRecovery/AccountRecovery';
 import EmailSendingSplashScreen from './pages/EmailSendingSplashScreen/EmailSendingSplashScreen';
 
+// 1. Importe o Axios que configuramos
+import apiClient from './api/axiosConfig'; 
+
 function AppRoutes() {
-  const [isLoggedIn, setIsLoggedIn] = useState(true);
-  const navigate = useNavigate(); // 1. Inicialize o hook useNavigate
+  // 2. Estado inicial é 'false' (começa deslogado)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // (NOVO) Estado para guardar os dados do usuário
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
-  const handleLogin = () => {
-    console.log('isloggedin_antes_e_mudar: ');
-    console.log(isLoggedIn);
-    setIsLoggedIn(true);
-    console.log('isloggedin_depois_de_mudar: ');
-    console.log(isLoggedIn);
-    navigate('/dashboard'); // Também é bom ter isso aqui para redirecionar no login
+  // 3. FUNÇÃO DE LOGIN ATUALIZADA
+  //    (Agora ela recebe 'email' e 'password' do Login.jsx)
+  const handleLogin = async (email, password) => {
+    try {
+      // (Opcional, mas recomendado) Pede um "cookie" de proteção ao Sanctum
+      await apiClient.get('/sanctum/csrf-cookie');
+      
+      // 4. Tenta fazer o login no Laravel
+      await apiClient.post('/api/login', {
+        email: email,
+        password: password
+      });
+
+      // 5. Se o login deu certo, busca os dados do usuário
+      const response = await apiClient.get('/api/user');
+      setUser(response.data); // Salva os dados do usuário (Dr. João Teste)
+      setIsLoggedIn(true);    // Marca como logado
+      navigate('/dashboard'); // Redireciona para o dashboard
+
+    } catch (error) {
+      // 6. Se o login falhar (senha errada, etc.)
+      console.error('Erro no login:', error);
+      alert('Email ou senha incorretos.'); // Aviso para o usuário
+    }
   };
 
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    navigate('/login'); // 2. AQUI ESTÁ A MÁGICA! Navega para /login no logout.
+  // 7. FUNÇÃO DE LOGOUT ATUALIZADA
+  const handleLogout = async () => {
+    try {
+      await apiClient.post('/api/logout');
+    } catch (error) {
+      console.error('Erro no logout:', error);
+    } finally {
+      // Limpa os estados de qualquer jeito
+      setUser(null);
+      setIsLoggedIn(false);
+      navigate('/login');
+    }
   };
 
+  // 8. (NOVO) Checa se o usuário JÁ está logado quando a página carrega
   useEffect(() => {
-    console.log(isLoggedIn);
-  }, [isLoggedIn]);
+    const checkLoginStatus = async () => {
+      try {
+        const response = await apiClient.get('/api/user');
+        setUser(response.data);
+        setIsLoggedIn(true);
+      } catch (error) {
+        setUser(null);
+        setIsLoggedIn(false);
+      }
+    };
+    checkLoginStatus();
+  }, []); // O '[]' significa que isso roda SÓ UMA VEZ
 
   return (
-    // 2. SUBSTITUA O FRAGMENT (<>) PELO CONTAINER PRINCIPAL
-    <div className="app-container">
+    <div className="app-container"> 
+      {/* A Navbar agora recebe a função de logout real */}
       {isLoggedIn && <Navbar onLogout={handleLogout} />}
 
-      {/* 3. ADICIONE O WRAPPER DE CONTEÚDO */}
       <main className="content-wrap">
         <Routes>
-          {/* Todas as suas rotas <Route ... /> vão aqui dentro */}
+          {/* === ROTAS PÚBLICAS === */}
           <Route
             path="/login"
             element={
               <PageLayout backgroundColor="#ffffffff">
-                <Login onLogin={handleLogin} />
+                <Login onLogin={handleLogin} /> 
               </PageLayout>
             }
           />
-          {/* ... (todas as suas outras rotas) ... */}
-          <Route
-            path="/dashboard"
-            element={
-              <PageLayout backgroundColor="#ffffffff">
-                <Dashboard />
-              </PageLayout>
-            }
-          />
-
-          <Route
-            path="/passwordReset"
-            element={
-              <PageLayout backgroundColor="#f0f4f8">
-                <PasswordReset />
-              </PageLayout>
-            }
-          />
-
           <Route
             path="/createAccount"
             element={
@@ -88,7 +111,14 @@ function AppRoutes() {
               </PageLayout>
             }
           />
-
+          <Route
+            path="/passwordReset"
+            element={
+              <PageLayout backgroundColor="#f0f4f8">
+                <PasswordReset />
+              </PageLayout>
+            }
+          />
           <Route
             path="/accountCreationSuccessful"
             element={
@@ -97,7 +127,6 @@ function AppRoutes() {
               </PageLayout>
             }
           />
-
           <Route
             path="/accountRecovery"
             element={
@@ -106,7 +135,6 @@ function AppRoutes() {
               </PageLayout>
             }
           />
-
           <Route
             path="/emailSendSuccess"
             element={
@@ -115,72 +143,8 @@ function AppRoutes() {
               </PageLayout>
             }
           />
-
           <Route
-            path="/patientList"
-            element={
-              <PageLayout backgroundColor="#fff">
-                <PatientList />
-              </PageLayout>
-            }
-          />
-
-          <Route
-            path="/patientRegister"
-            element={
-              <PageLayout backgroundColor="#fff">
-                <RegisterPatient />
-              </PageLayout>
-            }
-          />
-
-          <Route
-            path="/newAnalysis"
-            element={
-              <PageLayout backgroundColor="#fff">
-                <NewAnalysis />
-              </PageLayout>
-            }
-          />
-
-          <Route
-            path="/analysisResult"
-            element={
-              <PageLayout backgroundColor="#fff">
-                <AnalysisResult />
-              </PageLayout>
-            }
-          />
-
-          <Route
-            path="/analysisHistory"
-            element={
-              <PageLayout backgroundColor="#fff">
-                <AnalysisHistory />
-              </PageLayout>
-            }
-          />
-
-          <Route
-            path="/adminPanel"
-            element={
-              <PageLayout backgroundColor="#fff">
-                <AdminPanel />
-              </PageLayout>
-            }
-          />
-
-          <Route
-            path="/profile"
-            element={
-              <PageLayout backgroundColor="#fff">
-                <Profile />
-              </PageLayout>
-            }
-          />
-
-          <Route
-            path="/patientAnalysisResult"
+            path="/patientAnalysisResult" // Rota do Paciente (pode precisar de lógica de login diferente)
             element={
               <PageLayout backgroundColor="#fff">
                 <PatientResult />
@@ -188,11 +152,93 @@ function AppRoutes() {
             }
           />
 
+          {/* === ROTAS PROTEGIDAS (SÓ PARA PROFISSIONAIS LOGADOS) === */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <PageLayout backgroundColor="#ffffffff">
+                  <Dashboard />
+                </PageLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/patientList"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <PageLayout backgroundColor="#fff">
+                  <PatientList />
+                </PageLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/patientRegister"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <PageLayout backgroundColor="#fff">
+                  <RegisterPatient />
+                </PageLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/newAnalysis"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <PageLayout backgroundColor="#fff">
+                  <NewAnalysis />
+                </PageLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/analysisResult"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <PageLayout backgroundColor="#fff">
+                  <AnalysisResult />
+                </PageLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/analysisHistory"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <PageLayout backgroundColor="#fff">
+                  <AnalysisHistory />
+                </PageLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/adminPanel"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <PageLayout backgroundColor="#fff">
+                  <AdminPanel />
+                </PageLayout>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/profile"
+            element={
+              <ProtectedRoute isLoggedIn={isLoggedIn}>
+                <PageLayout backgroundColor="#fff">
+                  <Profile user={user} /> {/* Passa os dados do usuário para o Perfil */}
+                </PageLayout>
+              </ProtectedRoute>
+            }
+          />
+          
+          {/* Rota Padrão: Redireciona para o login ou dashboard */}
           <Route path="/" element={<Navigate to={isLoggedIn ? '/dashboard' : '/login'} />} />
         </Routes>
       </main>
 
-      {/* 4. ADICIONE O FOOTER FORA DO <main> */}
       <Footer />
     </div>
   );

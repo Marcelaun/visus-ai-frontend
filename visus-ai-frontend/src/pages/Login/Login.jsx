@@ -1,13 +1,12 @@
 import './Login.css';
-import Navbar from '../../components/Navbar/Navbar';
 import LogoVisus from '../../assets/Logo.svg';
-import Footer from '../../components/Footer/Footer';
+
 import {useNavigate, Link} from 'react-router-dom';
 import {useState} from 'react';
 
 import React from 'react';
 // import { useNavigate } from 'react-router-dom'; // PODE REMOVER ESTA LINHA
-import {Box, Button, Typography} from '@mui/material';
+
 
 const Login = ({onLogin}) => {
   // const navigate = useNavigate(); // PODE REMOVER ESTA LINHA
@@ -17,15 +16,15 @@ const Login = ({onLogin}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('passei_nafuncao_desubmit');
-    console.log({
-      email: email,
-      password: password,
-
-    });
-    // Agora só chama a função onLogin.
-    // O redirecionamento será feito no AppRoutes.
-    onLogin();
+    
+    // 1. Valide se os campos não estão vazios (opcional)
+    if (!email || !password) {
+      alert("Por favor, preencha o usuário e a senha.");
+      return;
+    }
+    
+    // 2. Envie o email e a senha para o AppRoutes
+    onLogin(email, password);
   };
 
   return (
