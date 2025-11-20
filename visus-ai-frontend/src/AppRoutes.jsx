@@ -17,6 +17,7 @@ import AnalysisResult from './pages/AnalysisResult/AnalysisResult';
 import RegisterPatient from './pages/RegisterPatient/RegisterPatient';
 import PatientDashboard from './pages/PatientDashboard/PatientDashboard';
 import PasswordReset from './pages/PasswordReset/PasswordReset';
+import VerifyEmail from './pages/VerifyEmail/VerifyEmail';
 import PatientResult from './pages/PatientAnalysisResult/PatientAnalysisResult';
 import NewAnalysis from './pages/NewAnalysis/NewAnalysis';
 import RegisterProfessional from './pages/RegisterProfessional/RegisterProfessional';
@@ -210,6 +211,17 @@ function AppRoutes() {
                )
              }
            />
+
+           <Route 
+  path="/verify-email" 
+  element={
+    <ProtectedRoute isLoggedIn={isLoggedIn}>
+       <PageLayout backgroundColor="#fff">
+          <VerifyEmail onLogout={handleLogout} />
+       </PageLayout>
+    </ProtectedRoute>
+  } 
+/>
 
 
           {/* === ROTAS PROTEGIDAS (SÓ PARA PROFISSIONAIS LOGADOS) === */}

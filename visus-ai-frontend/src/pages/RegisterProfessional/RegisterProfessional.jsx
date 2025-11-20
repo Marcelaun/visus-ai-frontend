@@ -48,7 +48,7 @@ const RegisterProfessional = () => {
       
       // 3. Redireciona para o Dashboard (já logado)
       // O AppRoutes vai checar o cookie e ver que está logado
-      navigate('/dashboard'); 
+      navigate('/verify-email'); 
 
       // (Opcional: se o AppRoutes não atualizar sozinho, você pode forçar um reload: window.location.href = '/dashboard';)
 
