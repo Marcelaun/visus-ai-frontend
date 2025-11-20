@@ -43,14 +43,28 @@ function AppRoutes() {
   const navigate = useNavigate();
 
   // --- Lógica do Profissional ---
+  // Lógica de Login com Token
   const handleLogin = async (email, password) => {
     try {
-      await apiClient.get('/sanctum/csrf-cookie');
-      await apiClient.post('/api/login', { email, password });
-      const response = await apiClient.get('/api/user');
-      setUser(response.data); 
-      setIsLoggedIn(true);    
-      navigate('/dashboard'); 
+      // NÃO precisamos mais do csrf-cookie
+      
+      // Chama a NOVA rota de token
+      const response = await apiClient.post('/api/login-token', {
+        email: email,
+        password: password
+      });
+
+      // O backend retorna { token: "...", user: {...} }
+      const { token, user } = response.data;
+
+      // 1. Salva o token no LocalStorage
+      localStorage.setItem('authToken', token);
+      
+      // 2. Salva o usuário no estado
+      setUser(user);
+      setIsLoggedIn(true);
+      navigate('/dashboard');
+
     } catch (error) {
       console.error('Erro no login:', error);
       alert('Email ou senha incorretos.');
@@ -59,16 +73,18 @@ function AppRoutes() {
 
   const handleLogout = async () => {
     try {
-      await apiClient.post('/api/logout');
-    } catch (error) {
-      console.error('Erro no logout:', error);
+       // Tenta avisar o backend para destruir o token
+       await apiClient.post('/api/logout');
+    } catch (e) {
+       // Se der erro, não importa, vamos deslogar localmente
     } finally {
-      setUser(null);
-      setIsLoggedIn(false);
-      navigate('/login');
+       // LIMPEZA LOCAL
+       localStorage.removeItem('authToken'); // Remove o token
+       setUser(null);
+       setIsLoggedIn(false);
+       navigate('/login');
     }
   };
-
   // --- Lógica do Paciente ---
   
   // 2. FUNÇÃO DE LOGIN DO PACIENTE (Salva no localStorage)
@@ -85,22 +101,29 @@ function AppRoutes() {
       navigate('/patient-login');
   };
 
-  // 4. VERIFICAÇÃO INICIAL (Ao dar F5 - Para o Profissional)
+  // Verificação Inicial (F5)
   useEffect(() => {
     const checkLoginStatus = async () => {
-      try {
-        const response = await apiClient.get('/api/user');
-        setUser(response.data);
-        setIsLoggedIn(true);
-      } catch (error) {
-        setUser(null);
-        setIsLoggedIn(false);
-      } finally {
-        setIsLoading(false);
+      const token = localStorage.getItem('authToken');
+      
+      if (token) {
+        try {
+           // Tenta buscar o usuário usando o token salvo
+           const response = await apiClient.get('/api/user');
+           setUser(response.data);
+           setIsLoggedIn(true);
+        } catch (error) {
+           // Token inválido ou expirado
+           localStorage.removeItem('authToken');
+           setUser(null);
+           setIsLoggedIn(false);
+        }
       }
+      setIsLoading(false);
     };
+    
     checkLoginStatus();
-  }, []); 
+  }, []);
 
   // 5. BLOQUEIO DE RENDERIZAÇÃO
   if (isLoading) {
