@@ -7,6 +7,8 @@
   max-width: 1000px;
   margin: 2rem auto;
   padding: 1.5rem;
+  /* Adicionado margem superior para não colar na navbar fixa */
+  margin-top: 6rem; 
 }
 
 /* --- Cabeçalho (Título) --- */
@@ -24,7 +26,7 @@
 }
 
 .historico-header h2 {
-  font-size: 1rem;
+  font-size: 1.5rem; /* Aumentei um pouco o tamanho */
   font-weight: 600;
   color: #333;
 }
@@ -91,7 +93,7 @@
 .table-header,
 .table-row {
   display: grid;
-  /* Define as 6 colunas */
+  /* Define as 6 colunas: Paciente, Olho, Resultado, Data, Status, Ações */
   grid-template-columns: 2fr 1fr 1.5fr 1.5fr 1.5fr 1fr;
   align-items: center;
   padding: 1rem 1.5rem;
@@ -139,8 +141,9 @@
 
 .tipo-normal { color: #10b981; } /* Verde */
 .tipo-leve { color: #f59e0b; } /* Laranja/Amarelo */
-.tipo-moderada { color: #f59e0b; } /* Laranja (igual leve na foto) */
-.tipo-severa { color: #ef4444; } /* Vermelho (exemplo) */
+.tipo-moderada { color: #eab308; } /* Amarelo mais forte */
+.tipo-severa { color: #ef4444; } /* Vermelho */
+.tipo-proliferativa { color: #991b1b; } /* Vermelho escuro */
 
 .status-tag {
   display: inline-block;
@@ -151,12 +154,12 @@
   white-space: nowrap;
 }
 
-.status-liberado {
+.status-concluido {
   background-color: #d1fae5; /* Fundo verde claro */
   color: #065f46; /* Texto verde escuro */
 }
 
-.status-analise {
+.status-pendente {
   background-color: #fee2e2; /* Fundo vermelho claro */
   color: #991b1b; /* Texto vermelho escuro */
 }
@@ -177,6 +180,53 @@
 .action-button:hover {
   background-color: #2563eb;
 }
+
+
+/* --- Paginação (NOVO BLOCO ADICIONADO) --- */
+.historico-pages-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background-color: #f9fafb;
+  border-top: 1px solid #e5e7eb; /* Separador do conteúdo */
+}
+
+.historico-page-info {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+.historico-page-buttons {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.historico-nav-btn {
+  border: 1px solid #d1d5db;
+  padding: 0.5rem 1rem;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  border-radius: 6px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.historico-nav-btn:hover:not(:disabled) {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+.historico-nav-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background-color: #f9fafb;
+}
+
 
 /* --- RESPONSIVIDADE (Celular) --- */
 @media (max-width: 900px) {
@@ -242,5 +292,16 @@
   }
   .action-button {
     width: auto; /* Deixa o botão com tamanho normal */
+  }
+
+  /* Ajuste da Paginação no Mobile */
+  .historico-pages-container {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+  .historico-nav-btn {
+    width: 45%; /* Botões maiores para toque */
+    justify-content: center;
   }
 }

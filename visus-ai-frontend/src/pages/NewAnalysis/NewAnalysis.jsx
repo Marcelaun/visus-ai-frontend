@@ -1,30 +1,46 @@
 import React, {useState, useEffect} from 'react';
 import UploadIcon from '../../assets/new-analysis-upload-img-icon.svg';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom'; // Importe useNavigate
+import apiClient from '../../api/axiosConfig'; // Importe o cliente da API
 
 import './NewAnalysis.css';
 
 const NewAnalysis = () => {
-  const [patient, setPatient] = useState('');
+  const navigate = useNavigate();
+
+  // Estados do Formulário
+  const [patientId, setPatientId] = useState(''); // Mudamos de 'patient' para 'patientId'
   const [examDate, setExamDate] = useState('');
   const [patientExaminedEye, setPatientExaminedEye] = useState('');
   const [utilizedEquipment, setUtilizedEquipment] = useState('');
   const [patientClinicalObs, setPatientClinicalObs] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const dadosFormatados = {
-      patient: patient,
-      examDate: examDate,
-      patientExaminedEye: patientExaminedEye,
-      utilizedEquipment: utilizedEquipment,
-      patientClinicalObs: patientClinicalObs,
-      files: selectedFiles.map((fileObj) => fileObj.file),
-    };
-    console.log(dadosFormatados);
-  };
+  // Estado para a lista de pacientes (para preencher o select)
+  const [patientsList, setPatientsList] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
+  // 1. Carregar a lista de pacientes assim que a tela abre
+  useEffect(() => {
+    const fetchPatients = async () => {
+      try {
+        const response = await apiClient.get('/api/patients');
+        // O Laravel retorna { data: [...], ... } se for paginado,
+        // ou direto o array [...] se for o ->get(). 
+        // Assumindo que você usou ->paginate(), os dados estão em response.data.data
+        // Se usou ->get(), estão em response.data. 
+        // Vamos garantir que pegamos um array:
+        const lista = response.data.data || response.data; 
+        setPatientsList(lista);
+      } catch (error) {
+        console.error("Erro ao carregar pacientes:", error);
+        alert("Erro ao carregar lista de pacientes.");
+      }
+    };
+    fetchPatients();
+  }, []);
+
+  // Limpeza de memória das imagens (preview)
   useEffect(() => {
     return () => {
       selectedFiles.forEach((fileObj) => URL.revokeObjectURL(fileObj.previewUrl));
@@ -53,48 +69,104 @@ const NewAnalysis = () => {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
   };
 
+  // 2. A Função de Envio (O Coração da Integração)
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // 3. Criar o FormData (Obrigatório para envio de arquivos)
+    const formData = new FormData();
+
+    // Adiciona os campos de texto (Mapeando para os nomes que o Laravel espera)
+    formData.append('patient_id', patientId);
+    formData.append('exam_date', examDate);
+    formData.append('eye_examined', patientExaminedEye);
+    formData.append('equipment', utilizedEquipment);
+    formData.append('clinical_notes', patientClinicalObs);
+
+    // 4. Adiciona as Imagens (O "Pulo do Gato")
+    // Para enviar múltiplas imagens, usamos o mesmo nome com []
+    selectedFiles.forEach((fileObj) => {
+      formData.append('files[]', fileObj.file);
+    });
+
+    try {
+      // 5. Envia para a API
+      // O header 'multipart/form-data' é setado automaticamente pelo axios quando vê FormData
+      const response = await apiClient.post('/api/analyses', formData);
+
+      console.log("Sucesso!", response.data);
+      alert("Análise criada com sucesso!");
+      
+      // 6. Redireciona para a tela de resultado usando o ID retornado
+     navigate(`/analysisResult/${response.data.analysis_id}`);
+
+    } catch (error) {
+      console.error("Erro ao criar análise:", error);
+      // Tratamento de erro básico
+      if (error.response?.data?.error) {
+          alert(`Erro: ${error.response.data.error}`);
+      } else if (error.response?.data?.message) {
+          alert(`Erro de validação: ${error.response.data.message}`);
+      } else {
+          alert("Ocorreu um erro ao processar a análise. Tente novamente.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <>
       <div className="new-analysis-main-container">
         <h2 className="new-analysis-main-title">Nova Análise de Imagem</h2>
+        
+        {isLoading && (
+            <div style={{textAlign: 'center', padding: '1rem', color: '#33b9b9', fontWeight: 'bold'}}>
+                Processando imagens com IA... Aguarde...
+            </div>
+        )}
+
         <form onSubmit={handleSubmit} className="new-analysis-main-form-container">
-          {/* --- Coluna 1 (Desktop) --- */}
           <div className="patient-selection-container">
             <h4 className="patient-selection-title">Seleção do paciente</h4>
             <label htmlFor="patient" className="new-analysis-form-labels">
               Paciente *
             </label>
+            
+            {/* 7. Select Populado Dinamicamente */}
             <select
               id="patient"
               className="new-analysis-input-box"
               required
-              value={patient}
-              onChange={(e) => setPatient(e.target.value)}
+              value={patientId}
+              onChange={(e) => setPatientId(e.target.value)}
             >
               <option disabled value="">
                 Selecione um Paciente...
               </option>
-              <option value="paciente1">João da Silva</option>
-              <option value="paciente2">Maria Oliveira</option>
-              <option value="paciente3">Carlos Souza</option>
+              
+              {patientsList.map((p) => (
+                <option key={p.id} value={p.id}>
+                    {p.nome} (CPF: {p.cpf || 'S/N'})
+                </option>
+              ))}
+              
             </select>
+            
             <label htmlFor="exam-date" className="new-analysis-form-labels">
               Data do Exame *
             </label>
             <input
               value={examDate}
-              type="text" // Alterado para 'text' para o placeholder funcionar
-              onFocus={(e) => (e.target.type = 'date')}
-              onBlur={(e) => (e.target.type = 'text')}
+              type="date" // Use type="date" direto, é mais seguro e consistente
               id="exam-date"
               className="new-analysis-input-box"
               required
-              placeholder="dd/mm/aaaa"
               onChange={(e) => setExamDate(e.target.value)}
             />
           </div>
 
-          {/* --- Coluna 2 (Desktop) --- */}
           <div className="exam-data-container">
             <h4 className="exam-data-selection-title">Dados do Exame</h4>
             <label htmlFor="patient-examined-eye" className="new-analysis-form-labels">
@@ -110,8 +182,8 @@ const NewAnalysis = () => {
               <option value="" disabled>
                 Selecione...
               </option>
-              <option value="direito">Olho Direito</option>
-              <option value="esquerdo">Olho Esquerdo</option>
+              <option value="Direito">Olho Direito</option>
+              <option value="Esquerdo">Olho Esquerdo</option>
             </select>
             <label htmlFor="utilized-equipment" className="new-analysis-form-labels">
               Equipamento utilizado
@@ -126,7 +198,6 @@ const NewAnalysis = () => {
             />
           </div>
 
-          {/* --- Seção de Upload (Linha Inteira) --- */}
           <div className="new-analysis-img-upload-container">
             <h4 className="new-analysis-selection-title">Upload da Imagem</h4>
             <input
@@ -185,14 +256,13 @@ const NewAnalysis = () => {
             />
           </div>
 
-          {/* *** NOVO CONTAINER PARA OS BOTÕES *** */}
           <div className="new-analysis-form-actions">
             <input
               type="submit"
-              value="Iniciar Análise"
+              value={isLoading ? "Processando..." : "Iniciar Análise"}
               className="new-analysis-submit-btn"
               id="clickSubmitButton"
-              disabled={!patient || selectedFiles.length === 0}
+              disabled={!patientId || selectedFiles.length === 0 || isLoading}
             />
             <Link to="/dashboard" className="new-analysis-cancel-btn">
               Cancelar

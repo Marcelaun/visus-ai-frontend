@@ -5,6 +5,9 @@ import './ProbabilityBars.css';
 
 // Recebe a lista de probabilidades
 const ProbabilityBars = ({probabilities}) => {
+  if (!probabilities || !Array.isArray(probabilities) || probabilities.length === 0) {
+    return <div className="prob-bars-empty">Dados de probabilidade indisponíveis.</div>;
+  }
   // Encontra o maior valor para destacar
   const maxValue = Math.max(...probabilities.map((p) => p.value));
 

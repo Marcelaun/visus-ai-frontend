@@ -1,0 +1,35 @@
+.patient-dash-container {
+    background-color: #f8f9fa; min-height: 100vh; font-family: 'Inter', sans-serif;
+    margin-top: 6rem;
+}
+.patient-header {
+    background: white; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0;
+}
+.header-brand { display: flex; gap: 1rem; align-items: center; }
+.header-brand img { height: 40px; }
+.header-brand h1 { margin: 0; font-size: 1.2rem; color: #333; }
+.header-brand p { margin: 0; font-size: 0.8rem; color: #666; }
+.btn-logout-patient {
+    border: 1px solid #ddd; background: transparent; padding: 0.5rem 1rem; border-radius: 6px; cursor: pointer;
+}
+
+.patient-content { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+
+.exam-card {
+    background: white; border-radius: 12px; padding: 1.5rem; margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.03); cursor: pointer; transition: transform 0.2s;
+}
+.exam-card:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+
+.exam-icon img { width: 30px; opacity: 0.7; }
+.exam-info { flex: 1; }
+.exam-date { font-size: 0.85rem; color: #888; display: block; margin-bottom: 4px; }
+.exam-doctor { font-size: 1.1rem; font-weight: 600; color: #333; margin: 0; }
+
+.status-badge { padding: 4px 10px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+.status-normal { background: #d1fae5; color: #065f46; }
+.status-warning { background: #fef3c7; color: #92400e; }
+.status-danger { background: #fee2e2; color: #991b1b; }
+.arrow-icon { color: #ccc; margin-left: 10px; }

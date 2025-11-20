@@ -1,0 +1,287 @@
+/* Importando a fonte */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* --- Container da Página --- */
+.patient-details-container {
+  font-family: 'Inter', sans-serif;
+  max-width: 800px;
+  margin: 6rem auto 4rem; /* Espaço para navbar fixa */
+  padding: 0 1.5rem;
+}
+
+/* --- Cabeçalho --- */
+.details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.details-header h2 {
+  font-size: 1.75rem;
+  color: #333;
+  font-weight: 700;
+  margin: 0;
+}
+
+.back-btn {
+  background-color: white;
+  border: 1px solid #d1d5db;
+  color: #666;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.back-btn:hover {
+  background-color: #f3f4f6;
+  border-color: #9ca3af;
+  color: #333;
+}
+
+/* --- Formulário (Card Principal) --- */
+.details-form {
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Títulos das Seções */
+.details-form h3 {
+  color: #33b9b9; /* Cor do tema */
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 0.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.details-form h3:first-of-type {
+  margin-top: 0;
+}
+
+/* Linhas do Formulário */
+.form-row {
+  display: grid;
+  grid-template-columns: 180px 1fr; /* Label fixa, Input flexível */
+  align-items: center;
+  margin-bottom: 1.2rem;
+}
+
+.form-row label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+}
+
+/* --- Estilo dos Inputs (A Mágica acontece aqui) --- */
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+/* 1. Estilo quando está EDITANDO (Ativo) */
+.form-row input:not(:disabled),
+.form-row select:not(:disabled),
+.form-row textarea:not(:disabled) {
+  background-color: #fff;
+  border: 1px solid #d1d5db;
+  color: #111;
+}
+
+.form-row input:focus,
+.form-row select:focus {
+  outline: none;
+  border-color: #33b9b9;
+  box-shadow: 0 0 0 3px rgba(51, 185, 185, 0.1);
+}
+
+/* 2. Estilo quando está APENAS VENDO (Desabilitado) */
+.form-row input:disabled,
+.form-row select:disabled,
+.form-row textarea:disabled {
+  background-color: #f9fafb; /* Cinza bem clarinho */
+  border: 1px solid transparent; /* Sem borda visível */
+  color: #374151; /* Cinza escuro para leitura */
+  font-weight: 500;
+  cursor: default;
+  /* Remove a aparência padrão de disabled do navegador */
+  opacity: 1; 
+  -webkit-text-fill-color: #374151;
+}
+
+/* --- Botões de Ação --- */
+.form-actions {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid #f0f0f0;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.edit-btn, .save-btn, .cancel-btn {
+  padding: 0.8rem 2rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.edit-btn:hover, .save-btn:hover, .cancel-btn:hover {
+  opacity: 0.9;
+}
+
+/* Botão Editar (Azul/Tema) */
+.edit-btn {
+  background-color: #33b9b9;
+  color: white;
+}
+
+/* Botão Salvar (Verde) */
+.save-btn {
+  background-color: #27ae60;
+  color: white;
+}
+
+/* Botão Cancelar (Cinza/Vermelho) */
+.cancel-btn {
+  background-color: #e5e7eb;
+  color: #333;
+}
+.cancel-btn:hover {
+  background-color: #d1d5db;
+}
+
+/* --- Responsividade (Mobile) --- */
+@media (max-width: 768px) {
+  .patient-details-container {
+    margin-top: 5rem;
+    padding: 0 1rem;
+  }
+
+  .details-form {
+    padding: 1.5rem;
+  }
+
+  .form-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .form-row label {
+    font-size: 0.85rem;
+    color: #777;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse; /* Salvar em cima no mobile */
+  }
+
+  .edit-btn, .save-btn, .cancel-btn {
+    width: 100%;
+    padding: 1rem;
+  }
+}
+
+
+.patient-history-section {
+    margin-top: 3rem;
+}
+
+.patient-history-section h3 {
+    color: #33b9b9;
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 0.5rem;
+}
+
+.history-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.history-card {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.history-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    border-color: #33b9b9;
+}
+
+.history-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+.history-date {
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+}
+
+.history-card-body {
+    margin-bottom: 1rem;
+}
+.history-label {
+    font-size: 0.85rem; color: #888; margin-bottom: 4px;
+}
+.history-badge {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+.history-eye {
+    font-size: 0.9rem; color: #555;
+}
+
+.history-card-footer {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #33b9b9;
+    text-align: right;
+}
+
+.new-analysis-btn {
+    background-color: #27ae60;
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+.new-analysis-btn:hover {
+    background-color: #219150;
+}

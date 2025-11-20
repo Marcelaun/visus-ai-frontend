@@ -1,41 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import apiClient from '../../api/axiosConfig';
 import './AnalysisHistory.css';
-import BarIcon from '../../assets/chart-bar-vertical.svg';
 
-const mockData = [
-  {
-    id: 1,
-    paciente: 'Maria Santos',
-    olho: 'Direito',
-    resultado: 'RD Moderada',
-    resultadoTipo: 'moderada', // Para o CSS
-    dataHora: '08/09/2025 14:32',
-    status: 'Laudo Liberado',
-    statusTipo: 'liberado',
-  },
-  {
-    id: 2,
-    paciente: 'José Silva',
-    olho: 'Esquerdo',
-    resultado: 'Normal',
-    resultadoTipo: 'normal',
-    dataHora: '08/09/2025 11:32',
-    status: 'Laudo Liberado',
-    statusTipo: 'liberado',
-  },
-  {
-    id: 3,
-    paciente: 'Ana Pereira',
-    olho: 'Direito',
-    resultado: 'RD Leve',
-    resultadoTipo: 'leve',
-    dataHora: '07/09/2025 09:15',
-    status: 'Em Análise',
-    statusTipo: 'analise',
-  },
-];
-
-
+// Ícones (sem alteração)
 const IconeHistorico = () => (
   <svg className="header-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25A1.125 1.125 0 019.75 19.875V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
@@ -49,91 +17,183 @@ const IconeBusca = () => (
 );
 
 const AnalysisHistory = () => {
+  const navigate = useNavigate();
+
+  // Estados de Dados
+  const [analyses, setAnalyses] = useState([]);
+  const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
-  
-  const filteredData = mockData.filter(item => 
-    item.paciente.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.resultado.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    item.dataHora.includes(searchTerm)
-  );
+
+  // Estados de Paginação
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+
+  // Função de busca com paginação
+  const fetchAnalyses = async (page = 1) => {
+    setLoading(true);
+    try {
+      // Passamos a página na URL
+      const response = await apiClient.get(`/api/analyses?page=${page}`);
+      
+      // O Laravel retorna os dados dentro de 'data' quando usamos paginate()
+      setAnalyses(response.data.data);
+      
+      // Atualiza metadados
+      setCurrentPage(response.data.current_page);
+      setTotalPages(response.data.last_page);
+      setTotalItems(response.data.total);
+      
+      setLoading(false);
+    } catch (error) {
+      console.error("Erro ao buscar histórico:", error);
+      setLoading(false);
+    }
+  };
+
+  // Carrega a página 1 ao iniciar
+  useEffect(() => {
+    fetchAnalyses(1);
+  }, []);
+
+  // Navegação de páginas
+  const handleNextPage = () => {
+    if (currentPage < totalPages) fetchAnalyses(currentPage + 1);
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) fetchAnalyses(currentPage - 1);
+  };
+
+  // Filtro (Nota: Isso filtra apenas a página ATUAL carregada)
+  // Para filtrar todo o banco, precisaríamos enviar o termo de busca para a API
+  const filteredData = analyses.filter(item => {
+    const termo = searchTerm.toLowerCase();
+    const pacienteNome = item.patient?.nome?.toLowerCase() || '';
+    const resultado = item.ai_summary_diagnosis?.toLowerCase() || '';
+    const data = new Date(item.exam_date).toLocaleDateString('pt-BR');
+
+    return pacienteNome.includes(termo) || resultado.includes(termo) || data.includes(termo);
+  });
+
+  const getStatusColorClass = (diagnosis) => {
+    if (!diagnosis) return '';
+    const diag = diagnosis.toLowerCase();
+    if (diag.includes('normal')) return 'tipo-normal';
+    if (diag.includes('leve')) return 'tipo-leve';
+    if (diag.includes('moderada')) return 'tipo-moderada';
+    if (diag.includes('severa') || diag.includes('proliferativa')) return 'tipo-severa';
+    return '';
+  };
 
   return (
-    <>
     <div className="analysis-history-main-container">
-     
+      
       <div className="historico-header">
         <IconeHistorico />
         <h2>Histórico de Análises</h2>
       </div>
 
-      
       <div className="historico-controls">
         <div className="search-bar-wrapper">
           <IconeBusca />
           <input
             type="text"
             className="search-input"
-            placeholder="Buscar por paciente, data ou resultado..."
+            placeholder="Filtrar nesta página..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
+        {/* O botão filtrar é visual, pois o filtro é em tempo real no input */}
         <button className="filter-button">Filtrar</button>
       </div>
 
-      
       <div className="historico-table">
-        
         
         <div className="table-header">
           <span className="header-cell">Paciente</span>
           <span className="header-cell">Olho</span>
           <span className="header-cell">Resultado</span>
-          <span className="header-cell">Data/Hora</span>
+          <span className="header-cell">Data</span>
           <span className="header-cell">Status</span>
           <span className="header-cell">Ações</span>
         </div>
 
-        
         <div className="table-body">
-          {filteredData.map((item) => (
-            <div key={item.id} className="table-row">
-              
-              <div className="cell-paciente" data-label="Paciente">
-                <strong>{item.paciente}</strong>
+          {loading ? (
+             <p style={{padding: '2rem', textAlign: 'center'}}>Carregando histórico...</p>
+          ) : filteredData.length === 0 ? (
+             <p style={{padding: '2rem', textAlign: 'center'}}>Nenhuma análise encontrada.</p>
+          ) : (
+            filteredData.map((item) => (
+              <div key={item.id} className="table-row">
+                
+                <div className="cell-paciente" data-label="Paciente">
+                  <strong>{item.patient ? item.patient.nome : 'Paciente Removido'}</strong>
+                </div>
+                
+                <div className="cell-olho" data-label="Olho">
+                  {item.eye_examined}
+                </div>
+                
+                <div className="cell-resultado" data-label="Resultado">
+                  <span className={`resultado-text ${getStatusColorClass(item.ai_summary_diagnosis)}`}>
+                    {item.ai_summary_diagnosis}
+                  </span>
+                </div>
+                
+                <div className="cell-data" data-label="Data">
+                  {new Date(item.exam_date).toLocaleDateString('pt-BR')}
+                </div>
+                
+                <div className="cell-status" data-label="Status">
+                  <span className={`status-tag status-${item.status}`}>
+                    {item.status === 'pendente' ? 'Em Análise' : 'Concluído'}
+                  </span>
+                </div>
+                
+                <div className="cell-acoes" data-label="Ações">
+                  <button 
+                    className="action-button"
+                    onClick={() => navigate(`/analysisResult/${item.id}`)}
+                  >
+                    Ver
+                  </button>
+                </div>
+                
               </div>
-              
-              <div className="cell-olho" data-label="Olho">
-                {item.olho}
-              </div>
-              
-              <div className="cell-resultado" data-label="Resultado">
-                <span className={`resultado-text ${'tipo-' + item.resultadoTipo}`}>
-                  {item.resultado}
-                </span>
-              </div>
-              
-              <div className="cell-data" data-label="Data/Hora">
-                {item.dataHora}
-              </div>
-              
-              <div className="cell-status" data-label="Status">
-                <span className={`status-tag ${'status-' + item.statusTipo}`}>
-                  {item.status}
-                </span>
-              </div>
-              
-              <div className="cell-acoes" data-label="Ações">
-                <button className="action-button">Ver</button>
-              </div>
-              
-            </div>
-          ))}
+            ))
+          )}
         </div>
+        
+        {/* --- PAGINAÇÃO --- */}
+        <div className="historico-pages-container">
+            <p className="historico-page-info">
+              Mostrando {filteredData.length} de {totalItems} registros 
+              (Página {currentPage} de {totalPages})
+            </p>
+            <div className="historico-page-buttons">
+              <button 
+                className="historico-nav-btn prev"
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                Anterior
+              </button>
+              <button 
+                className="historico-nav-btn next"
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages}
+              >
+                Próxima
+              </button>
+            </div>
+        </div>
+
       </div>
     </div>
-    </>
-  )
+  );
 }
 
-export default AnalysisHistory
+export default AnalysisHistory;

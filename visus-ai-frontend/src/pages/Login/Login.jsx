@@ -1,7 +1,7 @@
 import './Login.css';
 import LogoVisus from '../../assets/Logo.svg';
 
-import {useNavigate, Link} from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import {useState} from 'react';
 
 import React from 'react';
@@ -12,7 +12,6 @@ const Login = ({onLogin}) => {
   // const navigate = useNavigate(); // PODE REMOVER ESTA LINHA
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState();
-  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -76,6 +75,13 @@ const Login = ({onLogin}) => {
             </h3>
             <Link to="/createAccount" className="login-create-account-link">
               Criar Conta
+            </Link>
+
+            <h3 className="login-create-account-title">
+              É paciente? entre por aqui!
+            </h3>
+            <Link to="/patient-login" className="login-create-account-link">
+              Entrar como paciente
             </Link>
           </div>
         </div>

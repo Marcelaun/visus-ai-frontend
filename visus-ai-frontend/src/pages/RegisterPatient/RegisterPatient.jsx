@@ -1,8 +1,10 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import apiClient from '../../api/axiosConfig'; // Importe o apiClient
 import './RegisterPatient.css'; // Vamos usar o novo CSS
 
 const RegisterPatient = () => {
+  const navigate = useNavigate();
   // Seus estados estão perfeitos
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -16,22 +18,48 @@ const RegisterPatient = () => {
   const [diagnosisTime, setDiagnosisTime] = useState('');
   const [currentMedication, setCurrentMedication] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const dadosFormatados = {
+
+    // 1. Formata os dados para o padrão que o Laravel espera (snake_case)
+    //    Lembre-se: no banco é 'birth_date', no React é 'birthDate'.
+    const dadosParaEnviar = {
       nome: name,
-      email: email,
       cpf: cpf,
-      birthDate: birthDate,
+      birth_date: birthDate, // Mudou de camelCase para snake_case
       sexo: sexo,
       telefone: number,
-      tipoDiabetes: tipoDiabetes,
-      usaInsulina: usaInsulina,
-      diagnosisTime: diagnosisTime,
-      currentMedication: currentMedication,
+      email: email, // Se estiver vazio, o Laravel aceita null
+      
+      // Dados Clínicos
+      tipo_diabetes: tipoDiabetes, // snake_case
+      usa_insulina: usaInsulina,   // snake_case
+      diagnosis_time: diagnosisTime,
+      current_medication: currentMedication,
       comorbidities: comorbidities,
     };
-    console.log(dadosFormatados);
+
+    try {
+      // 2. Envia para a API
+      await apiClient.post('/api/patients', dadosParaEnviar);
+
+      // 3. Sucesso! Alerta o usuário e redireciona
+      alert('Paciente cadastrado com sucesso!');
+      navigate('/patientList'); // Redireciona para a lista de pacientes
+
+    } catch (error) {
+      // 4. Tratamento de Erro
+      console.error("Erro ao cadastrar paciente:", error);
+      
+      if (error.response && error.response.data.errors) {
+        // Se o Laravel mandou erros de validação (ex: email já existe)
+        // Mostra o primeiro erro encontrado
+        const mensagens = Object.values(error.response.data.errors).flat();
+        alert(`Erro: ${mensagens[0]}`);
+      } else {
+        alert('Ocorreu um erro ao cadastrar o paciente. Tente novamente.');
+      }
+    }
   };
 
   return (
@@ -157,10 +185,10 @@ const RegisterPatient = () => {
                 <option value="" disabled>
                   Selecione...
                 </option>
-                <option value="tipo1">Tipo 1</option>
-                <option value="tipo2">Tipo 2</option>
-                <option value="gestacional">Gestacional</option>
-                <option value="nao_sabe">Não sabe</option>
+                <option value="Tipo 1">Tipo 1</option>
+                <option value="Tipo 2">Tipo 2</option>
+                <option value="Gestacional">Gestacional</option>
+                <option value="Não Sabe">Não sabe</option>
               </select>
             </div>
 

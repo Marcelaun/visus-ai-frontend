@@ -114,3 +114,28 @@
   background-color: #e5e7eb;
   color: #333;
 }
+
+.profile-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: inherit;
+    color: #333;
+    background-color: #f9fafb;
+}
+.profile-input:focus {
+    outline: none;
+    border-color: #33b9b9;
+    box-shadow: 0 0 0 2px rgba(51, 185, 185, 0.1);
+}
+
+.fade-in {
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}

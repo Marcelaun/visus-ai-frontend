@@ -1,29 +1,17 @@
 // src/components/Navbar/Navbar.jsx
 
 import React, {useState, useEffect} from 'react';
-// 1. Importe o useLocation para detectar a rota
-import {useLocation, Link, useNavigate} from 'react-router-dom';
+import {useLocation, useNavigate} from 'react-router-dom';
 import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Box,
-  Button,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemButton,
-  ListItemText,
-  ListItemIcon,
-  Divider,
+  AppBar, Toolbar, Typography, Box, Button, IconButton, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider
 } from '@mui/material';
+
+// Ícones
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import WorkHistory from '@mui/icons-material/WorkHistory';
 import PeopleIconAdd from '@mui/icons-material/GroupAdd';
-import PostAddIcon from '@mui/icons-material/PostAdd';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -34,48 +22,104 @@ import LogoVisusAi from '../../assets/Logo.svg';
 
 import './Navbar.css';
 
-// 2. Adicionei 'path' a cada item para a lógica do título funcionar
-const navItems = [
-  {text: 'Dashboard', icon: <DashboardIcon />, path: '/dashboard'},
-  {text: 'Pacientes', icon: <PeopleIcon />, path: '/patientList'},
-  {text: 'Cadastrar Paciente', icon: <PeopleIconAdd />, path: '/patientRegister'},
-  {text: 'Nova Análise', icon: <NoteAddIcon />, path: '/newAnalysis'},
-  {text: 'Resultado Análise', icon: <BarChartIcon />, path: '/analysisResult'},
-  {text: 'Seu Resultado da Triagem', icon: <AssessmentIcon />, path: '/patientAnalysisResult'},
-  {text: 'Histórico Análises', icon: <WorkHistory />, path: '/analysisHistory'},
-  // {text: 'Novo Laudo', icon: <PostAddIcon />, path: '/novo-laudo'},
-  {text: 'Painel Administrativo', icon: <AdminPanelIcon />, path: '/adminPanel'},
-  {text: 'Perfil', icon: <PersonIcon />, path: '/profile'},
-  {text: 'Sair', icon: <LogoutIcon />, path: '/login'},
+// 1. ADICIONAMOS A PROPRIEDADE 'roles' PARA CADA ITEM
+// 'professional': Acesso para profissionais de saúde
+// 'admin': Acesso para administradores
+// 'patient': Acesso para pacientes
+const allNavItems = [
+  {
+    text: 'Dashboard', 
+    icon: <DashboardIcon />, 
+    path: '/dashboard', 
+    roles: ['professional', 'admin'] 
+  },
+  {
+    text: 'Pacientes', 
+    icon: <PeopleIcon />, 
+    path: '/patientList', 
+    roles: ['professional', 'admin']
+  },
+  {
+    text: 'Cadastrar Paciente', 
+    icon: <PeopleIconAdd />, 
+    path: '/patientRegister', 
+    roles: ['professional', 'admin']
+  },
+  {
+    text: 'Nova Análise', 
+    icon: <NoteAddIcon />, 
+    path: '/newAnalysis', 
+    roles: ['professional', 'admin']
+  },
+  // { // Este item parece ser o mesmo que 'Histórico', comentei para não duplicar
+  //   text: 'Resultado Análise', 
+  //   icon: <BarChartIcon />, 
+  //   path: '/analysisResult', 
+  //   roles: ['professional', 'admin']
+  // },
+  {
+    text: 'Seu Resultado', // Renomeei para ficar claro
+    icon: <AssessmentIcon />, 
+    path: '/patientAnalysisResult', 
+    roles: ['patient'] // APENAS PARA PACIENTES
+  },
+  {
+    text: 'Histórico Análises', 
+    icon: <WorkHistory />, 
+    path: '/analysisHistory', 
+    roles: ['professional', 'admin']
+  },
+  {
+    text: 'Painel Administrativo', 
+    icon: <AdminPanelIcon />, 
+    path: '/adminPanel', 
+    roles: ['admin'] // APENAS PARA ADMINS
+  },
+  {
+    text: 'Perfil', 
+    icon: <PersonIcon />, 
+    path: '/profile', 
+    roles: ['professional', 'admin', 'patient'] // TODOS PODEM VER
+  },
+  {
+    text: 'Sair', 
+    icon: <LogoutIcon />, 
+    path: '/login', 
+    roles: ['professional', 'admin', 'patient'] // TODOS PODEM SAIR
+  },
 ];
 
-// const settings = ['Sair']; // Este array não está mais sendo usado
-
-const Navbar = ({ onLogout }) => {
+// 2. RECEBA A PROP 'user'
+const Navbar = ({ onLogout, user }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  // 3. Estado para guardar o título da página atual
   const [pageTitle, setPageTitle] = useState('');
-  // 4. Obter o objeto de localização
+  
   const location = useLocation();
   const navigate = useNavigate();
+
+  // 3. FILTRE OS ITENS COM BASE NA ROLE DO USUÁRIO
+  // Se 'user' não existir ainda (carregando), mostra lista vazia ou básica
+  const userRole = user?.role || 'guest'; 
+
+  const navItems = allNavItems.filter(item => {
+    return item.roles.includes(userRole);
+  });
+
 
   const handleNavigation = (navPath) => {
     navigate(navPath);
   };
 
-  // 5. Efeito que roda toda vez que a rota (location) muda
   useEffect(() => {
-    // Encontra o item de navegação correspondente ao caminho atual
+    // Usa a lista filtrada 'navItems' para achar o título
     const currentNavItem = navItems.find((item) => item.path === location.pathname);
-
     if (currentNavItem) {
       setPageTitle(currentNavItem.text);
     } else {
-      // Define um título padrão se a rota não for encontrada
       setPageTitle('Visus');
     }
-  }, [location]); // Dependência: o efeito roda quando a 'location' muda
+  }, [location, navItems]); // Adicione navItems nas dependências
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 10);
@@ -96,18 +140,19 @@ const Navbar = ({ onLogout }) => {
 
       <Divider />
       <List>
+        {/* Usa a lista filtrada 'navItems' */}
         {navItems.map((item) => (
           <ListItem key={item.text} disablePadding>
             <ListItemButton onClick={() => {
-  if (item.text === 'Sair') {
-    onLogout(); // <-- CHAMA A FUNÇÃO DE LOGOUT REAL
-  } else {
-    handleNavigation(item.path); // Navega para outras páginas
-  }
-}}>
-  <ListItemIcon className="drawer-nav-icon">{item.icon}</ListItemIcon>
-  <ListItemText primary={item.text} className="drawer-nav-item" />
-</ListItemButton>
+              if (item.text === 'Sair') {
+                onLogout(); 
+              } else {
+                handleNavigation(item.path); 
+              }
+            }}>
+              <ListItemIcon className="drawer-nav-icon">{item.icon}</ListItemIcon>
+              <ListItemText primary={item.text} className="drawer-nav-item" />
+            </ListItemButton>
           </ListItem>
         ))}
       </List>
@@ -125,11 +170,9 @@ const Navbar = ({ onLogout }) => {
             onClick={handleDrawerToggle}
             className="navbar-menu-icon"
           >
-            {/* O ícone de Menu agora será maior devido ao CSS */}
             <MenuIcon />
           </IconButton>
 
-          {/* 6. Título dinâmico para mobile */}
           <Typography
             variant="h6"
             style={{fontSize: 18, fontFamily: 'Inter'}}
@@ -139,29 +182,29 @@ const Navbar = ({ onLogout }) => {
             {pageTitle}
           </Typography>
 
-          {/* Itens do Desktop */}
           <img src={LogoVisusAi} className="navbar-brand-logo" alt="Logo da Plataforma Visus" />
           <Typography variant="h6" component="div" className="navbar-brand-title">
             Plataforma de Triagem RD
           </Typography>
 
           <Box className="navbar-desktop-links">
-  {navItems.map((item) => (
-    <Button
-      onClick={() => {
-        if (item.text === 'Sair') {
-          onLogout(); // <-- CHAMA A FUNÇÃO DE LOGOUT REAL
-        } else {
-          handleNavigation(item.path); // Navega para outras páginas
-        }
-      }}
-      key={item.text}
-      className="navbar-link"
-    >
-      {item.text}
-    </Button>
-  ))}
-</Box>
+            {/* Usa a lista filtrada 'navItems' */}
+            {navItems.map((item) => (
+              <Button
+                onClick={() => {
+                  if (item.text === 'Sair') {
+                    onLogout();
+                  } else {
+                    handleNavigation(item.path);
+                  }
+                }}
+                key={item.text}
+                className="navbar-link"
+              >
+                {item.text}
+              </Button>
+            ))}
+          </Box>
         </Toolbar>
       </AppBar>
 

@@ -1,107 +1,146 @@
 import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import {useParams, useNavigate} from 'react-router-dom';
+import apiClient from '../../api/axiosConfig';
+
 import AnalysisResultDocIcon from '../../assets/analysis-result-doc-icon.svg';
 import BulbIcon from '../../assets/Bulb.svg';
 import ChartIcon from '../../assets/chart-bar-vertical.svg';
 import UserIcon from '../../assets/user-icon.svg';
-import ImageIcon from '../../assets/image-icon.svg';
+import ImageIcon from '../../assets/image-icon.svg'; 
 
 import ProbabilityBars from '../../components/ProbabilityBars/ProbabilityBars';
 
 import './AnalysisResult.css';
 
-// ... (Seu mockResults e funções de gravidade vêm aqui, sem mudança) ...
-// 1. DADOS DE EXEMPLO COMPLETOS
-const mockResults = [
-  {
-    id: 1,
-    url: 'https://placehold.co/600x600/000/fff?text=Olho+Campo+1',
-    label: 'Campo 1 (Mácula)',
-    diagnosis: 'Normal',
-    probabilities: [
-      {label: 'Normal', value: 95.2},
-      {label: 'RD Leve', value: 3.1},
-      {label: 'RD Moderada', value: 1.5},
-      {label: 'RD Severa', value: 0.1},
-      {label: 'RD Proliferativa', value: 0.1},
-    ],
-    borderColor: 'tipo-Normal',
-  },
-  {
-    id: 3,
-    url: 'https://placehold.co/600x600/666/fff?text=Olho+Campo+3',
-    label: 'Campo 3 (Temporal)',
-    diagnosis: 'RD Moderada',
-    probabilities: [
-      {label: 'Normal', value: 5.8},
-      {label: 'RD Leve', value: 15.2},
-      {label: 'RD Moderada', value: 78.0},
-      {label: 'RD Severa', value: 0.9},
-      {label: 'RD Proliferativa', value: 0.1},
-    ],
-    borderColor: 'tipo-RD',
-  },
-  {
-    id: 2,
-    url: 'https://placehold.co/600x600/333/fff?text=Olho+Campo+2',
-    label: 'Campo 2 (Nervo Óptico)',
-    diagnosis: 'RD Leve',
-    probabilities: [
-      {label: 'Normal', value: 10.5},
-      {label: 'RD Leve', value: 88.3},
-      {label: 'RD Moderada', value: 1.0},
-      {label: 'RD Severa', value: 0.1},
-      {label: 'RD Proliferativa', value: 0.1},
-    ],
-    borderColor: 'tipo-RD',
-  },
-];
-
-// 2. Lógica de gravidade (sem alteração)
-const gravidade = {
-  Normal: 0,
-  'RD Leve': 1,
-  'RD Moderada': 2,
-  'RD Severa': 3,
-  'RD Proliferativa': 4,
-};
-const getMaisGrave = (resultados) => {
-  return [...resultados].sort((a, b) => gravidade[b.diagnosis] - gravidade[a.diagnosis])[0];
-};
-
 const AnalysisResult = () => {
+  const { id } = useParams(); 
+  const navigate = useNavigate(); // Importante para redirecionar após excluir
+
+  // Estados
+  const [analysisData, setAnalysisData] = useState(null);
+  const [imagesList, setImagesList] = useState([]); 
+  const [selectedItem, setSelectedItem] = useState(null); 
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [professionalValidation, setProfessionalValidation] = useState('');
-  const [finalDiagnosis, setFinalDiagnosis] = useState(null);
-  const [selectedItem, setSelectedItem] = useState(null);
+  const [downloading, setDownloading] = useState(false);
 
   useEffect(() => {
-    const resultadoMaisGrave = getMaisGrave(mockResults);
-    setFinalDiagnosis(resultadoMaisGrave);
-    setSelectedItem(resultadoMaisGrave);
-  }, []);
+    const fetchAnalysis = async () => {
+      try {
+        const response = await apiClient.get(`/api/analyses/${id}`);
+        const data = response.data;
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const dadosFormatados = {
-      professionalValidation: professionalValidation,
+        const formattedImages = data.images.map(img => {
+          let parsedProbabilities = [];
+          try {
+             parsedProbabilities = typeof img.ai_probabilities === 'string' 
+              ? JSON.parse(img.ai_probabilities) 
+              : img.ai_probabilities;
+             if (!Array.isArray(parsedProbabilities)) parsedProbabilities = [];
+          } catch (e) {
+             parsedProbabilities = [];
+          }
+
+          return {
+            id: img.id,
+            url: img.file_path.startsWith('http') ? img.file_path : `https://vziwtdyxiozjkkppxlcl.supabase.co/storage/v1/object/public/exam_images/${img.file_path}`, 
+            label: img.file_name, 
+            diagnosis: img.ai_diagnosis,
+            probabilities: parsedProbabilities, 
+            borderColor: `tipo-${img.ai_diagnosis.split(' ')[0]}` 
+          };
+        });
+
+        setAnalysisData(data);
+        setImagesList(formattedImages); 
+        setSelectedItem(formattedImages[0]); 
+        setProfessionalValidation(data.professional_conduct || '');
+
+      } catch (err) {
+        console.error("Erro ao carregar análise:", err);
+        setError("Não foi possível carregar os resultados.");
+      } finally {
+        setIsLoading(false);
+      }
     };
-    console.log(dadosFormatados);
+
+    if (id) {
+      fetchAnalysis();
+    }
+  }, [id]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!professionalValidation.trim()) {
+        alert("Por favor, escreva uma conduta médica antes de salvar.");
+        return;
+    }
+    try {
+        await apiClient.put(`/api/analyses/${id}`, {
+            professional_conduct: professionalValidation
+        });
+        alert("Laudo salvo e finalizado com sucesso!");
+    } catch (error) {
+        console.error("Erro ao salvar:", error);
+        alert("Erro ao salvar o laudo.");
+    }
   };
 
-  const handleSketchSave = () => {
-    console.log('Rascunho Salvo');
+  // --- NOVA FUNÇÃO: DELETAR ---
+  const handleDelete = async () => {
+    if (!window.confirm("Tem certeza absoluta? Esta análise e todas as imagens serão apagadas permanentemente.")) {
+        return;
+    }
+
+    try {
+        await apiClient.delete(`/api/analyses/${id}`);
+        alert("Análise excluída com sucesso.");
+        
+        // Redireciona de volta para o histórico geral
+        navigate('/analysisHistory'); 
+        
+    } catch (error) {
+        console.error("Erro ao excluir:", error);
+        alert("Erro ao excluir a análise.");
+    }
   };
 
-  if (!selectedItem || !finalDiagnosis) {
-    return <div style={{marginTop: '100px', textAlign: 'center'}}>Carregando...</div>;
-  }
+  const handleDownloadPdf = async () => {
+      if (!analysisData) return;
+      setDownloading(true);
+      try {
+          const response = await apiClient.get(`/api/laudo/${id}/pdf`, {
+              responseType: 'blob' 
+          });
+          const url = window.URL.createObjectURL(new Blob([response.data]));
+          const link = document.createElement('a');
+          link.href = url;
+          link.setAttribute('download', `Laudo_${analysisData.patient.nome}_${analysisData.id}.pdf`);
+          document.body.appendChild(link);
+          link.click();
+          link.remove();
+          window.URL.revokeObjectURL(url);
+      } catch (err) {
+          console.error("Erro no download:", err);
+          alert("Erro ao gerar PDF. Tente novamente.");
+      } finally {
+          setDownloading(false);
+      }
+  };
+
+
+  if (isLoading) return <div style={{marginTop: '100px', textAlign: 'center'}}>Carregando resultados...</div>;
+  if (error) return <div style={{marginTop: '100px', textAlign: 'center', color: 'red'}}>{error}</div>;
+  if (!analysisData || !selectedItem) return null;
 
   return (
     <>
       <div className="analysis-result-main-container">
-        {/* --- ESTA É A NOVA DIV DA COLUNA ESQUERDA --- */}
+        
         <div className="analysis-result-content-column">
-          {/* --- TÍTULO DO RESULTADO FINAL --- */}
+          
+          {/* Veredito */}
           <div className="analysis-result-ai-verdict-container">
             <div className="analysis-result-title-container">
               <img src={ChartIcon} alt="Ícone Gráfico" className="analysis-result-title-icon" />
@@ -109,12 +148,12 @@ const AnalysisResult = () => {
             </div>
             <div className="analysis-result-verdict-box">
               <h3 className="analysis-result-verdict-title">
-                Resultado Final (Mais Grave): {finalDiagnosis.diagnosis.toUpperCase()}
+                Resultado Final (Mais Grave): {analysisData.ai_summary_diagnosis.toUpperCase()}
               </h3>
             </div>
           </div>
 
-          {/* === BLOCO DE ANÁLISE INTERATIVO === */}
+          {/* Imagens */}
           <div className="analysis-result-exam-images-container">
             <div className="analysis-result-title-container">
               <img src={ImageIcon} alt="Ícone Imagem" className="analysis-result-title-icon" />
@@ -122,105 +161,73 @@ const AnalysisResult = () => {
             </div>
             <ProbabilityBars probabilities={selectedItem.probabilities} />
             <div className={`main-image-container ${selectedItem.borderColor}`}>
-              <img src={selectedItem.url} alt={selectedItem.label} className="main-exam-image" />
+              <img 
+                src={selectedItem.url} 
+                alt={selectedItem.label} 
+                className="main-exam-image" 
+              />
+               <div className="main-image-diagnosis">
+                  <span className="main-image-diag-label">Diagnóstico desta imagem:</span>
+                  <span className={`main-image-diag-value ${selectedItem.borderColor}`}>
+                    {selectedItem.diagnosis}
+                  </span>
+                </div>
             </div>
             <div className="thumbnail-gallery-grid">
-              {mockResults.map((item) => (
-                <div
-                  key={item.id}
+              {imagesList.map((item) => (
+                <div 
+                  key={item.id} 
                   className={`exam-thumbnail-item ${selectedItem.id === item.id ? 'is-active' : ''}`}
-                  onClick={() => setSelectedItem(item)}
+                  onClick={() => setSelectedItem(item)} 
                 >
                   <img src={item.url} alt={item.label} className="exam-thumbnail-preview" />
                   <span className="exam-thumbnail-label">{item.label}</span>
-                  <span
-                    className={`exam-thumbnail-diagnosis ${'tipo-' + item.diagnosis.split(' ')[0]}`}
-                  >
+                  <span className={`exam-thumbnail-diagnosis ${item.borderColor}`}>
                     {item.diagnosis}
                   </span>
                 </div>
               ))}
             </div>
           </div>
-
-          {/* --- RECOMENDAÇÕES --- */}
+          
+          {/* Recomendações */}
           <div className="analysis-result-ai-automatic-recomendations-main-container">
-            <div className="analysis-result-title-container">
-              <img src={BulbIcon} alt="Ícone Lampada" className="analysis-result-title-icon" />
-              <h4 className="analysis-result-data-title">
-                Recomendações Automáticas (Sugestão da IA)
-              </h4>
-            </div>
-            <div className="analysis-result-ai-text-recomendations-container">
-              <div className="analysis-result-ai-text-suggestion-container">
-                <h4 className="analysis-result-ai-text-suggestion-title">
-                  SUGESTÃO: ENCAMINHAMENTO PARA OFTALMOLOGISTA
-                </h4>
-                <p className="analysis-result-ai-text-suggestion-text">
-                  Com base na detecção, sugere-se: Agendamento com especialista em retina (até 30
-                  dias), exames complementares (Angiofluoresceinografia, OCT), controle glicêmico
-                  rigoroso e reavaliação a cada 3-4 meses.
-                </p>
-              </div>
-              <div className="analysis-result-ai-warning-container">
-                <h3 className="analysis-result-ai-warning-title">IMPORTANTE!!: </h3>
-                <p className="analysis-result-ai-warning-text">
-                  Este Resultado é uma triagem automatizada e não substitui a avaliação médica. o
-                  profissional deve validar o resultado e definir a conduta final.
-                </p>
-              </div>
-            </div>
+             <div className="analysis-result-title-container">
+               <img src={BulbIcon} alt="Lâmpada" className="analysis-result-title-icon" />
+               <h4 className="analysis-result-data-title">Recomendações Automáticas</h4>
+             </div>
+             <div className="analysis-result-ai-text-recomendations-container">
+                <div className="analysis-result-ai-text-suggestion-container">
+                    <h4 className="analysis-result-ai-text-suggestion-title">SUGESTÃO: ENCAMINHAMENTO</h4>
+                    <p className="analysis-result-ai-text-suggestion-text">
+                        Com base na detecção ({analysisData.ai_summary_diagnosis}), sugere-se acompanhamento especializado.
+                    </p>
+                </div>
+             </div>
           </div>
 
-          {/* --- CONDUTA FINAL --- */}
+          {/* Conduta */}
           <div className="analysis-result-professional-conduct-main-container">
             <div className="analysis-result-title-container">
-              <img
-                src={AnalysisResultDocIcon}
-                alt="Ícone Documento"
-                className="analysis-result-title-icon"
-              />
-              <h4 className="analysis-result-data-title">Conduta Final do Profissional</h4>
+                <img src={AnalysisResultDocIcon} alt="Doc" className="analysis-result-title-icon" />
+                <h4 className="analysis-result-data-title">Conduta Final</h4>
             </div>
             <div className="analysis-result-professional-conduct-text-area-container">
-              <form
-                action=""
-                onSubmit={handleSubmit}
-                className="analysis-result-professional-conduct-form"
-              >
-                <label
-                  htmlFor="professional-validation"
-                  className="analysis-result-professional-validation-form-labels"
-                >
-                  Valide a Sugestão da IA e descreva a recomendação final para o paciente.
-                </label>
-                <textarea
-                  id="professional-validation"
-                  className="analysis-result-professional-validation-input-box"
-                  placeholder="EX: Encaminho o paciente para avaliação com oftalmologista. Recomendo agendamento prioritário. "
-                  value={professionalValidation}
-                  onChange={(e) => setProfessionalValidation(e.target.value)}
-                />
-                <input
-                  type="submit"
-                  value="Aprovar e Liberar Laudo"
-                  className="analysis-result-professional-submit-btn"
-                  id="clickSubmitButton"
-                  disabled={!professionalValidation}
-                />
-                <button
-                  type="button"
-                  onClick={handleSketchSave}
-                  className="analysis-result-professional-validation-save-sketch-btn"
-                >
-                  Salvar Rascunho
-                </button>
-              </form>
+                <form onSubmit={handleSubmit} className="analysis-result-professional-conduct-form">
+                    <textarea
+                        id="professional-validation"
+                        className="analysis-result-professional-validation-input-box"
+                        value={professionalValidation}
+                        onChange={(e) => setProfessionalValidation(e.target.value)}
+                        placeholder="Escreva seu laudo final..."
+                    />
+                    <input type="submit" value="Salvar Laudo" className="analysis-result-professional-submit-btn" />
+                </form>
             </div>
           </div>
-        </div>{' '}
-        {/* --- FIM DA NOVA COLUNA DA ESQUERDA --- */}
-        {/* --- COLUNA DIREITA (Sidebar) --- */}
+        </div>
+
+        {/* --- COLUNA DIREITA (SIDEBAR) --- */}
         <div className="analysis-result-sidebar-wrapper">
           <div className="analysis-result-patient-data-container">
             <div className="analysis-result-title-container">
@@ -231,34 +238,57 @@ const AnalysisResult = () => {
               <div className="analysis-result-patient-data-sub">
                 <div className="analysis-result-patient-data-label-container">
                   <p className="analysis-result-patient-data-label-title">Nome: </p>
-                  <p className="analysis-result-patient-data-value">Maria Santos</p>
+                  <p className="analysis-result-patient-data-value">{analysisData.patient.nome}</p>
                 </div>
                 <div className="analysis-result-patient-data-label-container">
                   <p className="analysis-result-patient-data-label-title">Idade: </p>
-                  <p className="analysis-result-patient-data-value">54 Anos</p>
+                  <p className="analysis-result-patient-data-value">
+                    {new Date().getFullYear() - new Date(analysisData.patient.birth_date).getFullYear()} Anos
+                  </p>
                 </div>
-                <div className="analysis-result-patient-data-label-container">
+                 <div className="analysis-result-patient-data-label-container">
                   <p className="analysis-result-patient-data-label-title">Tipo DM: </p>
-                  <p className="analysis-result-patient-data-value">Tipo 2</p>
+                  <p className="analysis-result-patient-data-value">{analysisData.patient.tipo_diabetes}</p>
                 </div>
               </div>
               <div className="analysis-result-patient-data-sub">
-                <div className="analysis-result-patient-data-label-container">
-                  <p className="analysis-result-patient-data-label-title">Data Exame: </p>
-                  <p className="analysis-result-patient-data-value">08/09/2025</p>
-                </div>
-                <div className="analysis-result-patient-data-label-container">
-                  <p className="analysis-result-patient-data-label-title">Olho: </p>
-                  <p className="analysis-result-patient-data-value">Direito</p>
-                </div>
-                <div className="analysis-result-patient-data-label-container">
-                  <p className="analysis-result-patient-data-label-title">Profissional: </p>
-                  <p className="analysis-result-patient-data-value">Dr. João Silva</p>
-                </div>
+                  <div className="analysis-result-patient-data-label-container">
+                    <p className="analysis-result-patient-data-label-title">Data Exame: </p>
+                    <p className="analysis-result-patient-data-value">
+                        {new Date(analysisData.exam_date).toLocaleDateString('pt-BR')}
+                    </p>
+                  </div>
+                  <div className="analysis-result-patient-data-label-container">
+                    <p className="analysis-result-patient-data-label-title">Olho: </p>
+                    <p className="analysis-result-patient-data-value">{analysisData.eye_examined}</p>
+                  </div>
               </div>
             </div>
+
+            {/* BOTÕES DE AÇÃO */}
+            <div style={{marginTop: '20px', display: 'flex', flexDirection: 'column', gap: '10px'}}>
+                <button 
+                    onClick={handleDownloadPdf} 
+                    className="analysis-result-professional-submit-btn" 
+                    style={{width: '100%', marginTop: 0, backgroundColor: '#33b9b9'}}
+                    disabled={downloading}
+                >
+                    {downloading ? "Gerando PDF..." : "Baixar Laudo (PDF)"}
+                </button>
+
+                {/* --- BOTÃO DE EXCLUIR (NOVO) --- */}
+                <button 
+                    onClick={handleDelete} 
+                    className="analysis-result-professional-submit-btn" 
+                    style={{width: '100%', marginTop: 0, backgroundColor: '#e74c3c', border: '1px solid #c0392b'}}
+                >
+                    Excluir Análise
+                </button>
+            </div>
+
           </div>
         </div>
+
       </div>
     </>
   );
