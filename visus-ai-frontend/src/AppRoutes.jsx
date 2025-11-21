@@ -22,7 +22,7 @@ import RegisterProfessional from './pages/RegisterProfessional/RegisterProfessio
 import AccountCreationSplashScreen from './pages/AccountCreationSplashScreen/AccountCreationSplashScreen';
 import AccountRecovery from './pages/AccountRecovery/AccountRecovery';
 import EmailSendingSplashScreen from './pages/EmailSendingSplashScreen/EmailSendingSplashScreen';
-import PatientLogin from './pages/Login/PatientLogin';
+import PatientLogin from './pages/PatientLogin/PatientLogin';
 import PatientDashboard from './pages/PatientLogin/PatientDashboard';
 import PatientDetails from './pages/PatientList/PatientDetails';
 import ProfessionalDetails from './pages/AdminPanel/ProfessionalDetails';
