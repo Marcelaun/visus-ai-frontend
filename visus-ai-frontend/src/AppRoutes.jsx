@@ -23,9 +23,9 @@ import AccountCreationSplashScreen from './pages/AccountCreationSplashScreen/Acc
 import AccountRecovery from './pages/AccountRecovery/AccountRecovery';
 import EmailSendingSplashScreen from './pages/EmailSendingSplashScreen/EmailSendingSplashScreen';
 import PatientLogin from './pages/PatientLogin/PatientLogin';
-import PatientDashboard from './pages/PatientLogin/PatientDashboard';
+import PatientDashboard from './pages/PatientDashboard/PatientDashboard';
 import PatientDetails from './pages/PatientList/PatientDetails';
-import ProfessionalDetails from './pages/AdminPanel/ProfessionalDetails';
+import ProfessionalDetails from './pages/ProfessionalDetails/ProfessionalDetails';
 import VerifyEmail from './pages/VerifyEmail/VerifyEmail'; // <--- IMPORTANTE
 
 import apiClient from './api/axiosConfig';
