@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import LogoVisus from '../../assets/Logo.svg';
 import apiClient from '../../api/axiosConfig';
 import '../Login/Login.css'; // Reutilizamos o CSS do Login
+import { toast } from 'react-toastify';
 
 const PatientLogin = ({ onPatientLogin }) => {
   const [cpf, setCpf] = useState('');
@@ -24,12 +25,12 @@ const PatientLogin = ({ onPatientLogin }) => {
       // Chama a função do AppRoutes para salvar o estado do paciente
       onPatientLogin(response.data.patient);
       
-      alert(`Bem-vindo(a), ${response.data.patient.nome}!`);
+      toast.success(`Bem-vindo(a), ${response.data.patient.nome}!`);
       navigate('/patient-dashboard'); // Redireciona para a área do paciente
 
     } catch (error) {
       console.error('Erro no login:', error);
-      alert('Dados incorretos. Verifique seu CPF e Data de Nascimento.');
+      toast.error('Dados incorretos. Verifique seu CPF e Data de Nascimento.');
     } finally {
       setIsLoading(false);
     }

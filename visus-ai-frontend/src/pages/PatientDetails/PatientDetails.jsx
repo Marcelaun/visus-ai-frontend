@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import apiClient from '../../api/axiosConfig';
 import './PatientDetails.css';
+import { toast } from 'react-toastify'; // <--- IMPORTANTE: Usar toast
 
 // Ícone de documento (reutilizando)
 const DocIcon = () => (
@@ -22,6 +23,7 @@ const PatientDetails = () => {
   const [analyses, setAnalyses] = useState([]); // Estado para as análises
   const [loading, setLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   // Estados do Formulário
   const [formData, setFormData] = useState({
@@ -36,8 +38,17 @@ const PatientDetails = () => {
       try {
         // Busca Paciente
         const patientRes = await apiClient.get(`/api/patients/${id}`);
-        setPatient(patientRes.data);
-        setFormData(patientRes.data);
+        
+        // --- CORREÇÃO DA DATA AQUI ---
+        // O Laravel manda "2000-03-19T00:00:00.000000Z"
+        // Nós pegamos apenas a parte antes do "T": "2000-03-19"
+        const patientData = patientRes.data;
+        if (patientData.birth_date) {
+            patientData.birth_date = patientData.birth_date.split('T')[0];
+        }
+
+        setPatient(patientData);
+        setFormData(patientData); // Agora o formulário recebe o formato YYYY-MM-DD correto!
 
         // Busca Histórico de Análises
         const analysesRes = await apiClient.get(`/api/patients/${id}/analyses`);
@@ -46,7 +57,7 @@ const PatientDetails = () => {
         setLoading(false);
       } catch (error) {
         console.error("Erro:", error);
-        alert("Erro ao carregar dados.");
+        toast.error("Erro ao carregar dados.");
         navigate('/patientList');
       }
     };
@@ -59,21 +70,24 @@ const PatientDetails = () => {
 
   const handleSave = async () => {
     try {
+      setIsSaving(true);
       await apiClient.put(`/api/patients/${id}`, formData);
-      alert("Paciente atualizado com sucesso!");
+      toast.success("Paciente atualizado com sucesso!");
       setIsEditing(false);
+      setIsSaving(false);
       setPatient(formData); 
     } catch (error) {
       console.error("Erro ao atualizar:", error);
-      alert("Erro ao atualizar paciente. Verifique os dados.");
+      toast.error("Erro ao atualizar paciente. Verifique os dados.");
     }
   };
 
   // Função de cor (reutilizada do histórico)
   const getStatusColor = (diag) => {
       if (!diag) return '';
-      if (diag.includes('Normal')) return '#d1fae5';
-      if (diag.includes('Leve') || diag.includes('Moderada')) return '#fef3c7';
+      const d = diag.toLowerCase();
+      if (d.includes('normal')) return '#d1fae5';
+      if (d.includes('leve') || d.includes('moderada')) return '#fef3c7';
       return '#fee2e2';
   };
 
@@ -100,6 +114,7 @@ const PatientDetails = () => {
         </div>
         <div className="form-row">
             <label>Data Nasc:</label>
+            {/* Agora este input receberá a data limpa (YYYY-MM-DD) e funcionará! */}
             <input type="date" name="birth_date" value={formData.birth_date} onChange={handleChange} disabled={!isEditing} required />
         </div>
         <div className="form-row">
@@ -128,12 +143,17 @@ const PatientDetails = () => {
                 <option value="nao">Não</option>
              </select>
         </div>
-        {/* Adicione os outros campos aqui... */}
+        
+        {/* Adicione os outros campos aqui se necessário (diagnosis_time, etc) */}
+
+         
+                
+                    
 
         <div className="form-actions">
             {isEditing ? (
                 <>
-                    <button type="button" className="save-btn" onClick={handleSave}>Salvar Alterações</button>
+                    <button type="button" disabled={isSaving} className="save-btn" onClick={handleSave}> {isSaving ? "Salvando Alterações..." : "Salvar Alterações"}</button>
                     <button type="button" className="cancel-btn" onClick={() => { setIsEditing(false); setFormData(patient); }}>Cancelar</button>
                 </>
             ) : (
@@ -143,7 +163,7 @@ const PatientDetails = () => {
 
       </form>
 
-      {/* --- NOVA SEÇÃO: HISTÓRICO DE ANÁLISES DESTE PACIENTE --- */}
+      {/* --- SEÇÃO: HISTÓRICO DE ANÁLISES DESTE PACIENTE --- */}
       <div className="patient-history-section">
          <h3>Histórico de Análises</h3>
          
@@ -177,13 +197,12 @@ const PatientDetails = () => {
              </div>
          )}
          
-         {/* Botão para criar nova análise JÁ para este paciente */}
          <div style={{marginTop: '2rem', textAlign: 'right'}}>
              <button 
                 className="new-analysis-btn"
-                onClick={() => navigate('/newAnalysis')} // Poderíamos passar o ID do paciente via state se quiséssemos pré-selecionar
+                onClick={() => navigate('/newAnalysis')} 
              >
-                + Nova Análise para {patient.nome.split(' ')[0]}
+                + Nova Análise
              </button>
          </div>
       </div>

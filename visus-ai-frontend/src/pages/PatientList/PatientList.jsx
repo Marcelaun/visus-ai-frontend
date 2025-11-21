@@ -4,6 +4,8 @@ import apiClient from '../../api/axiosConfig';
 import './PatientList.css';
 import PatientUserAddIcon from '../../assets/patient-user-add.svg';
 import PatientUserIcon from '../../assets/patient-user.svg';
+import LinearProgress from '@mui/material/LinearProgress';
+import Skeleton from '@mui/material/Skeleton';
 
 const PatientList = () => {
   const navigate = useNavigate();
@@ -102,7 +104,37 @@ const PatientList = () => {
 
           <div className="table-body">
             {loading ? (
-              <p style={{padding: '2rem', textAlign: 'center'}}>Carregando pacientes...</p>
+              // --- BLOCO DO SKELETON ---
+              // Cria 5 linhas de esqueleto para simular o carregamento
+              Array.from(new Array(5)).map((_, index) => (
+                 <div key={index} className="table-row" style={{ padding: '1.5rem', gap: '1rem' }}>
+                    {/* Coluna Nome */}
+                    <div className="cell-paciente" style={{width: '100%'}}>
+                        <Skeleton variant="text" width="60%" height={30} />
+                    </div>
+                    {/* Coluna Idade */}
+                    <div className="cell-idade" style={{width: '100%'}}>
+                        <Skeleton variant="text" width="40%" height={25} />
+                    </div>
+                    {/* Coluna Tipo DM */}
+                    <div className="cell-tipo-dm" style={{width: '100%'}}>
+                        <Skeleton variant="text" width="70%" height={25} />
+                    </div>
+                    {/* Coluna Última Análise */}
+                    <div className="cell-ultima-analise" style={{width: '100%'}}>
+                        <Skeleton variant="text" width="80%" height={40} />
+                    </div>
+                    {/* Coluna Status (Badge) */}
+                    <div className="cell-status" style={{width: '100%'}}>
+                        <Skeleton variant="rectangular" width={90} height={28} sx={{borderRadius: 4}} />
+                    </div>
+                    {/* Coluna Ações (Botão) */}
+                    <div className="cell-acoes" style={{width: '100%', display: 'flex', justifyContent: 'flex-end'}}>
+                        <Skeleton variant="rectangular" width={140} height={36} sx={{borderRadius: 2}} />
+                    </div>
+                 </div>
+              ))
+              // --- FIM DO BLOCO DO SKELETON ---
             ) : patients.length === 0 ? (
               <p style={{padding: '2rem', textAlign: 'center'}}>Nenhum paciente encontrado.</p>
             ) : (

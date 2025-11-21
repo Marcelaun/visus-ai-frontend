@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../../api/axiosConfig';
 import './PatientDashboard.css'; // Vamos criar
+import Skeleton from '@mui/material/Skeleton';
 
 // Ícones
 import HistoryIcon from '../../assets/chart-bar-vertical.svg'; // Reusando ícone
@@ -68,7 +69,29 @@ const PatientDashboard = ({ patient }) => {
       {/* Lista */}
       <main className="patient-content">
          {loading ? (
-             <p className="loading-text">Carregando exames...</p>
+             // --- SKELETON LOADING ---
+             <div className="history-list">
+                 {Array.from(new Array(3)).map((_, index) => (
+                     <div key={index} className="exam-card" style={{cursor: 'default'}}>
+                         {/* Ícone Fake */}
+                         <div className="exam-icon">
+                            <Skeleton variant="circular" width={40} height={40} />
+                         </div>
+                         
+                         {/* Info Fake */}
+                         <div className="exam-info" style={{width: '100%'}}>
+                             <Skeleton variant="text" width="30%" height={20} sx={{mb: 0.5}} /> {/* Data */}
+                             <Skeleton variant="text" width="60%" height={24} /> {/* Médico */}
+                         </div>
+                         
+                         {/* Status Fake */}
+                         <div className="exam-status">
+                             <Skeleton variant="rectangular" width={80} height={24} sx={{borderRadius: 5}} />
+                         </div>
+                     </div>
+                 ))}
+             </div>
+             // --- FIM DO SKELETON ---
          ) : history.length === 0 ? (
              <div className="empty-state">
                  <p>Nenhum exame encontrado.</p>

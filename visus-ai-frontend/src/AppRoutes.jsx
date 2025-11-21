@@ -7,6 +7,8 @@ import Footer from './components/Footer/Footer';
 import PageLayout from './components/PageLayout/PageLayout';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
+import { ToastContainer } from 'react-toastify'; // <--- IMPORTANTE
+import 'react-toastify/dist/ReactToastify.css';  // <-
 import Login from './pages/Login/Login';
 import Dashboard from './pages/Dashboard/Dashboard';
 import AdminPanel from './pages/AdminPanel/AdminPanel';
@@ -176,6 +178,20 @@ function AppRoutes() {
       </main>
 
       {(isLoggedIn || patientUser) && <Footer />}
+
+      <ToastContainer 
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+        style={{width: "500px"}}
+      />
     </div>
   );
 }

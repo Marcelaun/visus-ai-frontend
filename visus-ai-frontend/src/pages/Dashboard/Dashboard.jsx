@@ -5,6 +5,7 @@ import DashboardGeneralIcon from '../../assets/dashboard-general.svg';
 import DashboardRecentAnalysisIcon from '../../assets/dashboard-recent-analysis-icon.svg';
 import DashboardStatisticsIcon from '../../assets/dashboard-statistics-icon.svg';
 import LinearProgress from '@mui/material/LinearProgress';
+import Skeleton from '@mui/material/Skeleton';
 
 const Dashboard = ({ user }) => {
   // 1. Estado para guardar os dados do dashboard
@@ -41,8 +42,53 @@ const Dashboard = ({ user }) => {
     return Math.round((count / total) * 100);
   };
 
-  if (loading) {
-    return <div style={{marginTop: '100px', textAlign: 'center'}}>Carregando...</div>;
+ if (loading) {
+    return (
+      <div className="dashboard-main-container">
+        {/* Título Fake */}
+        <Skeleton variant="text" width={300} height={40} sx={{mb: 3}} />
+
+        {/* --- SKELETON DOS CARDS GERAIS --- */}
+        <div className="dashboard-general-data-container">
+           <Skeleton variant="rectangular" width={200} height={30} sx={{mb: 2}} />
+           <div className="data-box-container">
+              <Skeleton variant="rectangular" height={100} sx={{borderRadius: 3, flex: 1}} />
+              <Skeleton variant="rectangular" height={100} sx={{borderRadius: 3, flex: 1}} />
+              <Skeleton variant="rectangular" height={100} sx={{borderRadius: 3, flex: 1}} />
+           </div>
+        </div>
+
+        {/* --- SKELETON DA TABELA RECENTE --- */}
+        <div className="dashboard-recent-analysis-container" style={{marginTop: '2rem'}}>
+           <Skeleton variant="rectangular" width={200} height={30} sx={{mb: 2}} />
+           <div className="dashboard-recent-analysis-data-container">
+              {/* Cabeçalho Fake */}
+              <Skeleton variant="rectangular" height={40} sx={{mb: 1, borderRadius: 2}} />
+              {/* Linhas Fake */}
+              <Skeleton variant="rectangular" height={50} sx={{mb: 1, borderRadius: 2}} />
+              <Skeleton variant="rectangular" height={50} sx={{mb: 1, borderRadius: 2}} />
+              <Skeleton variant="rectangular" height={50} sx={{mb: 1, borderRadius: 2}} />
+           </div>
+        </div>
+
+        {/* --- SKELETON DAS BARRAS DE ESTATÍSTICA --- */}
+        <div className="dashboard-statistics-data-container" style={{marginTop: '2rem'}}>
+           <Skeleton variant="rectangular" width={200} height={30} sx={{mb: 2}} />
+           <div className="dashboard-statistics-data-bg-main-container">
+              <div className="dashboard-statistics-data-bg-container">
+                  <Skeleton variant="text" width="30%" sx={{mb: 1}} />
+                  <Skeleton variant="rectangular" height={12} sx={{borderRadius: 5, mb: 3}} />
+                  
+                  <Skeleton variant="text" width="30%" sx={{mb: 1}} />
+                  <Skeleton variant="rectangular" height={12} sx={{borderRadius: 5, mb: 3}} />
+                  
+                  <Skeleton variant="text" width="30%" sx={{mb: 1}} />
+                  <Skeleton variant="rectangular" height={12} sx={{borderRadius: 5}} />
+              </div>
+           </div>
+        </div>
+      </div>
+    );
   }
 
   return (

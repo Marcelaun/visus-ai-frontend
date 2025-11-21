@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import UploadIcon from '../../assets/new-analysis-upload-img-icon.svg';
 import {Link, useNavigate} from 'react-router-dom'; // Importe useNavigate
 import apiClient from '../../api/axiosConfig'; // Importe o cliente da API
+import Skeleton from '@mui/material/Skeleton';
+import { toast } from 'react-toastify';
 
 import './NewAnalysis.css';
 
@@ -15,6 +17,7 @@ const NewAnalysis = () => {
   const [utilizedEquipment, setUtilizedEquipment] = useState('');
   const [patientClinicalObs, setPatientClinicalObs] = useState('');
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [isPatientsLoading, setIsPatientsLoading] = useState(true);
 
   // Estado para a lista de pacientes (para preencher o select)
   const [patientsList, setPatientsList] = useState([]);
@@ -23,6 +26,7 @@ const NewAnalysis = () => {
   // 1. Carregar a lista de pacientes assim que a tela abre
   useEffect(() => {
     const fetchPatients = async () => {
+      setIsPatientsLoading(true); // Garante que está true
       try {
         const response = await apiClient.get('/api/patients');
         // O Laravel retorna { data: [...], ... } se for paginado,
@@ -34,7 +38,9 @@ const NewAnalysis = () => {
         setPatientsList(lista);
       } catch (error) {
         console.error("Erro ao carregar pacientes:", error);
-        alert("Erro ao carregar lista de pacientes.");
+        toast.error("Erro ao carregar lista de pacientes.");
+      } finally {
+        setIsPatientsLoading(false);
       }
     };
     fetchPatients();
@@ -74,42 +80,62 @@ const NewAnalysis = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // 3. Criar o FormData (Obrigatório para envio de arquivos)
+    // 1. Criar o FormData
     const formData = new FormData();
 
-    // Adiciona os campos de texto (Mapeando para os nomes que o Laravel espera)
+    // 2. Adiciona os campos de texto
     formData.append('patient_id', patientId);
     formData.append('exam_date', examDate);
     formData.append('eye_examined', patientExaminedEye);
     formData.append('equipment', utilizedEquipment);
-    formData.append('clinical_notes', patientClinicalObs);
+    // Envia string vazia se for null/undefined para evitar erro no backend
+    formData.append('clinical_notes', patientClinicalObs || '');
 
-    // 4. Adiciona as Imagens (O "Pulo do Gato")
-    // Para enviar múltiplas imagens, usamos o mesmo nome com []
+    // 3. Adiciona as Imagens
+    if (selectedFiles.length === 0) {
+        alert("Selecione pelo menos uma imagem.");
+        setIsLoading(false);
+        return;
+    }
+
     selectedFiles.forEach((fileObj) => {
+      // 'files[]' é crucial para o Laravel entender que é um array
       formData.append('files[]', fileObj.file);
     });
 
     try {
-      // 5. Envia para a API
-      // O header 'multipart/form-data' é setado automaticamente pelo axios quando vê FormData
-      const response = await apiClient.post('/api/analyses', formData);
+      // 4. Envia para a API FORÇANDO MULTIPART
+      const response = await apiClient.post('/api/analyses', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
 
       console.log("Sucesso!", response.data);
       alert("Análise criada com sucesso!");
       
-      // 6. Redireciona para a tela de resultado usando o ID retornado
-     navigate(`/analysisResult/${response.data.analysis_id}`);
+      // 5. Redireciona
+      navigate(`/analysisResult/${response.data.analysis_id}`);
 
     } catch (error) {
-      console.error("Erro ao criar análise:", error);
-      // Tratamento de erro básico
-      if (error.response?.data?.error) {
-          alert(`Erro: ${error.response.data.error}`);
-      } else if (error.response?.data?.message) {
-          alert(`Erro de validação: ${error.response.data.message}`);
+      console.error("Erro detalhado:", error);
+
+      if (error.response) {
+        // Log para ajudar a debugar se der erro de novo
+        console.log("Dados do erro:", error.response.data);
+        
+        if (error.response.status === 422) {
+          const errors = error.response.data.details || error.response.data.errors;
+          // Transforma o objeto de erros em texto
+          const errorMessages = Object.values(errors).flat().join('\n');
+          alert(`Erro de validação:\n${errorMessages}`);
+        } else if (error.response.data.message) {
+           alert(`Erro do Servidor: ${error.response.data.message}`);
+        } else {
+           alert("Erro desconhecido no servidor.");
+        }
       } else {
-          alert("Ocorreu um erro ao processar a análise. Tente novamente.");
+        alert("Erro de conexão. Verifique se o backend está rodando.");
       }
     } finally {
       setIsLoading(false);
@@ -135,24 +161,32 @@ const NewAnalysis = () => {
             </label>
             
             {/* 7. Select Populado Dinamicamente */}
-            <select
-              id="patient"
-              className="new-analysis-input-box"
-              required
-              value={patientId}
-              onChange={(e) => setPatientId(e.target.value)}
-            >
-              <option disabled value="">
-                Selecione um Paciente...
-              </option>
-              
-              {patientsList.map((p) => (
-                <option key={p.id} value={p.id}>
-                    {p.nome} (CPF: {p.cpf || 'S/N'})
-                </option>
-              ))}
-              
-            </select>
+           {isPatientsLoading ? (
+                // Mostra um esqueleto do tamanho do input enquanto carrega
+                <Skeleton variant="rectangular" height={45} sx={{borderRadius: '6px'}} />
+            ) : (
+                <select
+                  id="patient"
+                  className="new-analysis-input-box"
+                  required
+                  value={patientId}
+                  onChange={(e) => setPatientId(e.target.value)}
+                  // Se falhou e a lista tá vazia, desabilita
+                  disabled={patientsList.length === 0} 
+                >
+                  <option disabled value="">
+                    {patientsList.length === 0 ? "Nenhum paciente encontrado" : "Selecione um Paciente..."}
+                  </option>
+                  
+                  {patientsList.map((p) => (
+                    <option key={p.id} value={p.id}>
+                        {p.nome} (CPF: {p.cpf || 'S/N'})
+                    </option>
+                  ))}
+                </select>
+            )}
+            {/* Pequeno texto de ajuda se estiver demorando muito (opcional) */}
+            {isPatientsLoading && <span style={{fontSize: '1rem', color: '#58beb9'}}>Buscando lista de pacientes...</span>}
             
             <label htmlFor="exam-date" className="new-analysis-form-labels">
               Data do Exame *

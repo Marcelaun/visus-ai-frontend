@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import apiClient from '../../api/axiosConfig';
 
+import { toast } from 'react-toastify'; // <--- IMPORTANTE: Usar toast
 import AnalysisResultDocIcon from '../../assets/analysis-result-doc-icon.svg';
 import BulbIcon from '../../assets/Bulb.svg';
 import ChartIcon from '../../assets/chart-bar-vertical.svg';
 import UserIcon from '../../assets/user-icon.svg';
-import ImageIcon from '../../assets/image-icon.svg'; 
+import ImageIcon from '../../assets/image-icon.svg';
+import GlobalLoader from '../../components/GlobalLoader/GlobalLoader'; 
 
 import ProbabilityBars from '../../components/ProbabilityBars/ProbabilityBars';
 
@@ -59,7 +61,7 @@ const AnalysisResult = () => {
 
       } catch (err) {
         console.error("Erro ao carregar análise:", err);
-        setError("Não foi possível carregar os resultados.");
+        toast.error("Erro ao carregar os resultados da análise.");
       } finally {
         setIsLoading(false);
       }
@@ -73,17 +75,17 @@ const AnalysisResult = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!professionalValidation.trim()) {
-        alert("Por favor, escreva uma conduta médica antes de salvar.");
+       toast.warning("Por favor, escreva uma conduta médica antes de salvar.");
         return;
     }
     try {
         await apiClient.put(`/api/analyses/${id}`, {
             professional_conduct: professionalValidation
         });
-        alert("Laudo salvo e finalizado com sucesso!");
+        toast.success("Laudo salvo e finalizado com sucesso!");
     } catch (error) {
         console.error("Erro ao salvar:", error);
-        alert("Erro ao salvar o laudo.");
+        toast.error("Erro ao salvar o laudo.");
     }
   };
 
@@ -95,24 +97,26 @@ const AnalysisResult = () => {
 
     try {
         await apiClient.delete(`/api/analyses/${id}`);
-        alert("Análise excluída com sucesso.");
+        toast.success("Análise excluída com sucesso.");
         
         // Redireciona de volta para o histórico geral
         navigate('/analysisHistory'); 
         
     } catch (error) {
         console.error("Erro ao excluir:", error);
-        alert("Erro ao excluir a análise.");
+        toast.error("Erro ao excluir a análise.");
     }
   };
 
   const handleDownloadPdf = async () => {
       if (!analysisData) return;
       setDownloading(true);
-      try {
-          const response = await apiClient.get(`/api/laudo/${id}/pdf`, {
-              responseType: 'blob' 
-          });
+
+      // O 'toast.promise' cuida do loading, sucesso e erro visualmente!
+      const downloadPromise = apiClient.get(`/api/laudo/${id}/pdf`, {
+          responseType: 'blob' 
+      }).then((response) => {
+          // Lógica de criar o arquivo
           const url = window.URL.createObjectURL(new Blob([response.data]));
           const link = document.createElement('a');
           link.href = url;
@@ -121,16 +125,22 @@ const AnalysisResult = () => {
           link.click();
           link.remove();
           window.URL.revokeObjectURL(url);
-      } catch (err) {
-          console.error("Erro no download:", err);
-          alert("Erro ao gerar PDF. Tente novamente.");
-      } finally {
-          setDownloading(false);
-      }
+      });
+
+      await toast.promise(
+        downloadPromise,
+        {
+          pending: 'Gerando PDF, aguarde...',
+          success: 'PDF baixado com sucesso! 📄',
+          error: 'Erro ao gerar PDF 🤯'
+        }
+      );
+
+      setDownloading(false);
   };
 
 
-  if (isLoading) return <div style={{marginTop: '100px', textAlign: 'center'}}>Carregando resultados...</div>;
+  if (isLoading) return <GlobalLoader open={true} message="Carregando análise..." />;
   if (error) return <div style={{marginTop: '100px', textAlign: 'center', color: 'red'}}>{error}</div>;
   if (!analysisData || !selectedItem) return null;
 

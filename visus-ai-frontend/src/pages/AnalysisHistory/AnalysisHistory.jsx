@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../../api/axiosConfig';
 import './AnalysisHistory.css';
+import Skeleton from '@mui/material/Skeleton';
 
 // Ícones (sem alteração)
 const IconeHistorico = () => (
@@ -122,7 +123,44 @@ const AnalysisHistory = () => {
 
         <div className="table-body">
           {loading ? (
-             <p style={{padding: '2rem', textAlign: 'center'}}>Carregando histórico...</p>
+             // --- BLOCO DE SKELETON ---
+            // Cria 5 linhas falsas para animação
+            Array.from(new Array(5)).map((_, index) => (
+              <div key={index} className="table-row" style={{ alignItems: 'center' }}>
+                
+                {/* Paciente */}
+                <div className="cell-paciente" style={{ width: '100%' }}>
+                   <Skeleton variant="text" width="70%" height={30} />
+                </div>
+
+                {/* Olho */}
+                <div className="cell-olho" style={{ width: '100%' }}>
+                   <Skeleton variant="text" width="40%" />
+                </div>
+
+                {/* Resultado */}
+                <div className="cell-resultado" style={{ width: '100%' }}>
+                   <Skeleton variant="text" width="60%" />
+                </div>
+
+                {/* Data */}
+                <div className="cell-data" style={{ width: '100%' }}>
+                   <Skeleton variant="text" width="80%" />
+                </div>
+
+                {/* Status (formato de badge) */}
+                <div className="cell-status" style={{ width: '100%' }}>
+                   <Skeleton variant="rectangular" width={90} height={24} sx={{borderRadius: 4}} />
+                </div>
+
+                {/* Ações (Botão) */}
+                <div className="cell-acoes" style={{ width: '100%' }}>
+                   <Skeleton variant="rectangular" width={60} height={35} sx={{borderRadius: 2}} />
+                </div>
+
+              </div>
+            ))
+            // --- FIM DO BLOCO DE SKELETON ---
           ) : filteredData.length === 0 ? (
              <p style={{padding: '2rem', textAlign: 'center'}}>Nenhuma análise encontrada.</p>
           ) : (
