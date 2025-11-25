@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const apiClient = axios.create({
   // Use a variável de ambiente ou a URL direta do Render
-  baseURL: import.meta.env.VITE_API_URL || 'http://127.0.0.1:8001', //'https://backend-laravel-gb88.onrender.com',
+  baseURL: import.meta.env.VITE_API_URL || 'https://east-smooth-rocks-fingers.trycloudflare.com', //'https://backend-laravel-gb88.onrender.com',
   
   headers: {
     'Content-Type': 'application/json',
