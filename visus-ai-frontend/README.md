@@ -1,16 +1,30 @@
-# React + Vite
+# VisusAI - Web Client (React)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Vite](https://img.shields.io/badge/Vite-Build-646CFF?style=for-the-badge&logo=vite&logoColor=white)
+![Material UI](https://img.shields.io/badge/Material--UI-Design-007FFF?style=for-the-badge&logo=mui&logoColor=white)
 
-Currently, two official plugins are available:
+Interface web moderna e responsiva para a plataforma VisusAI, focada na usabilidade para profissionais de saúde e acessibilidade para pacientes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🎨 Destaques de UX/UI
 
-## React Compiler
+* **Fluxo Duplo de Login:** Áreas distintas para Profissionais (Email/Senha) e Pacientes (CPF/Data de Nascimento).
+* **Visualização de Dados:** Gráficos de barras para probabilidades de diagnóstico e galeria interativa de exames.
+* **Feedback Visual:** Uso de *Skeletons* para carregamento e *Toasts* para feedback de ações (sucesso/erro), eliminando telas travadas.
+* **SPA (Single Page Application):** Navegação fluida sem recarregamento de página.
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🔧 Stack Tecnológica
 
-## Expanding the ESLint configuration
+* **Framework:** React.js + Vite
+* **Estilização:** Material UI (MUI) + CSS Modules
+* **Http Client:** Axios (Configurado com Interceptors para Tokens e tratamento de CORS)
+* **Deploy:** Vercel (CI/CD automático)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 📦 Instalação
+
+```bash
+# Instalar dependências
+npm install
+
+# Rodar localmente
+npm run dev
