@@ -30,3 +30,8 @@ npm install
 
 # Rodar localmente
 npm run dev
+
+
+**🔗 Links Relacionados:**
+* [Backend (Laravel)](https://github.com/Marcelaun/backend_laravel)
+* [IA Service (Hugging Face)](https://github.com/Marcelaun/visus-ai-model)
