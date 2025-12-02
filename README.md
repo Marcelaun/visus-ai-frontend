@@ -4,6 +4,8 @@
 ![Vite](https://img.shields.io/badge/Vite-Build-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![Material UI](https://img.shields.io/badge/Material--UI-Design-007FFF?style=for-the-badge&logo=mui&logoColor=white)
 
+**Link para acessar online a plataforma:** [(https://visus-ai-frontend.vercel.app/)]
+
 Interface web moderna e responsiva para a plataforma VisusAI, focada na usabilidade para profissionais de saúde e acessibilidade para pacientes.
 
 ## 🎨 Destaques de UX/UI
