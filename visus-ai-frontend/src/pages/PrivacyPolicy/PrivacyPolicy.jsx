@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoVisus from '../../assets/Logo.svg';
 import './PrivacyPolicy.css'; // Vamos usar um CSS específico ou reutilizar o dos Termos
+import { useNavigate } from 'react-router-dom'; // Importe useNavigate
 
 const PrivacyPolicy = () => {
+  const navigate = useNavigate();
+  
   return (
     <div className="privacy-main-container">
       <div className="privacy-card">
@@ -86,9 +89,13 @@ const PrivacyPolicy = () => {
 
         {/* Rodapé */}
         <div className="privacy-footer">
-          <Link to="/login" className="privacy-btn-back">
-            Voltar para o Login
-          </Link>
+         <button 
+            onClick={() => navigate(-1)} // <--- A MÁGICA ESTÁ AQUI (-1 volta 1 passo)
+            className="privacy-btn-back"
+            style={{border: 'none', cursor: 'pointer'}} // Ajuste CSS se precisar
+          >
+            Voltar
+          </button>
         </div>
 
       </div>

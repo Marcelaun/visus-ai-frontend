@@ -37,7 +37,7 @@ const allNavItems = [
     text: 'Pacientes', 
     icon: <PeopleIcon />, 
     path: '/patientList', 
-    roles: ['professional', 'admin']
+    roles: ['professional']
   },
   {
     text: 'Cadastrar Paciente', 
@@ -67,7 +67,7 @@ const allNavItems = [
     text: 'Histórico Análises', 
     icon: <WorkHistory />, 
     path: '/analysisHistory', 
-    roles: ['professional', 'admin']
+    roles: ['professional']
   },
   {
     text: 'Painel Administrativo', 

@@ -2,8 +2,11 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoVisus from '../../assets/Logo.svg';
 import './TermsOfUse.css';
+import { useNavigate } from 'react-router-dom'; // Importe useNavigate
 
 const TermsOfUse = () => {
+  const navigate = useNavigate(); // Instancie o hook
+
   return (
     <div className="terms-main-container">
       <div className="terms-card">
@@ -81,9 +84,13 @@ const TermsOfUse = () => {
 
       
         <div className="terms-footer">
-          <Link to="/login" className="terms-btn-back">
-            Voltar para o Login
-          </Link>
+         <button 
+            onClick={() => navigate(-1)} // <--- A MÁGICA ESTÁ AQUI (-1 volta 1 passo)
+            className="terms-btn-back"
+            style={{border: 'none', cursor: 'pointer'}} // Ajuste CSS se precisar
+          >
+            Voltar
+          </button>
         </div>
 
       </div>
