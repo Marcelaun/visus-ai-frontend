@@ -3,11 +3,15 @@
     margin-top: 6rem;
     padding-bottom: 6rem;
 }
+
+.patient-dashboard-logo {
+    background-color: #fff;
+}
 .patient-header {
     background: white; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.05); position: sticky; top: 0;
 }
-.header-brand { display: flex; gap: 1rem; align-items: center; }
+.header-brand { display: flex; gap: 1rem; align-items: center;  background-color: #fff; }
 .header-brand img { height: 40px; }
 .header-brand h1 { margin: 0; font-size: 1.2rem; color: #333; }
 .header-brand p { margin: 0; font-size: 0.8rem; color: #666; }

@@ -1,439 +1,180 @@
-/* --- CSS Mobile-First (Limpo) --- */
+/* --- Estilos Globais --- */
 .analysis-result-main-container {
   display: flex;
   flex-direction: column;
-  margin-top: 5rem;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  box-sizing: border-box;
-  overflow-x: hidden; 
+  gap: 1.5rem;
+  padding: 1.5rem;
+  margin-top: 80px; /* Espaço para a Navbar fixa */
+  max-width: 1400px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Inter', sans-serif;
 }
 
+/* --- Títulos e Ícones --- */
 .analysis-result-title-container {
   display: flex;
-  gap: 0.5rem;
-  margin-left: 0.8rem;
-  margin-bottom: 0.7rem;
-  margin-top: 1rem;
-  align-items: center; 
-}
-.analysis-result-title-icon {
-  width: 1.25rem;
-  height: 1.25rem;
-  color: #33b9b9;
-  flex-shrink: 0; 
-}
-.analysis-result-data-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem; 
-  font-weight: 600;
-}
-
-/* === DADOS DO PACIENTE (Sidebar) === */
-.analysis-result-patient-data-container {
-  width: 95vw; 
-}
-.analysis-result-patient-data {
-  display: flex;
-  justify-content: space-around;
-  width: 100%;
-  padding: 1rem;
-  border-radius: 0.8rem;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 8px;
-  box-sizing: border-box;
-}
-.analysis-result-patient-data-label-container {
-  display: flex;
-  gap: 0.4rem;
-}
-.analysis-result-patient-data-label-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 700;
-}
-.analysis-result-patient-data-value {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 400;
-}
-
-
-/* === VEREDITO FINAL === */
-.analysis-result-ai-verdict-container {
-  width: 95vw; 
-  margin-top: 1.5rem;
-}
-.analysis-result-verdict-box {
-  display: flex;
-  justify-content: center;
   align-items: center;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 8px;
-  width: 100%; 
-  padding: 1.5rem;
-  border-radius: 0.8rem;
-  box-sizing: border-box;
-  background-color: #FEF9F0;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 0.5rem;
 }
-.analysis-result-verdict-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem; 
-  font-weight: 800;
-  color: #F39C12;
-  text-align: center;
+.analysis-result-title-icon { width: 24px; height: 24px; color: #33b9b9; }
+.analysis-result-data-title { font-size: 1.1rem; font-weight: 700; color: #2c3e50; margin: 0; }
+
+/* --- Estrutura dos Cards --- */
+.analysis-result-ai-verdict-container,
+.analysis-result-exam-images-container,
+.analysis-result-ai-automatic-recomendations-main-container,
+.analysis-result-professional-conduct-main-container,
+.analysis-result-patient-data-container {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eee;
+  margin-bottom: 1.5rem;
 }
 
-
-/* === GALERIA DE IMAGENS INTERATIVA === */
-.analysis-result-exam-images-container {
-  width: 95vw;
-  margin-top: 1.5rem;
+/* --- Veredito --- */
+.analysis-result-verdict-box {
+  text-align: center; padding: 1rem; background-color: #f8f9fa; border-radius: 8px;
 }
+.analysis-result-verdict-title { margin: 0; font-size: 1.4rem; font-weight: 800; color: #2c3e50; }
+
+/* --- IMAGEM PRINCIPAL --- */
 .main-image-container {
-  width: 100%;
-  padding: 0.5rem; 
-  background-color: #f9f9f9;
-  border-radius: 0.8rem;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 8px;
-  box-sizing: border-box;
-  border: 3px solid #f9f9f9; 
-  transition: border-color 0.3s ease;
-  margin-top: 1rem; 
+  background: #f9f9f9; border-radius: 8px; padding: 10px; text-align: center; margin-bottom: 1.5rem;
+  border: 3px solid transparent; transition: border-color 0.3s;
 }
-.main-image-container.tipo-Normal { border-color: #10b981; }
-.main-image-container.tipo-RD { border-color: #F39C12; }
+/* Cores das bordas baseadas no diagnóstico */
+.main-image-container.tipo-Normal { border-color: #27ae60; }
+.main-image-container.tipo-RD { border-color: #e67e22; } /* Leve/Moderada */
+.main-image-container.tipo-Severa, 
+.main-image-container.tipo-Proliferativa { border-color: #c0392b; }
 
 .main-exam-image {
-  width: 100%;
-  height: auto; 
-  max-height: 400px; 
-  object-fit: contain; 
-  border-radius: 6px;
+  max-width: 100%; height: auto; max-height: 500px;
+  object-fit: contain; border-radius: 4px;
 }
 
+.main-image-diagnosis {
+  margin-top: 10px; padding: 8px; background: #fff; border-radius: 6px; border: 1px solid #eee; display: inline-block;
+}
+.main-image-diag-label { font-weight: 600; color: #555; margin-right: 8px; }
+.main-image-diag-value { font-weight: 700; }
+
+
+/* --- CARROSSEL DE MINIATURAS (ATUALIZADO) --- */
 .thumbnail-gallery-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-  margin-top: 1rem;
+  display: flex;              /* Alinha lado a lado */
+  gap: 10px;
+  overflow-x: auto;           /* Habilita o scroll horizontal */
+  padding-bottom: 10px;       /* Espaço para a barra de rolagem */
+  scroll-behavior: smooth;
+  
+  /* Estilo da barra de rolagem (Fino) */
+  scrollbar-width: thin;
 }
+.thumbnail-gallery-grid::-webkit-scrollbar { height: 6px; }
+.thumbnail-gallery-grid::-webkit-scrollbar-thumb { background-color: #ddd; border-radius: 4px; }
+
 .exam-thumbnail-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.25rem;
+  flex: 0 0 auto;             /* Impede de encolher */
+  width: 110px;               /* Largura fixa */
   cursor: pointer;
-  border: 2px solid transparent; 
-  padding: 0.5rem;
-  border-radius: 8px;
-  transition: all 0.2s ease;
-}
-.exam-thumbnail-item:hover {
-  background-color: #f0f0f0;
-}
-.exam-thumbnail-item.is-active {
-  border-color: #33b9b9; 
-  background-color: #f0fafa;
-}
-.exam-thumbnail-preview {
-  width: 100%;
-  height: 80px;
-  object-fit: cover;
+  padding: 4px;
+  border: 2px solid transparent;
   border-radius: 6px;
+  transition: all 0.2s;
+  display: flex; flex-direction: column; align-items: center;
 }
-.exam-thumbnail-label {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: #555;
+.exam-thumbnail-item:hover { background-color: #f0f0f0; }
+.exam-thumbnail-item.is-active { 
+  border-color: #33b9b9; background: #e0f7fa; transform: scale(1.05); 
 }
-.exam-thumbnail-diagnosis {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 700;
+
+.exam-thumbnail-preview {
+  width: 100%; height: 80px; object-fit: cover; border-radius: 4px; margin-bottom: 4px;
 }
-.tipo-Normal { color: #10b981; } 
-.tipo-RD { color: #F39C12; }
+.exam-thumbnail-label { font-size: 0.75rem; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%; text-align: center; }
+.exam-thumbnail-diagnosis { font-size: 0.7rem; font-weight: 700; }
+.exam-thumbnail-diagnosis.tipo-Normal { color: #27ae60; }
+.exam-thumbnail-diagnosis.tipo-RD { color: #e67e22; }
+.exam-thumbnail-diagnosis.tipo-Severa, .exam-thumbnail-diagnosis.tipo-Proliferativa { color: #c0392b; }
 
 
-/* --- RECOMENDAÇÕES E CONDUTA --- */
-.analysis-result-ai-automatic-recomendations-main-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1rem;
-  width: 95vw;
-  box-sizing: border-box;
-}
-.analysis-result-ai-text-recomendations-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
+/* --- Recomendações e Texto --- */
 .analysis-result-ai-text-suggestion-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1.25rem; 
-  border-radius: 0.8rem;
-  background-color: #FEF9F0;
+  background-color: #fff8e1; padding: 1rem; border-radius: 8px; border-left: 4px solid #ffc107;
 }
-.analysis-result-ai-text-suggestion-title {
-  color: #b97930;
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 800;
-  text-align: center;
-}
-.analysis-result-ai-text-suggestion-text {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: #2C2C2C;
-  line-height: 1.5; 
-}
-.analysis-result-ai-warning-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1.25rem; 
-  background-color: #FFF3CD;
-  border-radius: 0.8rem;
-}
-.analysis-result-ai-warning-title {
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 800;
-  color: #F39C12;
-  text-align: center;
-}
-.analysis-result-ai-warning-text {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: #856404;
-  line-height: 1.5; 
-}
-.analysis-result-professional-conduct-main-container {
-  width: 95vw;
-  margin-bottom: 2rem; 
-}
-.analysis-result-professional-conduct-text-area-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  padding: 1.5rem;
-  box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 8px;
-  border-radius: 0.8rem;
-  width: 100%;
-  box-sizing: border-box;
-}
-.analysis-result-professional-conduct-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.analysis-result-professional-validation-form-labels {
-  font-family: 'Inter', sans-serif;
-  font-size: 0.9rem;
-  font-weight: 800;
-  text-align: center;
-  line-height: 1.4; 
-}
+.analysis-result-ai-text-suggestion-title { color: #d35400; font-size: 0.9rem; font-weight: 800; margin-bottom: 0.5rem; }
+.analysis-result-ai-text-suggestion-text { font-size: 0.95rem; color: #333; line-height: 1.5; }
+
+/* --- Formulário de Conduta --- */
+.analysis-result-professional-conduct-text-area-container { margin-top: 0; }
 .analysis-result-professional-validation-input-box {
-  padding: 1rem;
-  border: 1px solid #E8E5E5;
-  border-radius: 0.8rem;
-  height: 25vh; 
-  font-family: inherit;
-  font-size: 1rem;
-  resize: vertical;
+  width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 8px;
+  font-family: inherit; font-size: 1rem; resize: vertical; min-height: 150px;
+  box-sizing: border-box; margin-bottom: 1rem;
 }
 .analysis-result-professional-submit-btn {
-  padding: 1rem;
-  border: none;
-  border-radius: 0.8rem;
-  background-color: #27AE60;
-  color: #fff;
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  width: 80vw;
-  align-self: center;
-  cursor: pointer;
+  width: 100%; padding: 1rem; background-color: #27AE60; color: white;
+  font-weight: 700; border: none; border-radius: 8px; cursor: pointer; transition: 0.2s;
+  font-size: 1rem;
 }
-.analysis-result-professional-submit-btn:disabled {
-  background-color: #999;
-  cursor: not-allowed;
-  opacity: 0.7;
+.analysis-result-professional-submit-btn:hover { background-color: #219150; }
+.analysis-result-professional-submit-btn:disabled { background-color: #ccc; cursor: not-allowed; }
+
+/* --- Sidebar (Dados do Paciente) --- */
+.analysis-result-patient-data-sub { margin-bottom: 1rem; }
+.analysis-result-patient-data-label-container {
+  display: flex; justify-content: space-between; margin-bottom: 0.5rem; border-bottom: 1px solid #f9f9f9; padding-bottom: 4px;
 }
-.analysis-result-professional-validation-save-sketch-btn {
-  background-color: #95A5A6;
-  padding: 1rem;
-  border: none;
-  border-radius: 0.8rem;
-  font-family: 'Inter', sans-serif;
-  font-size: 1.1rem;
-  font-weight: 600;
-  width: 80vw;
-  align-self: center;
-  color: #fff;
-  cursor: pointer;
-}
+.analysis-result-patient-data-label-title { font-size: 0.85rem; color: #888; font-weight: 600; }
+.analysis-result-patient-data-value { font-size: 0.95rem; font-weight: 500; color: #333; }
 
 
 /* ===============================================
-   CÓDIGO DESKTOP (COM A CORREÇÃO FINAL)
-===============================================
-*/
+   LAYOUT RESPONSIVO (2 Colunas no Desktop)
+=============================================== */
 @media (min-width: 901px) {
-
-  /* 1. O container principal é Flexbox */
   .analysis-result-main-container {
-    display: flex;
-    flex-direction: row; 
-    align-items: start;
+    flex-direction: row;
+    align-items: flex-start;
     gap: 2rem;
-    max-width: 1400px;
-    margin: 6rem auto 4rem auto; 
-    padding: 2rem;
   }
 
-  /* 2. A coluna da esquerda (conteúdo) vai crescer */
   .analysis-result-content-column {
-    flex: 2; /* Ocupa 2/3 do espaço */
-    min-width: 0; /* Correção de bug do flexbox */
-    display: flex;
-    flex-direction: column;
-    gap: 2rem; 
+    flex: 2; /* 66% */
+    min-width: 0; /* Fix para o carrossel não estourar o flex */
   }
 
-  /* 3. A coluna da direita (sidebar) ocupa 1/3 */
   .analysis-result-sidebar-wrapper {
-    flex: 1;
+    flex: 1; /* 33% */
+    position: sticky;
+    top: 6rem; /* Sidebar fixa */
   }
+  
+  /* Ajuste do botão para não ficar gigante no desktop */
+  .analysis-result-professional-submit-btn {
+     width: auto; padding-left: 2rem; padding-right: 2rem; float: right;
+  }
+  /* Limpa o float do formulário */
+  .analysis-result-professional-conduct-form::after {
+    content: ""; display: table; clear: both;
+  }
+}
 
-  /* 4. O CARD DO PACIENTE (STICKY) */
-  .analysis-result-patient-data-container {
-    width: 100%;
-    position: sticky; /* <-- A MÁGICA */
-    top: 6rem; /* Distância da navbar */
-    
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    border-radius: 0.8rem;
-    padding: 1.5rem 2rem; 
-    margin-top: 0; 
-  }
-
-  .analysis-result-patient-data {
-    flex-direction: column; 
-    align-items: start;
-    width: 100%;
-    box-shadow: none;
-    padding: 0;
-  }
-  .analysis-result-patient-data-sub {
-    margin-bottom: 1rem;
-  }
-  .analysis-result-patient-data-label-container {
-    flex-direction: column;
-    gap: 0.1rem;
-    margin-bottom: 0.75rem;
-  }
-  .analysis-result-patient-data-label-title {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #6b7280;
-    text-transform: uppercase;
-  }
-  .analysis-result-patient-data-value {
-    font-size: 1rem;
-    font-weight: 500;
-  }
-
-  /* --- Coluna da Esquerda (Conteúdo Principal) --- */
-  .analysis-result-ai-verdict-container,
-  .analysis-result-exam-images-container,
-  .analysis-result-ai-automatic-recomendations-main-container,
-  .analysis-result-professional-conduct-main-container {
-    width: 100%;
-  }
-
-  /* Card de Veredito Final */
-  .analysis-result-verdict-box {
-    padding: 1.5rem 2rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  }
-  .analysis-result-verdict-title {
-    font-size: 1.25rem;
-  }
-
-  /* Galeria de Imagens */
-  .analysis-result-exam-images-container {
-    padding: 1.5rem 2rem;
-    background-color: #fff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-    border-radius: 0.8rem;
-  }
-  .main-image-container {
-    padding: 0;
-    box-shadow: none;
-    background-color: transparent;
-  }
-  .main-exam-image {
-    max-height: 500px; 
-  }
+@media (max-width: 600px) {
   .thumbnail-gallery-grid {
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 1rem;
-    padding: 0;
+      gap: 8px;
+  }
+  .exam-thumbnail-item {
+      width: 90px; /* Um pouco menor no mobile */
   }
   .exam-thumbnail-preview {
-    height: 100px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-  }
-  .exam-thumbnail-preview:hover {
-    transform: scale(1.05);
-  }
-
-  /* Card de Recomendações */
-  .analysis-result-ai-automatic-recomendations-main-container {
-    padding: 0; 
-  }
-  .analysis-result-ai-text-suggestion-container,
-  .analysis-result-ai-warning-container {
-    padding: 1.5rem 2rem;
-    border-radius: 0.8rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  }
-  .analysis-result-ai-text-suggestion-title,
-  .analysis-result-ai-warning-title {
-    text-align: left; 
-  }
-
-  /* Card de Conduta Profissional */
-  .analysis-result-professional-conduct-text-area-container {
-    padding: 1.5rem 2rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  }
-  .analysis-result-professional-validation-input-box {
-    height: 200px;
-  }
-  .analysis-result-professional-conduct-form {
-    flex-direction: row; 
-    justify-content: flex-end; 
-    align-items: center;
-    flex-wrap: wrap; 
-  }
-  .analysis-result-professional-validation-form-labels,
-  .analysis-result-professional-validation-input-box {
-    width: 100%;
-  }
-  .analysis-result-professional-submit-btn,
-  .analysis-result-professional-validation-save-sketch-btn {
-    width: auto;
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
+      height: 65px;
   }
 }

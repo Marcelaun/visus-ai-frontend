@@ -47,31 +47,72 @@ function AppRoutes() {
   const navigate = useNavigate();
   const location = useLocation(); // <--- Hook para saber onde estamos
 
-  // --- Lógica do Profissional ---
+  // // --- Lógica do Profissional ---
+  // const handleLogin = async (email, password) => {
+  //   try {
+  //     // Não precisa mais do csrf-cookie com autenticação por token
+  //     const response = await apiClient.post('/api/login-token', { email, password });
+  //     const { token, user: userData } = response.data;
+      
+  //     localStorage.setItem('authToken', token);
+  //     setUser(userData); 
+  //     setIsLoggedIn(true);    
+      
+  //     // O useEffect da "Catraca" vai decidir se vai pro Dashboard ou VerifyEmail
+  //     navigate('/dashboard'); 
+  //   } catch (error) {
+  //     console.error('Erro no login:', error);
+  //     alert('Email ou senha incorretos.');
+  //   }
+  // };
+
+  // const handleLogout = async () => {
+  //   try {
+  //     await apiClient.post('/api/logout');
+  //   } catch (error) {
+  //     console.error('Erro no logout:', error);
+  //   } finally {
+  //     localStorage.removeItem('authToken');
+  //     setUser(null);
+  //     setIsLoggedIn(false);
+  //     navigate('/login');
+  //   }
+  // };
+
   const handleLogin = async (email, password) => {
     try {
-      // Não precisa mais do csrf-cookie com autenticação por token
+      // Chama a API de login
       const response = await apiClient.post('/api/login-token', { email, password });
       const { token, user: userData } = response.data;
       
+      // Salva os dados
       localStorage.setItem('authToken', token);
       setUser(userData); 
       setIsLoggedIn(true);    
       
-      // O useEffect da "Catraca" vai decidir se vai pro Dashboard ou VerifyEmail
+      // O useEffect da "Catraca" (verificação de email) vai decidir o destino final,
+      // mas por padrão mandamos para o dashboard.
       navigate('/dashboard'); 
+
     } catch (error) {
-      console.error('Erro no login:', error);
-      alert('Email ou senha incorretos.');
+      console.error('Erro no login (AppRoutes):', error);
+      
+      // AQUI ESTÁ O SEGREDO:
+      // Não damos alert aqui. Lançamos o erro de volta para o Login.jsx
+      // Assim, o Login.jsx pode pegar o status (401, 500) e mostrar o Toast bonito.
+      throw error; 
     }
   };
 
   const handleLogout = async () => {
     try {
+      // Tenta avisar o backend para invalidar o token
       await apiClient.post('/api/logout');
     } catch (error) {
+      // Se der erro (ex: token já expirado), apenas logamos e seguimos para limpar o local
       console.error('Erro no logout:', error);
     } finally {
+      // Limpeza OBRIGATÓRIA (acontece dando certo ou errado)
       localStorage.removeItem('authToken');
       setUser(null);
       setIsLoggedIn(false);

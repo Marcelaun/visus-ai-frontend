@@ -57,7 +57,7 @@ const PatientDashboard = ({ patient }) => {
       {/* Header */}
       <header className="patient-header">
          <div className="header-brand">
-            <img src={LogoVisusAi} alt="Visus" />
+            <img className='patient-dashboard-logo' src={LogoVisusAi} alt="Visus" />
             <div>
                 <h1>Olá, {patient?.nome}</h1>
                 <p>Seu histórico de triagens</p>
