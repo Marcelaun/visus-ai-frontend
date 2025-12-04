@@ -1,6 +1,7 @@
 .patient-dash-container {
     background-color: #f8f9fa; min-height: 100vh; font-family: 'Inter', sans-serif;
     margin-top: 6rem;
+    padding-bottom: 6rem;
 }
 .patient-header {
     background: white; padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center;

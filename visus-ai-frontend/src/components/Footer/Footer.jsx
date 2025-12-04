@@ -1,43 +1,56 @@
 import React from 'react';
 import './Footer.css';
 import LogoVisusAi from '../../assets/Logo.svg';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const Footer = () => {
+const Footer = ({ user, patientUser }) => {
+  
+  // Verifica se é um Profissional logado (Médico ou Admin)
+  const isProfessional = user && (user.role === 'professional' || user.role === 'admin');
+
   return (
     <>
       <footer className="footer-main-container">
-        {' '}
-        {/* 1. Este é o PAI */}
         <div className="footer-info-main-container">
           <img src={LogoVisusAi} alt="Logo Visus AI" className="footer-logo" />
+          
           <p className="footer-platform-advise-text">
             Esta plataforma é uma ferramenta de triagem e apoio. Os resultados gerados pela
             Inteligência Artificial não constituem um diagnóstico médico final e não substituem a
             avaliação de um profissional de saúde qualificado.
           </p>
 
-          {/* === SEÇÃO DE LINKS ADICIONADA === */}
+          {/* === SEÇÃO DE LINKS DINÂMICA === */}
           <nav className="footer-links-container">
-            <Link to="/dashboard" className="footer-link-item">
-              Dashboard
-            </Link>
-            <Link to="/profile" className="footer-link-item">
-              Perfil
-            </Link>
-            <Link to="/termos-de-uso" className="footer-link-item">
+            
+            {/* Estes links só aparecem se for MÉDICO ou ADMIN */}
+            {isProfessional && (
+              <>
+                <Link to="/dashboard" className="footer-link-item">
+                  Dashboard
+                </Link>
+                <Link to="/profile" className="footer-link-item">
+                  Perfil
+                </Link>
+              </>
+            )}
+
+            {/* Estes links aparecem para TODOS (Médicos e Pacientes) */}
+            <Link to="/termsOfUse" className="footer-link-item">
               Termos de Uso
             </Link>
-            <Link to="/politica-de-privacidade" className="footer-link-item">
+            <Link to="/privacypolicy" className="footer-link-item">
               Política de Privacidade
             </Link>
+            
           </nav>
 
-          {/* === COPYRIGHT ADICIONADO === */}
           <p className="footer-copyright-text">
             © {new Date().getFullYear()} VisusAI. Todos os direitos reservados.
           </p>
         </div>
+        
+        {/* SVG Background... (Mantido igual) */}
         <svg
           width="100%"
           height="100%"
@@ -46,6 +59,7 @@ const Footer = () => {
           xmlns="http://www.w3.org/2000/svg"
           className="footer-svg-background transition duration-300 ease-in-out delay-150"
         >
+          {/* ... path e defs ... */}
           <defs>
             <linearGradient id="gradient" x1="0%" y1="50%" x2="100%" y2="50%">
               <stop offset="5%" stopColor="#33b9b9"></stop>
@@ -60,14 +74,8 @@ const Footer = () => {
             fillOpacity="0.53"
             className="transition-all duration-300 ease-in-out delay-150 path-0"
           ></path>
-          <defs>
-            <linearGradient id="gradient" x1="0%" y1="50%" x2="100%" y2="50%">
-              <stop offset="5%" stopColor="#33b9b9"></stop>
-              <stop offset="95%" stopColor="#8ED1FC"></stop>
-            </linearGradient>
-          </defs>
           <path
-            d="M 0,400 L 0,233 C 107.23444976076553,253.97607655502392 214.46889952153106,274.95215311004785 319,272 C 423.53110047846894,269.04784688995215 525.3588516746412,242.1674641148325 605,241 C 684.6411483253588,239.8325358851675 742.0956937799043,264.377990430622 842,269 C 941.9043062200957,273.622009569378 1084.2583732057417,258.32057416267946 1191,249 C 1297.7416267942583,239.67942583732054 1368.870813397129,236.33971291866027 1440,233 L 1440,400 L 0,400 Z"
+            d="M 0,400 L 0,233 C 107.23444976076553,253.97607655502392 214.46889952153116,274.95215311004785 319,272 C 423.53110047846894,269.04784688995215 525.3588516746412,242.1674641148325 605,241 C 684.6411483253588,239.8325358851675 742.0956937799043,264.377990430622 842,269 C 941.9043062200957,273.622009569378 1084.2583732057417,258.32057416267946 1191,249 C 1297.7416267942583,239.67942583732054 1368.870813397129,236.33971291866027 1440,233 L 1440,400 L 0,400 Z"
             stroke="none"
             strokeWidth="0"
             fill="url(#gradient)"

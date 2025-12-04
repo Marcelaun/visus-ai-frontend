@@ -20,6 +20,8 @@ import RegisterPatient from './pages/RegisterPatient/RegisterPatient';
 import PasswordReset from './pages/PasswordReset/PasswordReset';
 import PatientResult from './pages/PatientAnalysisResult/PatientAnalysisResult';
 import NewAnalysis from './pages/NewAnalysis/NewAnalysis';
+import TermsOfUse from './pages/TermsOfUse/TermsOfUse';
+import PrivacyPolicy from './pages/PrivacyPolicy/PrivacyPolicy';
 import RegisterProfessional from './pages/RegisterProfessional/RegisterProfessional';
 import AccountCreationSplashScreen from './pages/AccountCreationSplashScreen/AccountCreationSplashScreen';
 import AccountRecovery from './pages/AccountRecovery/AccountRecovery';
@@ -130,12 +132,7 @@ function AppRoutes() {
     <div className="app-container">
       {isLoggedIn && <Navbar onLogout={handleLogout} user={user} />}
       
-      {!isLoggedIn && patientUser && (
-          <div style={{padding: '1rem 2rem', background: '#fff', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'center', position: 'fixed', width: '100%', top: 0, zIndex: 100}}>
-             <span style={{fontWeight: 'bold', color: '#33b9b9', fontSize: '1.1rem'}}>Olá, {patientUser.nome}</span>
-             <button onClick={handlePatientLogout} style={{border: '1px solid #ccc', background: 'white', color: '#666', padding: '5px 15px', borderRadius: '5px', cursor: 'pointer', fontWeight: '600'}}>Sair</button>
-          </div>
-      )}
+     
 
       <main className="content-wrap">
         <Routes>
@@ -146,6 +143,9 @@ function AppRoutes() {
           <Route path="/accountCreationSuccessful" element={<PageLayout backgroundColor="#fff"><AccountCreationSplashScreen /></PageLayout>} />
           <Route path="/accountRecovery" element={<PageLayout backgroundColor="#fff"><AccountRecovery /></PageLayout>} />
           <Route path="/emailSendSuccess" element={<PageLayout backgroundColor="#fff"><EmailSendingSplashScreen /></PageLayout>} />
+          <Route path="/termsOfUse" element={<PageLayout backgroundColor="#fff"><TermsOfUse /></PageLayout>} />
+          <Route path="/privacypolicy" element={<PageLayout backgroundColor="#fff"><PrivacyPolicy /></PageLayout>} />
+          
           
           {/* ROTA ESPECIAL: VERIFICAÇÃO DE EMAIL */}
           <Route 
@@ -177,7 +177,7 @@ function AppRoutes() {
         </Routes>
       </main>
 
-      {(isLoggedIn || patientUser) && <Footer />}
+      {(isLoggedIn || patientUser) && <Footer user={user} patientUser={patientUser} />}
 
       <ToastContainer 
         position="bottom-right"

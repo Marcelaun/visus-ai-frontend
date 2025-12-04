@@ -31,7 +31,7 @@ const allNavItems = [
     text: 'Dashboard', 
     icon: <DashboardIcon />, 
     path: '/dashboard', 
-    roles: ['professional', 'admin'] 
+    roles: ['professional'] 
   },
   {
     text: 'Pacientes', 
@@ -43,22 +43,22 @@ const allNavItems = [
     text: 'Cadastrar Paciente', 
     icon: <PeopleIconAdd />, 
     path: '/patientRegister', 
-    roles: ['professional', 'admin']
+    roles: ['professional']
   },
   {
     text: 'Nova Análise', 
     icon: <NoteAddIcon />, 
     path: '/newAnalysis', 
-    roles: ['professional', 'admin']
+    roles: ['professional']
   },
-  // { // Este item parece ser o mesmo que 'Histórico', comentei para não duplicar
+  // { 
   //   text: 'Resultado Análise', 
   //   icon: <BarChartIcon />, 
   //   path: '/analysisResult', 
   //   roles: ['professional', 'admin']
   // },
   {
-    text: 'Seu Resultado', // Renomeei para ficar claro
+    text: 'Seu Resultado', 
     icon: <AssessmentIcon />, 
     path: '/patientAnalysisResult', 
     roles: ['patient'] // APENAS PARA PACIENTES
