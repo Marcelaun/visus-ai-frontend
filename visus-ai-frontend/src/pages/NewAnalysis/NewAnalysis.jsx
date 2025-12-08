@@ -93,7 +93,7 @@ const NewAnalysis = () => {
 
     // 3. Adiciona as Imagens
     if (selectedFiles.length === 0) {
-        alert("Selecione pelo menos uma imagem.");
+        toast.warning("Selecione pelo menos uma imagem.");
         setIsLoading(false);
         return;
     }
@@ -112,7 +112,7 @@ const NewAnalysis = () => {
       });
 
       console.log("Sucesso!", response.data);
-      alert("Análise criada com sucesso!");
+      toast.success("Análise criada com sucesso!");
       
       // 5. Redireciona
       navigate(`/analysisResult/${response.data.analysis_id}`);
@@ -128,14 +128,14 @@ const NewAnalysis = () => {
           const errors = error.response.data.details || error.response.data.errors;
           // Transforma o objeto de erros em texto
           const errorMessages = Object.values(errors).flat().join('\n');
-          alert(`Erro de validação:\n${errorMessages}`);
+          toast.error(`Erro de validação:\n${errorMessages}`);
         } else if (error.response.data.message) {
-           alert(`Erro do Servidor: ${error.response.data.message}`);
+           toast.error(`Erro do Servidor: ${error.response.data.message}`);
         } else {
-           alert("Erro desconhecido no servidor.");
+           toast.error("Erro desconhecido no servidor.");
         }
       } else {
-        alert("Erro de conexão. Verifique se o backend está rodando.");
+        toast.error("Erro de conexão. Verifique se o backend está rodando.");
       }
     } finally {
       setIsLoading(false);

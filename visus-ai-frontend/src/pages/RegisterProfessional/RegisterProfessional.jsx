@@ -3,6 +3,7 @@ import {useNavigate, Link} from 'react-router-dom';
 import LogoVisusAi from '../../assets/Logo.svg';
 import apiClient from '../../api/axiosConfig'; // Importe o apiClient
 import BackIcon from '../../assets/back-icon.svg';
+import { toast } from 'react-toastify'; // 1. Importe o toast
 
 import './RegisterProfessional.css';
 
@@ -44,7 +45,7 @@ const RegisterProfessional = () => {
       // O Laravel Breeze cria o usuário e JÁ FAZ O LOGIN automaticamente
       await apiClient.post('/api/register', dadosParaEnviar);
 
-      alert('Conta criada com sucesso!');
+      toast.success('Conta criada com sucesso!');
       
       // 3. Redireciona para o Dashboard (já logado)
       // O AppRoutes vai checar o cookie e ver que está logado
@@ -59,9 +60,9 @@ const RegisterProfessional = () => {
       if (error.response && error.response.data.errors) {
         // Pega o primeiro erro (ex: "Email já está em uso")
         const mensagens = Object.values(error.response.data.errors).flat();
-        alert(`Erro: ${mensagens[0]}`);
+        toast.error(`Erro: ${mensagens[0]}`);
       } else {
-        alert('Ocorreu um erro ao criar a conta. Tente novamente.');
+        toast.error('Ocorreu um erro ao criar a conta. Tente novamente.');
       }
     } finally {
       setIsLoading(false);
