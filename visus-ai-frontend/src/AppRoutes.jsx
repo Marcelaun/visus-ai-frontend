@@ -4,6 +4,7 @@ import {Routes, Route, Navigate, useNavigate, useLocation} from 'react-router-do
 // Componentes e Páginas
 import Navbar from './components/Navbar/Navbar';
 import Footer from './components/Footer/Footer';
+import ChatWidget from './components/ChatWidget/ChatWidget';
 import PageLayout from './components/PageLayout/PageLayout';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
@@ -219,6 +220,8 @@ function AppRoutes() {
       </main>
 
       {(isLoggedIn || patientUser) && <Footer user={user} patientUser={patientUser} />}
+
+      {isLoggedIn && <ChatWidget />}
 
       <ToastContainer 
         position="bottom-right"
